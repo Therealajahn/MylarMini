@@ -2,18 +2,6 @@ import Plate from '../Plate/Plate';
 
 export default function MiniModular() {
 
-//             <div style={{
-//                 width:'98%',
-//                 height:'80%',
-//                 alignSelf: 'center',
-//                 justifySelf: 'center',
-//                 gridArea: 'top',
-//                 backgroundColor: '#AAAAAA',
-//                 borderRadius: '10px',
-//                 border: 'solid 3px white'
-//             }}>
-//             </div>
-    //
     let backPlate = {
         width: '80vw',
         height: '50vw',
@@ -29,6 +17,24 @@ export default function MiniModular() {
             'main'
         `
     }
+    let mainPlateWrapper = {
+        gridArea: 'main',
+        display: 'grid',
+        gridTemplateRows: '100%',
+        gridTemplateColumns:'repeat(10,10%)',
+        width:'92.5%',
+        height:'99%',
+        justifySelf:'center',
+        marginTop:'-.8%',
+    }
+    let renderSomePlates = (renderNumber) => {
+        return Array(renderNumber).fill(
+            <Plate
+                height= '99%'
+                width='90%'
+            />
+        ) 
+    }
     return(
         <div style={backPlate}>
             <Plate
@@ -38,12 +44,11 @@ export default function MiniModular() {
             <Plate
                 gridArea='mid'
             />
-            <Plate
-                gridArea='main'
-                height='98.3%'
-                marginTop='-.8%'
-            />
-    </div>
-    )
+
+            <div style={mainPlateWrapper}>
+                {renderSomePlates(10)}
+            </div>
+        </div>
+            )
 
 };
