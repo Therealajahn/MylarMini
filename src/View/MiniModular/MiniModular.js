@@ -8,7 +8,7 @@ export default function MiniModular() {
         backgroundColor: '#4E4848',
         justifySelf: 'center',
         alignSelf: 'center',
-        borderRadius: '15px',
+        borderRadius: '1.5vw',
         display: 'grid',
         gridTemplateRows: '20% 20% 60%',
         gridTemplateAreas: `
@@ -21,19 +21,28 @@ export default function MiniModular() {
         gridArea: 'main',
         display: 'grid',
         gridTemplateRows: '100%',
-        gridTemplateColumns:'repeat(10,10%)',
+        gridTemplateColumns: '20% 20% 6% 6% 6% 6% 6% 6% 6% 6%',
         width:'92.5%',
         height:'99%',
         justifySelf:'center',
         marginTop:'-.8%',
     }
-    let renderSomePlates = (renderNumber) => {
-        return Array(renderNumber).fill(
-            <Plate
-                height= '99%'
-                width='90%'
-            />
-        ) 
+    let renderSomePlates = (renderNumber,heightArray) => {
+        let plateArray = [];
+        for(let i = 0; i < renderNumber; i++){
+                if(heightArray.length){
+                    i++;
+                }
+                plateArray.push(
+                    <Plate
+                        height= {heightArray[i] + '%'} 
+                        width='90%'
+                        plateColor='#666666'
+                        key={i}
+                    />
+                )
+        }
+        return plateArray;
     }
     return(
         <div style={backPlate}>
@@ -46,7 +55,7 @@ export default function MiniModular() {
             />
 
             <div style={mainPlateWrapper}>
-                {renderSomePlates(10)}
+                {renderSomePlates(10,[100,100,100,100,100,100,100,100,100,100])}
             </div>
         </div>
             )

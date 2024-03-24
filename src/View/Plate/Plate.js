@@ -8,7 +8,7 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
             gridArea: gridArea,
             marginTop: marginTop,
             backgroundColor: `${plateColor ? plateColor : '#aaaaaa'}`,
-            borderRadius: '10px',
+            borderRadius: '1vw',
             border: 'solid 3px white'
         }}>
         </div>
