@@ -21,7 +21,7 @@ export default function MiniModular() {
         gridArea: 'main',
         display: 'grid',
         gridTemplateRows: '100%',
-        gridTemplateColumns: '20% 20% 6% 6% 6% 6% 6% 6% 6% 6%',
+        gridTemplateColumns: '15fr 15fr 8fr 8fr 8fr 11fr 8fr 11fr 11fr 6fr',
         width:'92.5%',
         height:'99%',
         justifySelf:'center',
@@ -30,9 +30,6 @@ export default function MiniModular() {
     let renderSomePlates = (renderNumber,heightArray) => {
         let plateArray = [];
         for(let i = 0; i < renderNumber; i++){
-                if(heightArray.length){
-                    i++;
-                }
                 plateArray.push(
                     <Plate
                         height= {heightArray[i] + '%'} 
