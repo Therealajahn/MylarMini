@@ -1,9 +1,9 @@
-export default function Knob({gridArea,marginTop}){
+export default function Knob({gridArea,marginTop,width}){
     console.log('marginTop',marginTop)
    return(
        <svg viewBox="0 0 53 72" fill="none" xmlns="http://www.w3.org/2000/svg"
            style={{
-               width:'93%',
+               width:`${width ? width : '93%'}`,
                justifySelf:'center',
                marginTop:`${marginTop ? marginTop : '0vw'}`,
                gridArea:`${gridArea ? gridArea : ''}`,

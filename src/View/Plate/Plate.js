@@ -10,6 +10,15 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
             case 'tails':
                 return renderTails();
             break;
+            case 'kick':
+                return renderKick();
+            break;
+            case 'hat':
+                return renderKick();
+            break;
+            case 'clap':
+                return renderKick();
+            break;
         }
     }
 
@@ -103,7 +112,48 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
             </div>
         )
     }
-
+    function renderKick(){
+        return(
+            <div style={{
+                display:'grid',
+                height:'50%',
+                alignSelf:'center',
+                gridTemplateRows:'repeat(3,1fr)',
+            }}>
+                <Knob width={'70%'}/>
+                <Knob width={'70%'}/>
+                <Knob width={'70%'}/>
+            </div>
+        )
+    }
+    function renderHat(){
+        return(
+            <div style={{
+                display:'grid',
+                height:'50%',
+                alignSelf:'center',
+                gridTemplateRows:'repeat(3,1fr)',
+            }}>
+                <Knob width={'70%'}/>
+                <Knob width={'70%'}/>
+                <Knob width={'70%'}/>
+            </div>
+        )
+    }
+    function renderClap(){
+        return(
+            <div style={{
+                display:'grid',
+                height:'50%',
+                alignSelf:'center',
+                gridTemplateRows:'repeat(3,1fr)',
+            }}>
+                <Knob width={'70%'}/>
+                <Knob width={'70%'}/>
+                <Knob width={'70%'}/>
+            </div>
+        )
+    }
 // Main Render
     return(
         <div style={{
