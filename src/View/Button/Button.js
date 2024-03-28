@@ -12,6 +12,7 @@ export default function Button({bottomColor, marginTop, width}) {
                     border: 'solid .25vw white',
                     zIndex:'1000',
                 }}></div>
+
            <div className='button-bottom'
                style={{
                     position:'absolute',

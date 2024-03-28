@@ -1,11 +1,14 @@
-import Button from '../Button/Button.js';
-
+import Button from '../Button/Button.js'; import Knob from '../Knob/Knob.js';
+import Fader from '../Fader/Fader.js';
 
 export default function Plate({gridArea,plateColor,width,height,alignSelf,marginTop,name}) {
     function getModule(){
         switch(name){
             case 'rhythm':
                 return renderRhythm();
+            break;
+            case 'tails':
+                return renderTails();
             break;
         }
     }
@@ -65,9 +68,43 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                 <Button width="8.5vw"/>
             </div>
            </div>
-    )
+    )};
 
+    function renderTails(){
+        return(
+            <div className='ControlFrame' 
+            style={{
+                display:'grid',
+                width:'95%',
+                height:'33%',
+                marginTop:'17%',
+                alignSelf:'center',
+                justifySelf:'center',
+                backgroundColor:'#404240',
+                borderRadius:'1vw',
+                border: 'solid .2vw white',
+                gridTemplateRows:'repeat(4,1fr)',
+                gridTemplateColumns:'repeat(4,1fr)',
+                gridTemplateAreas:`
+                    "knob1 knob2 knob3 knob4"
+                    "fader1 fader2 fader3 fader4"
+                    "fader1 fader2 fader3 fader4"
+                    "fader1 fader2 fader3 fader4"
+                `,
+            }}>
+                <Knob gridArea={'knob1'} marginTop={'-3vw'}/>
+                <Knob gridArea={'knob2'} marginTop={'-3vw'}/>
+                <Knob gridArea={'knob3'} marginTop={'-3vw'}/>
+                <Knob gridArea={'knob4'} marginTop={'-3vw'}/>
+                <Fader gridArea={'fader1'} marginTop={'-1.5vw'} marginLeft={'.6vw'}/>
+                <Fader gridArea={'fader2'} marginTop={'-1.5vw'} marginLeft={'.6vw'}/>
+                <Fader gridArea={'fader3'} marginTop={'-1.5vw'} marginLeft={'.6vw'}/>
+                <Fader gridArea={'fader4'} marginTop={'-1.5vw'} marginLeft={'.6vw'}/>
+            </div>
+        )
     }
+
+// Main Render
     return(
         <div style={{
             display:'grid',
