@@ -1,5 +1,7 @@
-import Button from '../Button/Button.js'; import Knob from '../Knob/Knob.js';
+import Button from '../Button/Button.js';
+import Knob from '../Knob/Knob.js';
 import Fader from '../Fader/Fader.js';
+import Keys from '../Keys/Keys.js';
 
 export default function Plate({gridArea,plateColor,width,height,alignSelf,marginTop,name}) {
     function getModule(){
@@ -14,23 +16,49 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                 return renderKick();
             break;
             case 'hat':
-                return renderKick();
+                return renderHat();
             break;
             case 'clap':
-                return renderKick();
+                return renderClap();
             break;
-        }
-    }
+            case 'pitch':
+                return renderPitch();
+            break;
+        };
+    };
 
     function renderRhythm(){
-        const buttonRow = {
-                display:'grid',
-                width:'100%',
-                height:'100%',
-                alignSelf:'start',
-                justifySelf:'center',
-                gridTemplateColumns: 'repeat(4,1fr)'
-        }        
+//         const buttonRow = {
+//             display:'grid',
+//             width:'100%',
+//             height:'100%',
+//             alignSelf:'start',
+//             justifySelf:'center',
+//             gridTemplateColumns: 'repeat(4,1fr)'
+//         }
+
+        const createButtonRow = (buttonNumber,marginTop,bottomColor) => (
+            <div style={{
+                    display:'grid',
+                    width:'100%',
+                    height:'100%',
+                    alignSelf:'start',
+                    justifySelf:'center',
+                    gridTemplateColumns: 'repeat(4,1fr)'
+            }}>
+                {repeatButtons(buttonNumber,marginTop,bottomColor)}
+            </div>
+        )
+
+        const repeatButtons = (buttonNumber,marginTop,bottomColor) => (
+                Array(buttonNumber).fill(0).map((button,i) => 
+                    <Button  
+                        type={'square'} 
+                        marginTop={`${marginTop}`} 
+                        bottomColor={`${bottomColor}`}
+                    />
+                )
+        )
     return(
             <div className='ButtonFrame'
             style={{
@@ -45,26 +73,36 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                 gridTemplateRows:'repeat(4,1fr)',
             }}>
 
-            <div style={buttonRow}>
-                <Button  marginTop={'-1vw'} bottomColor='#B9B9B9'/>
-                <Button  marginTop={'-1vw'} bottomColor='#B9B9B9'/>
-                <Button  marginTop={'-1vw'} bottomColor='#B9B9B9'/>
-                <Button  marginTop={'-1vw'} bottomColor='#B9B9B9'/>
-            </div>
+                {createButtonRow(4,'-1vw','#B9B9B9')}
+                {/*
+                {repeatButtons(4,'-1vw','#B9B9B9')}
+                */}
+                {/*
+                <Button  type={'square'} marginTop={'-1vw'} bottomColor='#B9B9B9'/>
+                <Button  type={'square'} marginTop={'-1vw'} bottomColor='#B9B9B9'/>
+                <Button  type={'square'} marginTop={'-1vw'} bottomColor='#B9B9B9'/>
+                <Button  type={'square'} marginTop={'-1vw'} bottomColor='#B9B9B9'/>
+                */}
+{/*
+                {/*
+                {repeatButtons(4,'0vw')}
+                */}
+                {/*
+                <Button type={'square'} marginTop={'0vw'}/>
+                <Button type={'square'} marginTop={'0vw'}/>
+                <Button type={'square'} marginTop={'0vw'}/>
+                <Button type={'square'} marginTop={'0vw'}/>
+                */}
 
-            <div style={buttonRow}>
-                <Button marginTop={'0vw'}/>
-                <Button marginTop={'0vw'}/>
-                <Button marginTop={'0vw'}/>
-                <Button marginTop={'0vw'}/>
-            </div>
-
-            <div style={buttonRow}>
-                <Button marginTop={'-.3vw'}/>
-                <Button marginTop={'-.3vw'}/>
-                <Button marginTop={'-.3vw'}/>
-                <Button marginTop={'-.3vw'}/>
-        </div>
+                {/*
+                {repeatButtons(4,'-.3vw')}
+                */}
+                {/*
+                <Button type={'square'} marginTop={'-.3vw'}/>
+                <Button type={'square'} marginTop={'-.3vw'}/>
+                <Button type={'square'} marginTop={'-.3vw'}/>
+                <Button type={'square'} marginTop={'-.3vw'}/>
+                */}
         
             <div className= 'Spacebar'
             style={{
@@ -74,7 +112,7 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                 alignSelf:'start',
                 justifySelf:'center',
             }}>
-                <Button width="8.5vw"/>
+                <Button type={'square'} width="8.5vw"/>
             </div>
            </div>
     )};
@@ -110,8 +148,9 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                 <Fader gridArea={'fader3'} marginTop={'-1.5vw'} marginLeft={'.6vw'}/>
                 <Fader gridArea={'fader4'} marginTop={'-1.5vw'} marginLeft={'.6vw'}/>
             </div>
-        )
-    }
+        );
+    };
+
     function renderKick(){
         return(
             <div style={{
@@ -124,8 +163,9 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                 <Knob width={'70%'}/>
                 <Knob width={'70%'}/>
             </div>
-        )
-    }
+        );
+    };
+
     function renderHat(){
         return(
             <div style={{
@@ -138,8 +178,9 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                 <Knob width={'70%'}/>
                 <Knob width={'70%'}/>
             </div>
-        )
-    }
+        );
+    };
+
     function renderClap(){
         return(
             <div style={{
@@ -152,8 +193,34 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                 <Knob width={'70%'}/>
                 <Knob width={'70%'}/>
             </div>
-        )
-    }
+        );
+    };
+
+    function renderPitch(){
+        return(
+            <div style={{
+                display:'grid',
+                height:'40%', 
+                width:'90%',
+                alignSelf:'center',
+                justifySelf:'center',
+                gridTemplateColumns:'4fr 6fr',
+            }}>
+                <div style={{
+                    display:'grid',
+                    height:'80%',
+                    gridTemplateRows:'repeat(4,1fr)',
+                }}>
+                    <Knob width="90%"/>
+                    <Knob width="90%"/>
+                    <Knob width="90%"/>
+                    <Knob width="90%"/>
+                </div>
+                <Keys/>
+            </div>
+        );
+    };
+
 // Main Render
     return(
         <div style={{
