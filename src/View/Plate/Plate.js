@@ -2,6 +2,7 @@ import Button from '../Button/Button.js';
 import Knob from '../Knob/Knob.js';
 import Fader from '../Fader/Fader.js';
 import Keys from '../Keys/Keys.js';
+import RepeatElement from '../../Utilities/RepeatElement/RepeatElement.js';
 
 export default function Plate({gridArea,plateColor,width,height,alignSelf,marginTop,name}) {
     function getModule(){
@@ -38,6 +39,7 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
 //         }
 
         const createButtonRow = (buttonNumber,marginTop,bottomColor) => (
+
             <div style={{
                     display:'grid',
                     width:'100%',
@@ -46,19 +48,18 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                     justifySelf:'center',
                     gridTemplateColumns: 'repeat(4,1fr)'
             }}>
-                {repeatButtons(buttonNumber,marginTop,bottomColor)}
+                <RepeatElement
+                    repetitions={buttonNumber}
+                    element={Button}
+                    props={{
+                        type:'square',
+                        marginTop:'-1vw',
+                        bottomColor:`${bottomColor}`
+                    }}
+                />
             </div>
         )
 
-        const repeatButtons = (buttonNumber,marginTop,bottomColor) => (
-                Array(buttonNumber).fill(0).map((button,i) => 
-                    <Button  
-                        type={'square'} 
-                        marginTop={`${marginTop}`} 
-                        bottomColor={`${bottomColor}`}
-                    />
-                )
-        )
     return(
             <div className='ButtonFrame'
             style={{
@@ -72,37 +73,9 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                 border: 'solid .2vw white',
                 gridTemplateRows:'repeat(4,1fr)',
             }}>
-
                 {createButtonRow(4,'-1vw','#B9B9B9')}
-                {/*
-                {repeatButtons(4,'-1vw','#B9B9B9')}
-                */}
-                {/*
-                <Button  type={'square'} marginTop={'-1vw'} bottomColor='#B9B9B9'/>
-                <Button  type={'square'} marginTop={'-1vw'} bottomColor='#B9B9B9'/>
-                <Button  type={'square'} marginTop={'-1vw'} bottomColor='#B9B9B9'/>
-                <Button  type={'square'} marginTop={'-1vw'} bottomColor='#B9B9B9'/>
-                */}
-{/*
-                {/*
-                {repeatButtons(4,'0vw')}
-                */}
-                {/*
-                <Button type={'square'} marginTop={'0vw'}/>
-                <Button type={'square'} marginTop={'0vw'}/>
-                <Button type={'square'} marginTop={'0vw'}/>
-                <Button type={'square'} marginTop={'0vw'}/>
-                */}
-
-                {/*
-                {repeatButtons(4,'-.3vw')}
-                */}
-                {/*
-                <Button type={'square'} marginTop={'-.3vw'}/>
-                <Button type={'square'} marginTop={'-.3vw'}/>
-                <Button type={'square'} marginTop={'-.3vw'}/>
-                <Button type={'square'} marginTop={'-.3vw'}/>
-                */}
+                {createButtonRow(4,'0vw','black')}
+                {createButtonRow(4,'-.3vw','black')}
         
             <div className= 'Spacebar'
             style={{

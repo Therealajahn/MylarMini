@@ -1,26 +1,9 @@
 import { createElement } from 'react';
 import Button from '../Button/Button.js';
+import RepeatElement from '../../Utilities/RepeatElement/RepeatElement.js';
 
 export default function Keys(){
 
-    const blackButtons = () => (
-        Array(7).fill(0).map((button,i) => 
-            <Button type='circle' gridArea={`black${i + 1}`}/>
-        )
-    ); 
-
-    const whiteButtons = () => (
-        Array(5).fill(0).map((button,i) =>
-            <Button
-                type='circle'
-                topColor='#fff'
-                bottomColor='#000'
-                gridArea={`white${i + 1}`}
-                marginTop='-50%'
-            />
-        )
-    )     
-    
     return(
         <div style={{
             display:'grid',
@@ -38,54 +21,27 @@ export default function Keys(){
                 "black7 white5"
             `
         }}>
-            {blackButtons()}
-            {whiteButtons()}
-            {/*
-            <Button type='circle' gridArea='black1'/>
-            <Button type='circle' gridArea='black2'/>
-            <Button type='circle' gridArea='black3'/>
-            <Button type='circle' gridArea='black4'/>
-            <Button type='circle' gridArea='black5'/>
-            <Button type='circle' gridArea='black6'/>
-            <Button type='circle' gridArea='black7'/>
-            */}
-            {/*
-            <Button 
-                type='circle' 
-                topColor='#fff' 
-                bottomColor='#000'
-                gridArea='white1'   
-                marginTop="-50%"
+            <RepeatElement 
+                repetitions={7}
+                element={Button}
+                props={{
+                    type:'circle',
+                }}
+                countKey='gridArea'
+                countValue='black'
             />
-            <Button 
-                type='circle' 
-                topColor='#fff' 
-                bottomColor='#000'
-                gridArea='white2'   
-                marginTop="-50%"
+            <RepeatElement 
+                repetitions={5}
+                element={Button}
+                props={{
+                    type:'circle',
+                    topColor:'#fff',
+                    bottomColor:'#000',
+                    marginTop:'-50%',
+                }}
+                countKey='gridArea'
+                countValue='white'
             />
-            <Button 
-                type='circle' 
-                topColor='#fff' 
-                bottomColor='#000'
-                gridArea='white3'   
-                marginTop="-50%"
-            />
-            <Button 
-                type='circle' 
-                topColor='#fff' 
-                bottomColor='#000'
-                gridArea='white4'   
-                marginTop="-50%"
-            />
-            <Button 
-                type='circle' 
-                topColor='#fff' 
-                bottomColor='#000'
-                gridArea='white5'   
-                marginTop="-50%"
-            />
-            */}
         </div>     
     );
 };
