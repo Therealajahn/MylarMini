@@ -1,4 +1,3 @@
-import { createElement } from 'react';
 import Button from '../Button/Button.js';
 import RepeatElement from '../../Utilities/RepeatElement/RepeatElement.js';
 
@@ -9,6 +8,7 @@ export default function Keys(){
             display:'grid',
             height:'100%',
             backgroundColor:'#818181',
+            borderRadius:'1vw',
             gridTemplateRows:'repeat(7,1fr)',
             gridTemplateColumns:'1fr 1fr',
             gridTemplateAreas:`
@@ -26,21 +26,23 @@ export default function Keys(){
                 element={Button}
                 props={{
                     type:'circle',
+                    dataTestid:'main-key',
                 }}
-                countKey='gridArea'
-                countValue='black'
+                countKeys={['gridArea']}
+                countValues={['black']}
             />
             <RepeatElement 
                 repetitions={5}
                 element={Button}
                 props={{
                     type:'circle',
+                    dataTestid:'secondary-key',
                     topColor:'#fff',
                     bottomColor:'#000',
                     marginTop:'-50%',
                 }}
-                countKey='gridArea'
-                countValue='white'
+                countKeys={['gridArea']}
+                countValues={['white']}
             />
         </div>     
     );

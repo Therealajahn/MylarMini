@@ -1,12 +1,15 @@
 import { createElement } from 'react';
 
-export default function RepeatElement({repetitions, element, props, countKey, countValue, children}){
+export default function RepeatElement({repetitions, element, props, countKeys, countValues, children}){
     function renderElements(){
-        console.log("element",element)
         return(
+            //generate an array of repeated elements
             Array(repetitions).fill(0).map((elements,i) => {
-                props[countKey] = `${countValue}${i + 1}`;
-                return createElement(element,props,children)
+                if(countKeys){
+                    // generate a number beside each value of each given key value pair
+                    countKeys.forEach((key,j) => {props[countKeys[j]] = `${countValues[j]}${i + 1}`});
+                }
+                    return createElement(element,props,children)
                 }
             )
         )

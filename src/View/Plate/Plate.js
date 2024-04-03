@@ -29,15 +29,6 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
     };
 
     function renderRhythm(){
-//         const buttonRow = {
-//             display:'grid',
-//             width:'100%',
-//             height:'100%',
-//             alignSelf:'start',
-//             justifySelf:'center',
-//             gridTemplateColumns: 'repeat(4,1fr)'
-//         }
-
         const createButtonRow = (buttonNumber,marginTop,bottomColor) => (
 
             <div style={{
@@ -53,7 +44,7 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                     element={Button}
                     props={{
                         type:'square',
-                        marginTop:'-1vw',
+                        marginTop:`${marginTop}`,
                         bottomColor:`${bottomColor}`
                     }}
                 />
@@ -112,14 +103,25 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                     "fader1 fader2 fader3 fader4"
                 `,
             }}>
-                <Knob gridArea={'knob1'} marginTop={'-3vw'}/>
-                <Knob gridArea={'knob2'} marginTop={'-3vw'}/>
-                <Knob gridArea={'knob3'} marginTop={'-3vw'}/>
-                <Knob gridArea={'knob4'} marginTop={'-3vw'}/>
-                <Fader gridArea={'fader1'} marginTop={'-1.5vw'} marginLeft={'.6vw'}/>
-                <Fader gridArea={'fader2'} marginTop={'-1.5vw'} marginLeft={'.6vw'}/>
-                <Fader gridArea={'fader3'} marginTop={'-1.5vw'} marginLeft={'.6vw'}/>
-                <Fader gridArea={'fader4'} marginTop={'-1.5vw'} marginLeft={'.6vw'}/>
+                <RepeatElement
+                    repetitions={4}
+                    element={Knob}
+                    props={{
+                        marginTop:'-3vw',
+                    }}
+                    countKeys={['gridArea']}
+                    countValues={['knob']}
+                />
+                <RepeatElement
+                    repetitions={4}
+                    element={Fader}
+                    props={{
+                        marginTop:'-1.5vw',
+                        marginLeft:'.6vw',
+                    }}
+                    countKeys={['gridArea']}
+                    countValues={['fader']}
+                />
             </div>
         );
     };
@@ -132,9 +134,13 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                 alignSelf:'center',
                 gridTemplateRows:'repeat(3,1fr)',
             }}>
-                <Knob width={'70%'}/>
-                <Knob width={'70%'}/>
-                <Knob width={'70%'}/>
+                <RepeatElement
+                    repetitions={3}
+                    element={Knob}
+                    props={{
+                        width:'70%'
+                    }}
+                />
             </div>
         );
     };
@@ -147,9 +153,13 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                 alignSelf:'center',
                 gridTemplateRows:'repeat(3,1fr)',
             }}>
-                <Knob width={'70%'}/>
-                <Knob width={'70%'}/>
-                <Knob width={'70%'}/>
+                <RepeatElement
+                    repetitions={3}
+                    element={Knob}
+                    props={{
+                        width:'70%'
+                    }}
+                />
             </div>
         );
     };
@@ -162,9 +172,13 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                 alignSelf:'center',
                 gridTemplateRows:'repeat(3,1fr)',
             }}>
-                <Knob width={'70%'}/>
-                <Knob width={'70%'}/>
-                <Knob width={'70%'}/>
+                <RepeatElement
+                    repetitions={3}
+                    element={Knob}
+                    props={{
+                        width:'70%'
+                    }}
+                />
             </div>
         );
     };
@@ -184,10 +198,13 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                     height:'80%',
                     gridTemplateRows:'repeat(4,1fr)',
                 }}>
-                    <Knob width="90%"/>
-                    <Knob width="90%"/>
-                    <Knob width="90%"/>
-                    <Knob width="90%"/>
+                    <RepeatElement
+                        repetitions={4}
+                        element={Knob}
+                        props={{
+                            width:'90%'
+                        }}
+                    />
                 </div>
                 <Keys/>
             </div>

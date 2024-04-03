@@ -9,7 +9,7 @@ function App() {
         backgroundColor: '#707070'
     };
     return (
-        <div className='App' style={appStyle}>
+        <div data-testid="app-div" className='App' style={appStyle}>
             <MiniModular/> 
         </div>
     );

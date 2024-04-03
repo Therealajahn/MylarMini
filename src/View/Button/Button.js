@@ -1,7 +1,7 @@
-export default function Button({type, bottomColor, marginTop, width, topColor,gridArea}) {
+export default function Button({type,dataTestid, bottomColor, marginTop, width, topColor,gridArea}) {
     function renderSquareButton(){
         return(
-            <div className='button' style={{
+            <div data-testid={`${dataTestid? dataTestid : 'square-button'}`} className='button' style={{
                 display:'grid',
                 height:'100%',
                 width:'100%',
@@ -39,7 +39,7 @@ export default function Button({type, bottomColor, marginTop, width, topColor,gr
 
     function renderCircleButton(){
         return(
-           <div className='button' style={{
+           <div data-testid='circle-button' className='button' style={{
                display:'grid',
                height:'100%',
                width:'100%',
@@ -81,6 +81,7 @@ export default function Button({type, bottomColor, marginTop, width, topColor,gr
             return renderCircleButton();
         break;
         default:
+            throw new Error(`${gridArea} has been given no type`)
             console.log("This button has been given no type");
     }
 };
