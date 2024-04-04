@@ -47,6 +47,8 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                         marginTop:`${marginTop}`,
                         bottomColor:`${bottomColor}`
                     }}
+                    countKeys={['key']}
+                    countValues={['rhythm']}
                 />
             </div>
         )
@@ -109,8 +111,8 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                     props={{
                         marginTop:'-3vw',
                     }}
-                    countKeys={['gridArea']}
-                    countValues={['knob']}
+                    countKeys={['gridArea','key']}
+                    countValues={['knob','knob']}
                 />
                 <RepeatElement
                     repetitions={4}
@@ -119,8 +121,8 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                         marginTop:'-1.5vw',
                         marginLeft:'.6vw',
                     }}
-                    countKeys={['gridArea']}
-                    countValues={['fader']}
+                    countKeys={['gridArea','key']}
+                    countValues={['fader','fader']}
                 />
             </div>
         );
@@ -140,6 +142,8 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                     props={{
                         width:'70%'
                     }}
+                    countKeys={['key']}
+                    countValues={['knob']}
                 />
             </div>
         );
@@ -159,6 +163,8 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                     props={{
                         width:'70%'
                     }}
+                    countKeys={['key']}
+                    countValues={['knob']}
                 />
             </div>
         );
@@ -178,6 +184,8 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                     props={{
                         width:'70%'
                     }}
+                    countKeys={['key']}
+                    countValues={['knob']}
                 />
             </div>
         );
@@ -204,6 +212,8 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                         props={{
                             width:'90%'
                         }}
+                        countKeys={['key']}
+                        countValues={['knob']}
                     />
                 </div>
                 <Keys/>

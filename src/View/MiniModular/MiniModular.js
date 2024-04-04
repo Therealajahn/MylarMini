@@ -1,4 +1,5 @@
 import Plate from '../Plate/Plate';
+import RepeatElement from '../../Utilities/RepeatElement/RepeatElement.js';
 
 export default function MiniModular() {
 
@@ -17,6 +18,7 @@ export default function MiniModular() {
             'main'
         `
     }
+
     let mainPlateWrapper = {
         gridArea: 'main',
         display: 'grid',
@@ -27,25 +29,29 @@ export default function MiniModular() {
         justifySelf:'center',
         marginTop:'-.8%',
     }
-    let mainPlates = [
-        {height: '100%', name:'rhythm'},
-        {height: '100%', name:'tails'},
-        {height: '100%', name:'kick'},
-        {height: '100%', name:'hat'},
-        {height: '100%', name:'clap'},
-        {height: '100%', name:'pitch'},
-        {height: '100%', name:'chords'},
-        {height: '100%', name:'wave'},
-        {height: '100%', name:'fx'},
-    ]
-    let mainElements = mainPlates.map((plate) => (
-        <Plate
-            name={plate.name}
-            height= {plate.height} 
-            width='90%'
-            plateColor='#666666'
-        />
-    ))
+
+    let plates = <RepeatElement
+                        repetitions={9}
+                        element={Plate}
+                        props={{
+                            height:'100%'
+                        }}
+                        listProp='name'
+                        list={[
+                            'rhythm',
+                            'tails',
+                            'kick',
+                            'hat',
+                            'clap',
+                            'pitch',
+                            'chords',
+                            'wave',
+                            'fx',
+
+                        ]}
+                        countKeys={['key']}
+                        countValues={['plate']}
+                  />
 
     return(
         <div style={backPlate}>
@@ -58,7 +64,7 @@ export default function MiniModular() {
             />
 
             <div style={mainPlateWrapper}>
-                {mainElements}
+                {plates}
             </div>
         </div>
     )

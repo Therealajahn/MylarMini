@@ -28,8 +28,8 @@ export default function Keys(){
                     type:'circle',
                     dataTestid:'main-key',
                 }}
-                countKeys={['gridArea']}
-                countValues={['black']}
+                countKeys={['gridArea','key']}
+                countValues={['black','black']}
             />
             <RepeatElement 
                 repetitions={5}
@@ -41,8 +41,8 @@ export default function Keys(){
                     bottomColor:'#000',
                     marginTop:'-50%',
                 }}
-                countKeys={['gridArea']}
-                countValues={['white']}
+                countKeys={['gridArea','key']}
+                countValues={['white','white']}
             />
         </div>     
     );

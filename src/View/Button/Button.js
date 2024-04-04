@@ -1,7 +1,7 @@
-export default function Button({type,dataTestid, bottomColor, marginTop, width, topColor,gridArea}) {
+export default function Button({type,dataTestid, bottomColor, marginTop, width, topColor,gridArea,toKey}) {
     function renderSquareButton(){
         return(
-            <div data-testid={`${dataTestid? dataTestid : 'square-button'}`} className='button' style={{
+            <div  data-testid={`${dataTestid? dataTestid : 'square-button'}`} className='button' style={{
                 display:'grid',
                 height:'100%',
                 width:'100%',
@@ -39,7 +39,7 @@ export default function Button({type,dataTestid, bottomColor, marginTop, width, 
 
     function renderCircleButton(){
         return(
-           <div data-testid={`${dataTestid? dataTestid : 'circle-button'}`} className='button' style={{
+           <div  data-testid={`${dataTestid? dataTestid : 'circle-button'}`} className='button' style={{
                display:'grid',
                height:'100%',
                width:'100%',
