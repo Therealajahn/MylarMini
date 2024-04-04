@@ -14,12 +14,14 @@ describe("there is a correct amount of keys",() => {
 
     it("renders 7 main keys",() => {
         renderKeys();
-        expect(screen.getByTestId('main-key'));
+        let mainKeys = screen.getAllByTestId('main-key');
+        expect(mainKeys.length).toBe(7);
     })
 
     it("renders 5 secondary keys",() => {
         renderKeys();
-        expect(screen.getByTestId('secondary-key'));
+        let secondaryKeys = screen.getAllByTestId('secondary-key')
+        expect(secondaryKeys.length).toBe(5);
     })
 })
 
