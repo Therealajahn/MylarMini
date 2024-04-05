@@ -236,7 +236,8 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
             borderRadius: '1vw',
             border: 'solid .38vw white',
         }}
-        data-testid={dataTestId}
+            data-testid={dataTestId}
+            name={name}
         >
             {getModule()} 
         </div>

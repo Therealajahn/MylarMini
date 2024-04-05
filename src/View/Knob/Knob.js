@@ -2,19 +2,19 @@ import { createElement } from 'react';
 
 export default function Knob({gridArea,marginTop,width,height}){
     //stroke-width was throwing an error, converted the elements using it
-    let pathOne = createElement("path",{
+    const pathOne = createElement("path",{
         d:"M51.5 45.5696C51.5 59.3346 40.3108 70.5 26.5 70.5C12.6892 70.5 1.5 59.3346 1.5 45.5696C1.5 31.8047 12.6892 20.6393 26.5 20.6393C40.3108 20.6393 51.5 31.8047 51.5 45.5696Z",
         fill:"#B9B9B9",
         stroke:"white",
         strokeWidth:"3",
     });
-    let anotherPath = createElement("path",{
+    const anotherPath = createElement("path",{
         d:"M46.931 21.8734C46.931 33.1216 37.7875 42.2468 26.5 42.2468C15.2125 42.2468 6.06897 33.1216 6.06897 21.8734C6.06897 10.6252 15.2125 1.5 26.5 1.5C37.7875 1.5 46.931 10.6252 46.931 21.8734Z", 
         fill:"black",
         stroke:"white",
         strokeWidth:"3",
     })
-    let lineOne = createElement("line",{
+    const lineOne = createElement("line",{
         x1:"6.47819",
         y1:"17.2549",
         x2:"1.47819",
@@ -22,7 +22,7 @@ export default function Knob({gridArea,marginTop,width,height}){
         stroke:"white",
         strokeWidth:"3",
     })
-    let lineTwo = createElement("line",{
+    const lineTwo = createElement("line",{
         x1:"46.4782",
         y1:"16.7451",
         x2:"51.4782",

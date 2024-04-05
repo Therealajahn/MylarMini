@@ -66,7 +66,7 @@ export default function MiniModular() {
                 gridArea='mid'
             />
             <div data-testid='main-plate' 
-            style={mainPlateWrapper}>
+                style={mainPlateWrapper}>
                 {plates}
             </div>
         </div>
