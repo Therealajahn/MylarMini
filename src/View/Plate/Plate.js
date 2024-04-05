@@ -4,7 +4,7 @@ import Fader from '../Fader/Fader.js';
 import Keys from '../Keys/Keys.js';
 import RepeatElement from '../../Utilities/RepeatElement/RepeatElement.js';
 
-export default function Plate({gridArea,plateColor,width,height,alignSelf,marginTop,name}) {
+export default function Plate({gridArea,plateColor,width,height,alignSelf,marginTop,dataTestId,name}) {
     function getModule(){
         switch(name){
             case 'rhythm':
@@ -37,7 +37,7 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                     height:'100%',
                     alignSelf:'start',
                     justifySelf:'center',
-                    gridTemplateColumns: 'repeat(4,1fr)'
+                    gridTemplateColumns: 'repeat(4,1fr)',
             }}>
                 <RepeatElement
                     repetitions={buttonNumber}
@@ -104,6 +104,7 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                     "fader1 fader2 fader3 fader4"
                     "fader1 fader2 fader3 fader4"
                 `,
+                
             }}>
                 <RepeatElement
                     repetitions={4}
@@ -233,8 +234,10 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
             marginTop: marginTop,
             backgroundColor: `${plateColor ? plateColor : '#aaaaaa'}`,
             borderRadius: '1vw',
-            border: 'solid .38vw white'
-        }}>
+            border: 'solid .38vw white',
+        }}
+        data-testid={dataTestId}
+        >
             {getModule()} 
         </div>
     );

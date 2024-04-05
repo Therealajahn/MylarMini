@@ -30,40 +30,43 @@ export default function MiniModular() {
         marginTop:'-.8%',
     }
 
-    let plates = <RepeatElement
-                        repetitions={9}
-                        element={Plate}
-                        props={{
-                            height:'100%'
-                        }}
-                        listProp='name'
-                        list={[
-                            'rhythm',
-                            'tails',
-                            'kick',
-                            'hat',
-                            'clap',
-                            'pitch',
-                            'chords',
-                            'wave',
-                            'fx',
+    let plates = 
+        <RepeatElement
+            repetitions={9}
+            element={Plate}
+            props={{
+                height:'100%'
+            }}
+            listProp='name'
+            list={[
+                'rhythm',
+                'tails',
+                'kick',
+                'hat',
+                'clap',
+                'pitch',
+                'chords',
+                'wave',
+                'fx',
 
-                        ]}
-                        countKeys={['key']}
-                        countValues={['plate']}
-                  />
+            ]}
+            countKeys={['key']}
+            countValues={['plate']}
+        />
 
     return(
-        <div style={backPlate}>
+        <div data-testid="back-plate" style={backPlate}>
             <Plate
+                dataTestId='top-plate'
                 gridArea='top'
                 alignSelf='center'
             />
             <Plate
+                dataTestId='mid-plate'
                 gridArea='mid'
             />
-
-            <div style={mainPlateWrapper}>
+            <div data-testid='main-plate' 
+            style={mainPlateWrapper}>
                 {plates}
             </div>
         </div>
