@@ -6,7 +6,7 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
         type="chords"
       >
         <div
@@ -350,7 +350,7 @@ Object {
   </body>,
   "container": <div>
     <div
-      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
       type="chords"
     >
       <div
@@ -751,7 +751,7 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
         type="clap"
       >
         <div
@@ -988,7 +988,7 @@ Object {
   </body>,
   "container": <div>
     <div
-      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
       type="clap"
     >
       <div
@@ -1282,7 +1282,7 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
         type="effects"
       >
         <div
@@ -1519,7 +1519,7 @@ Object {
   </body>,
   "container": <div>
     <div
-      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
       type="effects"
     >
       <div
@@ -1813,7 +1813,7 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
         type="hat"
       >
         <div
@@ -2050,7 +2050,7 @@ Object {
   </body>,
   "container": <div>
     <div
-      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
       type="hat"
     >
       <div
@@ -2344,7 +2344,7 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
         type="kick"
       >
         <div
@@ -2581,7 +2581,7 @@ Object {
   </body>,
   "container": <div>
     <div
-      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
       type="kick"
     >
       <div
@@ -2875,7 +2875,7 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
         type="tails"
       >
         <div
@@ -3331,7 +3331,7 @@ Object {
   </body>,
   "container": <div>
     <div
-      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
       type="tails"
     >
       <div
@@ -3844,13 +3844,13 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
       />
     </div>
   </body>,
   "container": <div>
     <div
-      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
     />
   </div>,
   "debug": [Function],
@@ -3913,7 +3913,7 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
         type="rhythm"
       >
         <div
@@ -4125,7 +4125,7 @@ Object {
   </body>,
   "container": <div>
     <div
-      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
       type="rhythm"
     >
       <div
@@ -4394,7 +4394,7 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
         type="tails"
       >
         <div
@@ -4850,7 +4850,7 @@ Object {
   </body>,
   "container": <div>
     <div
-      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
       type="tails"
     >
       <div
@@ -5363,7 +5363,7 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+        style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
         type="wave"
       >
         <div
@@ -5679,7 +5679,7 @@ Object {
   </body>,
   "container": <div>
     <div
-      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(170, 170, 170); border-radius: 1vw; border: .38vw solid white;"
+      style="display: grid; width: 92%; height: 80%; align-self: start; justify-self: center; background-color: rgb(102, 102, 102); border-radius: 1vw; border: .38vw solid white;"
       type="wave"
     >
       <div

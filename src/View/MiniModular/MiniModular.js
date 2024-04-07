@@ -60,10 +60,12 @@ export default function MiniModular() {
                 dataTestId='top-plate'
                 gridArea='top'
                 alignSelf='center'
+                backgroundColor="#aaaaaa"
             />
             <Plate
                 dataTestId='mid-plate'
                 gridArea='mid'
+                backgroundColor="#aaaaaa"
             />
             <div data-testid='main-plate' 
                 style={mainPlateWrapper}>
