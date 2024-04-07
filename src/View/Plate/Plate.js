@@ -31,6 +31,9 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
             case 'wave':
                 return renderWave();
             break;
+            case 'effects':
+                return renderEffects();
+            break;
         };
     };
 
@@ -283,6 +286,24 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
                     <Knob width='90%' justifySelf='end'/>
                 </div>
             </div>
+        )
+    }
+    function renderEffects(){
+        return(
+        <div style={{
+            display:'grid',
+            height:'60%', 
+            width:'85%',
+            alignSelf:'center',
+            justifySelf:'center',
+            justifyItems:'center',
+            gridTemplateColumns:'1fr',
+            gridTemplateRows:'1fr 1fr 1fr',
+        }}>
+            <Knob/>
+            <Knob/>
+            <Knob/>
+        </div>
         )
     }
 // Main Render

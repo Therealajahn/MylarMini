@@ -47,7 +47,7 @@ export default function MiniModular() {
                 'pitch',
                 'chords',
                 'wave',
-                'fx',
+                'effects',
 
             ]}
             countKeys={['key']}

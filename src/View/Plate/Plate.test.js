@@ -38,4 +38,7 @@ describe('Plate is rendered in all its many flavors',() => {
     test('...a wave plate',() => {
         expect(renderPlate('wave')).toMatchSnapshot();
     })
+    test('...a effects plate',() => {
+        expect(renderPlate('effects')).toMatchSnapshot();
+    })
 })
