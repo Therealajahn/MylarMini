@@ -5,17 +5,31 @@ afterEach(() => {
     cleanup();
 });
 
-jest.mock('./Plate.js',(props) => "huh?")
-
-const plateMock = jest.fn();
 
 describe('Plate is rendered in all its many flavors',() => {
-    const renderPlate = () => {
-        <Plate/>
-    }
+    const renderPlate = (type) => (
+        render(<Plate type={type}/>)
+    );
 
-    it('renders a rhythm plate',() => {
-        renderPlate();
-        screen.debug();
+    test('...a plain plate',() => {
+        expect(renderPlate()).toMatchSnapshot();
+    })
+    test('...a rhythm plate',() => {
+        expect(renderPlate('rhythm')).toMatchSnapshot();
+    })
+    test('...a tails plate',() => {
+        expect(renderPlate('tails')).toMatchSnapshot();
+    })
+    test('...a kick plate',() => {
+        expect(renderPlate('kick')).toMatchSnapshot();
+    })
+    test('...a hat plate',() => {
+        expect(renderPlate('hat')).toMatchSnapshot();
+    })
+    test('...a clap plate',() => {
+        expect(renderPlate('clap')).toMatchSnapshot();
+    })
+    test('...a pitch plate',() => {
+        expect(renderPlate('tails')).toMatchSnapshot();
     })
 })

@@ -30,14 +30,14 @@ export default function MiniModular() {
         marginTop:'-.8%',
     }
 
-    let plates = 
+    let mainPlates = 
         <RepeatElement
             repetitions={9}
             element={Plate}
             props={{
                 height:'100%'
             }}
-            listProp='name'
+            listProp='key'
             list={[
                 'rhythm',
                 'tails',
@@ -67,7 +67,7 @@ export default function MiniModular() {
             />
             <div data-testid='main-plate' 
                 style={mainPlateWrapper}>
-                {plates}
+                {mainPlates}
             </div>
         </div>
     )

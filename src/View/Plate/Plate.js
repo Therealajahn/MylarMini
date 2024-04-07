@@ -4,9 +4,9 @@ import Fader from '../Fader/Fader.js';
 import Keys from '../Keys/Keys.js';
 import RepeatElement from '../../Utilities/RepeatElement/RepeatElement.js';
 
-export default function Plate({gridArea,plateColor,width,height,alignSelf,marginTop,dataTestId,name}) {
+export default function Plate({gridArea,plateColor,width,height,alignSelf,marginTop,dataTestId,type}) {
     function getModule(){
-        switch(name){
+        switch(type){
             case 'rhythm':
                 return renderRhythm();
             break;
@@ -237,7 +237,7 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
             border: 'solid .38vw white',
         }}
             data-testid={dataTestId}
-            name={name}
+            type={type}
         >
             {getModule()} 
         </div>
