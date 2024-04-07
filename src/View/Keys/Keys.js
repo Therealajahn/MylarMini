@@ -1,14 +1,16 @@
 import Button from '../Button/Button.js';
 import RepeatElement from '../../Utilities/RepeatElement/RepeatElement.js';
 
-export default function Keys(){
+export default function Keys({width}){
 
     return(
         <div style={{
             display:'grid',
             height:'100%',
+            width:`${width ? width : 'auto'}`,
             backgroundColor:'#818181',
             borderRadius:'1vw',
+            justifyItems:'center',
             gridTemplateRows:'repeat(7,1fr)',
             gridTemplateColumns:'1fr 1fr',
             gridTemplateAreas:`

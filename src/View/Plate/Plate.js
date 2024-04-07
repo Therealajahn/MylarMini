@@ -25,6 +25,12 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
             case 'pitch':
                 return renderPitch();
             break;
+            case 'chords':
+                return renderChords();
+            break;
+            case 'wave':
+                return renderWave();
+            break;
         };
     };
 
@@ -222,6 +228,63 @@ export default function Plate({gridArea,plateColor,width,height,alignSelf,margin
         );
     };
 
+    function renderChords(){
+        return(
+            <div style={{
+                display:'grid',
+                height:'60%', 
+                width:'90%',
+                alignSelf:'center',
+                justifySelf:'center',
+                justifyItems:'center',
+                gridTemplateColumns:'1fr',
+                gridTemplateRows:'1fr 6fr',
+            }}>
+                <div style={{
+                    display:'grid',
+                    gridTemplateColumns:'1fr 1fr',
+                    gridTemplateRows:'1fr',
+                }}>
+                    <RepeatElement
+                        repetitions={2}
+                        element={Knob}
+                        props={{
+                            width:'100%',
+                        }}
+                        countKeys={['key']}
+                        countValues={['knob']}
+                    />
+                </div>
+                <Keys width='90%'/>
+            </div>
+        )
+    }
+    function renderWave(){
+        return(
+            <div style={{
+                display:'grid',
+                height:'70%', 
+                width:'100%',
+                alignSelf:'center',
+                justifySelf:'center',
+                justifyItems:'center',
+                gridTemplateColumns:'1fr',
+                gridTemplateRows:'1fr 1fr 1fr',
+            }}>
+                <Knob width='70%'/>
+                <Knob width='45%' alignSelf='center'/>
+                <div style={{
+                    display:'grid',
+                    width:'100%',
+                    gridTemplateColumns:'1fr 1fr',
+                    gridTemplateRows:'1fr',
+                }}>
+                    <Knob width='90%' justifySelf='start'/>
+                    <Knob width='90%' justifySelf='end'/>
+                </div>
+            </div>
+        )
+    }
 // Main Render
     return(
         <div style={{

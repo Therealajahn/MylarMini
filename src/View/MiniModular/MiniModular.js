@@ -37,7 +37,7 @@ export default function MiniModular() {
             props={{
                 height:'100%'
             }}
-            listProp='key'
+            listProp='type'
             list={[
                 'rhythm',
                 'tails',

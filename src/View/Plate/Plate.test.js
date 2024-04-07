@@ -32,4 +32,10 @@ describe('Plate is rendered in all its many flavors',() => {
     test('...a pitch plate',() => {
         expect(renderPlate('tails')).toMatchSnapshot();
     })
+    test('...a chord plate',() => {
+        expect(renderPlate('chords')).toMatchSnapshot();
+    })
+    test('...a wave plate',() => {
+        expect(renderPlate('wave')).toMatchSnapshot();
+    })
 })
