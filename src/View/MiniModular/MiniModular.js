@@ -48,7 +48,6 @@ export default function MiniModular() {
                 'chords',
                 'wave',
                 'effects',
-
             ]}
             countKeys={['key']}
             countValues={['plate']}
@@ -57,12 +56,14 @@ export default function MiniModular() {
     return(
         <div data-testid="back-plate" style={backPlate}>
             <Plate
+                type='top-plate'
                 dataTestId='top-plate'
                 gridArea='top'
                 alignSelf='center'
                 backgroundColor="#aaaaaa"
             />
             <Plate
+                type='mid-plate'
                 dataTestId='mid-plate'
                 gridArea='mid'
                 backgroundColor="#aaaaaa"

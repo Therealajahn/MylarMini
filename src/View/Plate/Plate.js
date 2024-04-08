@@ -34,6 +34,12 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
             case 'effects':
                 return renderEffects();
             break;
+            case 'mid-plate':
+                return renderMidPanel();
+            break;
+            case 'top-plate':
+                return renderTopPanel();
+            break;
         };
     };
 
@@ -262,6 +268,7 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
             </div>
         )
     }
+    
     function renderWave(){
         return(
             <div style={{
@@ -288,23 +295,49 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
             </div>
         )
     }
+
     function renderEffects(){
         return(
-        <div style={{
-            display:'grid',
-            height:'60%', 
-            width:'85%',
-            alignSelf:'center',
-            justifySelf:'center',
-            justifyItems:'center',
-            gridTemplateColumns:'1fr',
-            gridTemplateRows:'1fr 1fr 1fr',
-        }}>
-            <Knob/>
-            <Knob/>
-            <Knob/>
-        </div>
+            <div style={{
+                display:'grid',
+                height:'60%', 
+                width:'85%',
+                alignSelf:'center',
+                justifySelf:'center',
+                justifyItems:'center',
+                gridTemplateColumns:'1fr',
+                gridTemplateRows:'1fr 1fr 1fr',
+            }}>
+                <Knob/>
+                <Knob/>
+                <Knob/>
+            </div>
         )
+    }
+
+    function renderMidPanel(){
+        return(
+            <div style={{
+                display:'grid',
+                width:'40%',
+                justifySelf:'end',
+                alignItems:'center',
+                justifyItems:'center',
+                marginRight:'.5vw',
+            }}>
+
+                <svg width="auto" height="auto" viewBox="0 0 347 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M141.166 70C145.552 61.1834 148 51.3583 148 41C148 29.8515 145.164 19.3206 140.129 10L7.87092 10C2.83557 19.3206 0 29.8515 0 41C0 51.3583 2.44784 61.1834 6.83356 70H141.166Z" fill="#5A5A5A"/>
+                <circle cx="76.5" cy="40.5" r="37" fill="#4B4B4B" stroke="white" stroke-width="7"/>
+                <rect x="179" y="15" width="137" height="60" fill="#D9D9D9"/>
+                <circle cx="249" cy="42" r="38" fill="#4B4B4B"/>
+                <circle cx="315" cy="43" r="32" fill="#4B4B4B"/>
+                <circle cx="182" cy="43" r="32" fill="#4B4B4B"/>
+                </svg>
+            </div>
+        )
+    }
+    function renderTopPanel(){
     }
 // Main Render
     return(
