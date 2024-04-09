@@ -41,4 +41,8 @@ describe('Plate is rendered in all its many flavors',() => {
     test('...a effects plate',() => {
         expect(renderPlate('effects')).toMatchSnapshot();
     })
+    test('...a top plate',() => {
+        expect(renderPlate('top-plate')).toMatchSnapshot();})
+    test('...a middle plate',() => {
+        expect(renderPlate('mid-plate')).toMatchSnapshot();})
 })

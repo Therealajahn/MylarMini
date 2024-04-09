@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import Button from '../Button/Button.js';
 import Knob from '../Knob/Knob.js';
 import Fader from '../Fader/Fader.js';
@@ -268,6 +269,13 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
             </div>
         )
     }
+
+    const euclidContainerRef = useRef("huh"); 
+
+    function getContainer(){
+        console.log('getContainer:')
+        console.log(euclidContainerRef)
+    }
     
     function renderWave(){
         return(
@@ -280,7 +288,9 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                 justifyItems:'center',
                 gridTemplateColumns:'1fr',
                 gridTemplateRows:'1fr 1fr 1fr',
+                ref:{euclidContainerRef},
             }}>
+                {getContainer()}
                 <Knob width='70%'/>
                 <Knob width='45%' alignSelf='center'/>
                 <div style={{
@@ -318,23 +328,39 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
     function renderMidPanel(){
         return(
             <div style={{
+                className:'huh',
                 display:'grid',
-                width:'40%',
-                justifySelf:'end',
-                alignItems:'center',
-                justifyItems:'center',
-                marginRight:'.5vw',
+                width:'100%',
             }}>
-
-                <svg width="auto" height="auto" viewBox="0 0 347 81" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M141.166 70C145.552 61.1834 148 51.3583 148 41C148 29.8515 145.164 19.3206 140.129 10L7.87092 10C2.83557 19.3206 0 29.8515 0 41C0 51.3583 2.44784 61.1834 6.83356 70H141.166Z" fill="#5A5A5A"/>
-                <circle cx="76.5" cy="40.5" r="37" fill="#4B4B4B" stroke="white" stroke-width="7"/>
-                <rect x="179" y="15" width="137" height="60" fill="#D9D9D9"/>
-                <circle cx="249" cy="42" r="38" fill="#4B4B4B"/>
-                <circle cx="315" cy="43" r="32" fill="#4B4B4B"/>
-                <circle cx="182" cy="43" r="32" fill="#4B4B4B"/>
-                </svg>
+                <div style={{
+                    display:'grid',
+                    width:'40%',
+                    justifySelf:'end',
+                    alignItems:'center',
+                    justifyItems:'center',
+                    marginRight:'.5vw',
+                    backgroundColor:'#f3f3f3',
+                    borderRadius:'1vw',
+                    border: '.25vw black solid'
+                }}>
+                            <svg style={{marginRight:'1vw'}} width="102%" height="auto" viewBox="0 0 347 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M141.166 70C145.552 61.1834 148 51.3583 148 41C148 29.8515 145.164 19.3206 140.129 10L7.87092 10C2.83557 19.3206 0 29.8515 0 41C0 51.3583 2.44784 61.1834 6.83356 70H141.166Z" fill="#5A5A5A"/>
+                            <circle cx="76.5" cy="40.5" r="37" fill="#4B4B4B" stroke="white" stroke-width="7"/>
+                            <rect x="179" y="15" width="137" height="60" fill="#D9D9D9"/>
+                            <circle cx="249" cy="42" r="38" fill="#4B4B4B"/>
+                            <circle cx="315" cy="43" r="32" fill="#4B4B4B"/>
+                            <circle cx="182" cy="43" r="32" fill="#4B4B4B"/>
+                            </svg>
+                    <div style={{
+                        position:'absolute',
+                        display:'grid',
+                        width:'100%',
+                        height:'100%',
+                        gridTemplateColumns:'repeat(5,1fr)',
+                    }}>
+                    </div>
             </div>
+        </div>
         )
     }
     function renderTopPanel(){
