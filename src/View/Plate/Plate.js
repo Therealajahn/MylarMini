@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef,useCallback } from 'react';
 import Button from '../Button/Button.js';
 import Knob from '../Knob/Knob.js';
 import Fader from '../Fader/Fader.js';
@@ -270,13 +270,6 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
         )
     }
 
-    const euclidContainerRef = useRef("huh"); 
-
-    function getContainer(){
-        console.log('getContainer:')
-        console.log(euclidContainerRef)
-    }
-    
     function renderWave(){
         return(
             <div style={{
@@ -288,9 +281,7 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                 justifyItems:'center',
                 gridTemplateColumns:'1fr',
                 gridTemplateRows:'1fr 1fr 1fr',
-                ref:{euclidContainerRef},
             }}>
-                {getContainer()}
                 <Knob width='70%'/>
                 <Knob width='45%' alignSelf='center'/>
                 <div style={{
@@ -324,14 +315,25 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
             </div>
         )
     }
+    //Comment: Why am I using this exactly?
+    const euclidOverlay = useRef(null);
+    const euclidContainer = useRef(null);
+    const syncEuclid = useCallback(() => {
+        console.log("NODE:",euclidContainer)
+        console.log("overlay:",euclidOverlay)
+//         euclidOverlay.current.style.width =
+//             euclidContainer.current.style.width
+//         euclidOverlay.current.style.height =
+    },[]); 
 
     function renderMidPanel(){
         return(
             <div style={{
-                className:'huh',
+                className:'inner grid',
                 display:'grid',
                 width:'100%',
-            }}>
+            }}
+            >
                 <div style={{
                     display:'grid',
                     width:'40%',
@@ -342,7 +344,10 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                     backgroundColor:'#f3f3f3',
                     borderRadius:'1vw',
                     border: '.25vw black solid'
-                }}>
+                }}
+                ref={euclidContainer}
+                >
+                {syncEuclid()}
                             <svg style={{marginRight:'1vw'}} width="102%" height="auto" viewBox="0 0 347 81" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M141.166 70C145.552 61.1834 148 51.3583 148 41C148 29.8515 145.164 19.3206 140.129 10L7.87092 10C2.83557 19.3206 0 29.8515 0 41C0 51.3583 2.44784 61.1834 6.83356 70H141.166Z" fill="#5A5A5A"/>
                             <circle cx="76.5" cy="40.5" r="37" fill="#4B4B4B" stroke="white" stroke-width="7"/>
@@ -354,15 +359,16 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                     <div style={{
                         position:'absolute',
                         display:'grid',
-                        width:'100%',
-                        height:'100%',
                         gridTemplateColumns:'repeat(5,1fr)',
-                    }}>
+                    }}
+                    ref={euclidOverlay}
+                    >
                     </div>
             </div>
         </div>
         )
     }
+
     function renderTopPanel(){
     }
 // Main Render
