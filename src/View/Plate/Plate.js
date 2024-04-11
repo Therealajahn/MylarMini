@@ -1,4 +1,4 @@
-import { useRef,useCallback } from 'react';
+import { createElement } from 'react';
 import Button from '../Button/Button.js';
 import Knob from '../Knob/Knob.js';
 import Fader from '../Fader/Fader.js';
@@ -94,7 +94,7 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                 alignSelf:'start',
                 justifySelf:'center',
             }}>
-                <Button type={'square'} width="8.5vw"/>
+                <Button type={'square'} width='8.5vw'/>
             </div>
            </div>
     )};
@@ -115,10 +115,10 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                 gridTemplateRows:'repeat(4,1fr)',
                 gridTemplateColumns:'repeat(4,1fr)',
                 gridTemplateAreas:`
-                    "knob1 knob2 knob3 knob4"
-                    "fader1 fader2 fader3 fader4"
-                    "fader1 fader2 fader3 fader4"
-                    "fader1 fader2 fader3 fader4"
+                    'knob1 knob2 knob3 knob4'
+                    'fader1 fader2 fader3 fader4'
+                    'fader1 fader2 fader3 fader4'
+                    'fader1 fader2 fader3 fader4'
                 `,
                 
             }}>
@@ -315,18 +315,14 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
             </div>
         )
     }
-    //Comment: Why am I using this exactly?
-    const euclidOverlay = useRef(null);
-    const euclidContainer = useRef(null);
-    const syncEuclid = useCallback(() => {
-        console.log("NODE:",euclidContainer)
-        console.log("overlay:",euclidOverlay)
-//         euclidOverlay.current.style.width =
-//             euclidContainer.current.style.width
-//         euclidOverlay.current.style.height =
-    },[]); 
 
     function renderMidPanel(){
+        const pathOne = createElement('path',{
+            fillRule:'evenodd',
+            clipRule:'evenodd',
+            d:'M141.166 70C145.552 61.1834 148 51.3583 148 41C148 29.8515 145.164 19.3206 140.129 10L7.87092 10C2.83557 19.3206 0 29.8515 0 41C0 51.3583 2.44784 61.1834 6.83356 70H141.166Z', 
+            fill:'#5A5A5A',
+        });
         return(
             <div style={{
                 className:'inner grid',
@@ -335,6 +331,7 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
             }}
             >
                 <div style={{
+                    position:'relative',
                     display:'grid',
                     width:'40%',
                     justifySelf:'end',
@@ -345,25 +342,31 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                     borderRadius:'1vw',
                     border: '.25vw black solid'
                 }}
-                ref={euclidContainer}
                 >
-                {syncEuclid()}
-                            <svg style={{marginRight:'1vw'}} width="102%" height="auto" viewBox="0 0 347 81" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M141.166 70C145.552 61.1834 148 51.3583 148 41C148 29.8515 145.164 19.3206 140.129 10L7.87092 10C2.83557 19.3206 0 29.8515 0 41C0 51.3583 2.44784 61.1834 6.83356 70H141.166Z" fill="#5A5A5A"/>
-                            <circle cx="76.5" cy="40.5" r="37" fill="#4B4B4B" stroke="white" stroke-width="7"/>
-                            <rect x="179" y="15" width="137" height="60" fill="#D9D9D9"/>
-                            <circle cx="249" cy="42" r="38" fill="#4B4B4B"/>
-                            <circle cx="315" cy="43" r="32" fill="#4B4B4B"/>
+                    <svg style={{marginRight:'1vw'}} width='102%' height='auto' viewBox='0 0 347 81' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                            {pathOne}
+                            <circle cx='76.5' cy='40.5' r='37' fill='#4B4B4B' stroke='white' stroke-width="7"/>
+                            <rect x='179' y='15' width='137' height='60' fill='#D9D9D9'/>
+                            <circle cx='249' cy='42' r='38' fill='#4B4B4B'/>
+                            <circle cx='315' cy='43' r='32' fill='#4B4B4B'/>
                             <circle cx="182" cy="43" r="32" fill="#4B4B4B"/>
-                            </svg>
-                    <div style={{
-                        position:'absolute',
-                        display:'grid',
-                        gridTemplateColumns:'repeat(5,1fr)',
-                    }}
-                    ref={euclidOverlay}
-                    >
-                    </div>
+                    </svg>
+                <div style={{
+                    position:'absolute',
+                    display:'grid',
+                    width:'100%',
+                    height:'100%',
+                    gridTemplateColumns:'repeat(5,1fr)',
+                    gridTemplateRows:'1fr',
+                    gridTemplateAreas:`" . . knob1 knob2 knob3"`
+                }}
+                >
+                    <Knob gridArea="knob1" width="60%" marginTop='.6vw' marginLeft=
+                        '.3vw'/>
+                    <Knob gridArea="knob2" width="70%"/>
+                    <Knob gridArea="knob3" width="60%" marginTop='.6vw' marginLeft=
+                        '-.15vw'/>
+                </div>
             </div>
         </div>
         )

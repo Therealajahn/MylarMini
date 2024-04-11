@@ -1,6 +1,6 @@
 import { createElement } from 'react';
 
-export default function Knob({gridArea,marginTop,width,height,alignSelf,justifySelf}){
+export default function Knob({gridArea,marginTop,marginLeft,width,height,alignSelf,justifySelf}){
     //stroke-width was throwing an error, converted the elements using it
     const pathOne = createElement("path",{
         d:"M51.5 45.5696C51.5 59.3346 40.3108 70.5 26.5 70.5C12.6892 70.5 1.5 59.3346 1.5 45.5696C1.5 31.8047 12.6892 20.6393 26.5 20.6393C40.3108 20.6393 51.5 31.8047 51.5 45.5696Z",
@@ -36,6 +36,7 @@ export default function Knob({gridArea,marginTop,width,height,alignSelf,justifyS
                height:`${height ? height : 'auto'}`,
                width:`${width ? width : 'auto'}`,
                marginTop:`${marginTop ? marginTop : '0vw'}`,
+               marginLeft:`${marginLeft ? marginLeft : '0vw'}`,
                gridArea:`${gridArea ? gridArea : ''}`,
                alignSelf:`${alignSelf ? alignSelf : ''}`,
                justifySelf:`${justifySelf ? justifySelf : 'center'}`,
