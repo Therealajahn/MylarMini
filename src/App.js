@@ -1,7 +1,8 @@
 import MiniModular from './View/MiniModular/MiniModular.js';
+import Sound from './Sound/Sound.js';
 import './App.css';
 
-function App() {
+export default function App() {
     let appStyle = {
         width: '100vw',
         height: '100vh',
@@ -15,4 +16,3 @@ function App() {
     );
 };
 
-export default App;
