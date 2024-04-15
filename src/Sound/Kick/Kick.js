@@ -2,6 +2,7 @@ import React from 'react';
 import * as Tone from 'tone';
 
 export default function Kick() {
+    console.log(Tone);
     const oscillator = new Tone.Oscillator({
       frequency: 100,
       type: 'sine'
@@ -15,12 +16,12 @@ export default function Kick() {
     }).toDestination();
 
   function playKick() {
-    this.oscillator.start();
-    this.envelope.triggerAttackRelease(0.1);
+    oscillator.start();
+    envelope.triggerAttackRelease(0.1);
   }
 
     return (
-      <button onClick={() => this.playKick()}>Play Kick</button>
+      <button onClick={() => playKick()}>Play Kick</button>
     );
 }
 
