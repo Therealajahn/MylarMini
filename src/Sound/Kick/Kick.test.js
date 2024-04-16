@@ -1,16 +1,17 @@
 import react from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import * as Tone from 'tone';
 import Kick from './Kick.js'; // Import your React component
 
 // Mock the Tone.js library
 jest.mock('tone', () => ({
-  Oscillator: jest.fn(() => ({
-    toDestination: jest.fn()
+    Oscillator: jest.fn(() => ({
+    toDestination: jest.fn().mockReturnThis()
   })),
-  Envelope: jest.fn(() => ({
+  envelope: jest.fn(() => ({
     toDestination: jest.fn(),
-    triggerAttackRelease: jest.fn()
+    triggerAttackRelease: jest.fn().mockReturnThis(),
   }))
 }));
 
@@ -21,7 +22,6 @@ describe('Kick', () => {
 
     it('plays the kick sound when button is clicked', () => {
         renderKick();
-
         const playButton = screen.getByText('Play Kick');
 
     // Click the button

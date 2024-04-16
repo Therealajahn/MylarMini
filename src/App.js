@@ -11,6 +11,7 @@ export default function App() {
     };
     return (
         <div data-testid="app-div" className='App' style={appStyle}>
+            <Sound/>
             <MiniModular/> 
         </div>
     );

@@ -1,27 +1,31 @@
-import React from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import * as Tone from 'tone';
 
 export default function Kick() {
-    console.log(Tone);
-    const oscillator = new Tone.Oscillator({
+    const [oscillator] = useState(new Tone.Oscillator({
       frequency: 100,
       type: 'sine'
-    }).toDestination();
+    }).toDestination());
 
-    const envelope = new Tone.Envelope({
+    const [envelope] = useState(new Tone.Envelope({
       attack: 0.001,
       decay: 0.1,
       sustain: 0,
       release: 0.5
-    }).toDestination();
+    }).toDestination());
 
-  function playKick() {
-    oscillator.start();
-    envelope.triggerAttackRelease(0.1);
-  }
+   function playKick() {
+     oscillator.start();
+     envelope.triggerAttackRelease(0.1);
+     setTimeout(oscillator.stop(),100);
+   }
+   
+    useEffect(() => {
+        console.log("effect");
+    },[])
 
     return (
-      <button onClick={() => playKick()}>Play Kick</button>
+        <button onClick={() => playKick()}>Play Kick</button>
     );
 }
 

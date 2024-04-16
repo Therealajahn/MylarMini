@@ -11,7 +11,7 @@ describe('App renders',() => {
             <App/>
         )
     }  
-    it("renders a fader",() => {
+    it("renders the app",() => {
         renderApp()
         expect(screen.getByTestId('app-div'));
     })
