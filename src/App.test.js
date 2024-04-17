@@ -1,5 +1,6 @@
 import { render, screen, cleanup } from '@testing-library/react';
 import App from './App';
+import * as Tone from 'tone';
 
 afterEach(() => {
     cleanup();
