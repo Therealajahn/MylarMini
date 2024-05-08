@@ -3,7 +3,7 @@ async function startAudio(){
     console.log('audio started')
 }
 const clap = clapInit();
-const kick = kickInit();
+// const kick = kickInit();
 const hat = hatInit();
 const bass = bassInit();
 
@@ -34,6 +34,7 @@ const controlData = {
 
 
 function clapInit(){
+    console.log('clap init');
 
     const noise = new Tone.Noise('white').start();
     const audioEnv = new Tone.AmplitudeEnvelope({
@@ -66,6 +67,7 @@ function clapInit(){
 }
 
 function kickInit(){
+    console.log('kick init');
 //SOUND GENERATION
     const sine = new Tone.Oscillator('c1','sine').start();
     const noise = new Tone.Noise('brown').start();
@@ -97,22 +99,26 @@ function kickInit(){
 }
 
 function hatInit(){
-    //make an fm synth with sines complex wavforms
-    const carrier = new Tone.Oscillator('a1','sine').start();
-    const modulator = new Tone.Oscillator('a#1','sine').start();
-    const gain = new Tone.Gain(1000);
-    modulator.chain(gain,carrier.frequency);
+    console.log('hat init');
+    
+    const carrierPitch = 100;
+    const carrierWave = new Tone.Oscillator(100,'sine').start();
+    const modulatorWave = new Tone.Oscillator(carrierPitch * 1.1,'sine').start();
+    const modulatorGain = new Tone.Gain(1000);
 
-    const audioEnv = new Tone.AmplitudeEnvelope({
-        attack:0.01,
-        release:1,
-    })
-    carrier.chain(audioEnv,Tone.Destination);
+    const carrierAudioEnvelope = new Tone.AmplitudeEnvelope({
+        attack: 0.01,
+        release: 1,
+    });
+
+    modulatorWave.chain(modulatorGain,carrierWave.frequency);
+    carrierWave.chain(carrierAudioEnvelope,Tone.Destination);
 
     return () => {
         const now = Tone.now();
-        audioEnv.triggerAttackRelease(now,'0.001');
+        carrierAudioEnvelope.triggerAttackRelease(now,0.01,1);
     }
+    //make an fm synth with sines complex wavforms
     //make multiply node
     //connect gain node to modulator
     //connect gain node to signal 
@@ -122,6 +128,7 @@ function hatInit(){
 }
 
 function bassInit(){
+    console.log('bass init');
     //make a vibrato sine wave bass 
     const wave = new Tone.Oscillator('c1','sine').start();
     const audioEnv = new Tone.AmplitudeEnvelope({
@@ -147,11 +154,14 @@ function makeSequencer(){
 function keyboardControl(){
     //make a keyboard that can be transposed
     document.addEventListener('keydown',event => {
+        if(event.key === ' '){
+            startAudio();
+        }
         if(event.key === 'j'){
             clap();
         }
         if(event.key === 'k'){
-            kickInit();
+            kick();
         }
         if(event.key === 'l'){
             hat();
