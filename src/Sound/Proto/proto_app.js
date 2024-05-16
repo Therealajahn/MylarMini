@@ -10,7 +10,7 @@ function ProtoApp(){
         console.log('audio started')
     }
 
-    const clap = clapButton();
+    const clap = clapInit();
     const clapButton = 
         document.getElementById('clap-button')
         .addEventListener('click',() => {

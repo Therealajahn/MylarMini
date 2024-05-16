@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+   <style>
+    #four-sliders{
+        width:40vw;
+        height:20vw;
+        display:grid;
+
+    }
+    .slider{
+        display: grid;
+        position:relative;
+        justify-items: center;
+        width:25%;
+        height:100%;
+    }
+    #slider-track{
+        position:absolute;
+        width:20%;
+        height:90%;
+        background-color: black;
+    }
+    #slider-wiper{
+        position:absolute;
+        width:40%;
+        height:10%;
+        background-color: red;
+    }
+   </style>
+</head>
+<body>
+    <div id="four-sliders">
+        <div class="slider" id='1'>
+            <div class="slider-track"></div>
+            <div class="slider-wiper"></div>
+        </div>
+        <div class="slider" id='2'>
+            <div class="slider-track"></div>
+            <div class="slider-wiper"></div>
+        </div>
+        <div class="slider" id='3'>
+            <div class="slider-track"></div>
+            <div class="slider-wiper"></div>
+        </div>
+        <div class="slider" id='4'>
+            <div class="slider-track"></div>
+            <div class="slider-wiper"></div>
+        </div>
+    </div>
+    
+    <script>
+            const sliderWiper = document.getElementById('slider-wiper');
+            const wiperHeight = Number(
+                getComputedStyle(sliderWiper).height.match(/[\d.]/g).join('')
+            );
+            const sliderTrack = document.getElementById('slider-track');
+            const trackHeight = Number(
+                getComputedStyle(sliderTrack).height.match(/[\d.]/g).join('')
+            );
+            let sliderPosition = 0;
+
+            document.addEventListener('mousedown',event => {
+                document.addEventListener('mousemove',whenMouseMoves,true);
+            })
+
+            function whenMouseMoves(event){
+                if(sliderPosition >= trackHeight - wiperHeight){
+                    sliderPosition = trackHeight - wiperHeight;
+                }
+                if(sliderPosition <= 0){
+                    sliderPosition = 0;
+                }
+                sliderPosition += event.movementY;
+                sliderWiper.style.marginTop = `${sliderPosition}px`;
+            }
+
+            document.addEventListener('mouseup',()=>{
+                document.removeEventListener('mousemove',whenMouseMoves,true);
+            });
+
+    </script defer>
+</body>
+</html>
+
