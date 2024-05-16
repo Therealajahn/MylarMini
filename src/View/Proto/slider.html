@@ -8,22 +8,23 @@
         width:40vw;
         height:20vw;
         display:grid;
-
+        grid-template-columns:repeat(4,1fr);
+        grid-template-rows:1fr;
     }
     .slider{
         display: grid;
         position:relative;
         justify-items: center;
-        width:25%;
+        width:100%;
         height:100%;
     }
-    #slider-track{
+    .slider-track{
         position:absolute;
         width:20%;
         height:90%;
         background-color: black;
     }
-    #slider-wiper{
+    .slider-wiper{
         position:absolute;
         width:40%;
         height:10%;
@@ -33,55 +34,43 @@
 </head>
 <body>
     <div id="four-sliders">
-        <div class="slider" id='1'>
-            <div class="slider-track"></div>
-            <div class="slider-wiper"></div>
+        <div class="slider 1">
+            <div class="slider-track 1"></div>
+            <div class="slider-wiper 1" onMousedown="wiperClicked(1)"></div>
         </div>
-        <div class="slider" id='2'>
-            <div class="slider-track"></div>
-            <div class="slider-wiper"></div>
+        <div class="slider 2">
+            <div class="slider-track 2"></div>
+            <div class="slider-wiper 2" onMousedown="wiperClicked(2)"></div>
         </div>
-        <div class="slider" id='3'>
-            <div class="slider-track"></div>
-            <div class="slider-wiper"></div>
+        <div class="slider 3">
+            <div class="slider-track 3"></div>
+            <div class="slider-wiper 3" onMousedown="wiperClicked(3)"></div>
         </div>
-        <div class="slider" id='4'>
-            <div class="slider-track"></div>
-            <div class="slider-wiper"></div>
+        <div class="slider 4">
+            <div class="slider-track 4"></div>
+            <div class="slider-wiper 4" onMousedown="wiperClicked(4)"></div>
         </div>
     </div>
     
     <script>
-            const sliderWiper = document.getElementById('slider-wiper');
-            const wiperHeight = Number(
-                getComputedStyle(sliderWiper).height.match(/[\d.]/g).join('')
-            );
-            const sliderTrack = document.getElementById('slider-track');
-            const trackHeight = Number(
-                getComputedStyle(sliderTrack).height.match(/[\d.]/g).join('')
-            );
-            let sliderPosition = 0;
+        function wiperClicked(sliderNumber){
+            const selectedSlider = 
+                document.getElementsByClassName(`slider ${sliderNumber}`)[0];
+            const selectedTrack = 
+                document.getElementsByClassName(`slider-track ${sliderNumber}`)[0];
+            const selectedWiper = 
+                document.getElementsByClassName(`slider-wiper ${sliderNumber}`)[0];
 
-            document.addEventListener('mousedown',event => {
-                document.addEventListener('mousemove',whenMouseMoves,true);
+            const sliderHeight = window.getComputedStyle(selectedTrack).height;
+
+            let wiperPosition = 0;
+            document.addEventListener('mousemove',event => {
+                console.log('mouse:', selectedWiper);
+                wiperPosition += event.movementY; 
+                selectedWiper.style.marginTop = `${wiperPosition}px`;
             })
-
-            function whenMouseMoves(event){
-                if(sliderPosition >= trackHeight - wiperHeight){
-                    sliderPosition = trackHeight - wiperHeight;
-                }
-                if(sliderPosition <= 0){
-                    sliderPosition = 0;
-                }
-                sliderPosition += event.movementY;
-                sliderWiper.style.marginTop = `${sliderPosition}px`;
-            }
-
-            document.addEventListener('mouseup',()=>{
-                document.removeEventListener('mousemove',whenMouseMoves,true);
-            });
-
-    </script defer>
+        }
+    </script>
 </body>
 </html>
 
