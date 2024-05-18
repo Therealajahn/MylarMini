@@ -32,7 +32,7 @@
     }
    </style>
 </head>
-<body>
+<body onMouseup="mouseReleased()">
     <div id="four-sliders">
         <div class="slider 1">
             <div class="slider-track 1"></div>
@@ -53,22 +53,64 @@
     </div>
     
     <script>
+        state = {
+             wiperPosition: 0,
+             wiperAtTop: false,
+             wiperAtBottom: false,
+             sliderHeight: 0,
+             wiperHeight: 0,
+        }
+
+        function mouseReleased(){
+            console.log('mouse released');
+            document.removeEventListener('mousemove',decideWiperMotion,true);
+        }
+
         function wiperClicked(sliderNumber){
-            const selectedSlider = 
+            state.selectedSlider = 
                 document.getElementsByClassName(`slider ${sliderNumber}`)[0];
-            const selectedTrack = 
+            state.selectedTrack = 
                 document.getElementsByClassName(`slider-track ${sliderNumber}`)[0];
-            const selectedWiper = 
+            state.selectedWiper = 
                 document.getElementsByClassName(`slider-wiper ${sliderNumber}`)[0];
 
-            const sliderHeight = window.getComputedStyle(selectedTrack).height;
+            state.sliderHeight = Number(
+                window.getComputedStyle(state.selectedTrack).height.match(/[\d.]/g).join('')
+            );
+            state.wiperHeight = Number(
+                window.getComputedStyle(state.selectedWiper).height.match(/[\d.]/g).join('')
+            );
 
-            let wiperPosition = 0;
-            document.addEventListener('mousemove',event => {
-                console.log('mouse:', selectedWiper);
-                wiperPosition += event.movementY; 
-                selectedWiper.style.marginTop = `${wiperPosition}px`;
-            })
+            document.addEventListener('mousemove',decideWiperMotion,true);
+        }
+
+        function decideWiperMotion(){
+            //if the wiper is at the bottom, it can only move up
+            //if the wiper is at the top, it can only move down
+            function moveWiper(){
+                    state.wiperPosition += event.movementY; 
+                    state.selectedWiper.style.marginTop = `${state.wiperPosition}px`;
+            }
+
+            if(state.wiperAtBottom && event.movementY < 0){
+                moveWiper();
+                state.wiperAtBottom = false;
+                return;
+            }
+            if(state.wiperPosition > state.sliderHeight - state.wiperHeight){
+                state.wiperAtBottom = true;
+                return;
+            }
+            if(state.wiperAtTop && event.movementY > 0){
+                moveWiper();
+                state.wiperAtTop = false;
+                return;
+            }
+            if(state.wiperPosition < 0){
+                state.wiperAtTop = true;
+                return;
+            }
+            moveWiper();
         }
     </script>
 </body>
