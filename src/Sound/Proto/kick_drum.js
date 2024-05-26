@@ -1,10 +1,14 @@
-function kickInit(){
+function kick(){
 
     const lowpass = new Tone.Filter({
         frequency:100,
         type: 'lowpass',
         Q:7,
     });
+
+    const lowpassControl = new Tone.Signal({units:'frequency'});
+    lowpassControl.connect(lowpass.frequency);
+
     const highpass = new Tone.Filter({
         frequency:50,
         type: 'highpass',
@@ -39,15 +43,20 @@ function kickInit(){
 
     noise.chain(noiseToPitchGain,lowpass.frequency);
     noise.chain(noiseGain,lowpass,highpass,ampEnvelope,outputGain,outputFilter,Tone.Destination);
-       lowpass.chain(highpass,ampEnvelope,Tone.Destination);
+    lowpass.chain(highpass,ampEnvelope,Tone.Destination);
     lowpassEnvelope.connect(lowpass.frequency);
     highpassEnvelope.connect(highpass.frequency);
 
-    return () => {
-        console.log('return')
-        const now = Tone.now();
-        ampEnvelope.triggerAttackRelease(now,0.001,1);
-        lowpassEnvelope.triggerAttackRelease(now,0.001,1);
-        highpassEnvelope.triggerAttackRelease(now,0.001,1);
+    return {
+        trigger: () => {
+            const now = Tone.now();
+            ampEnvelope.triggerAttackRelease(now,0.001,1);
+            lowpassEnvelope.triggerAttackRelease(now,0.001,1);
+            highpassEnvelope.triggerAttackRelease(now,0.001,1);
+        },
+        changeLowpass: (value) => {
+            const now = Tone.now();
+            lowpassControl.rampTo(value,0.5,now);
+        },
     }
 }

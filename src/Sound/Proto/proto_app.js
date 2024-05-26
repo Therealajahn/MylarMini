@@ -17,13 +17,11 @@ function ProtoApp(){
             clap();
         });
 
-    const kick = kickInit();
     const kickButton = 
         document.getElementById('kick-button')
         .addEventListener('click',() => {
-            kick();
+            kick().trigger();
         });
-
 
 
 }

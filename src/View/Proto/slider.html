@@ -66,6 +66,7 @@
              wiperAtBottom: false,
              sliderHeight: 0,
              wiperHeight: 0,
+             wiperOutput: 0,
         }
         
         function wiperClicked(sliderNumber){
@@ -84,6 +85,11 @@
             );
 
             document.addEventListener('mousemove',decideWiperMotion,true);
+        }
+
+        function mouseReleased(){
+            console.log('mouse released');
+            document.removeEventListener('mousemove',decideWiperMotion,true);
         }
 
         function decideWiperMotion(event){
@@ -115,10 +121,6 @@
             moveWiper();
         }
 
-        function mouseReleased(){
-            console.log('mouse released');
-            document.removeEventListener('mousemove',decideWiperMotion,true);
-        }
     </script>
 </body>
 </html>

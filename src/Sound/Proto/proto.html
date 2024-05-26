@@ -3,14 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+   <style>
+    body{
+        margin:0;
+        padding:0;
+        width:100vw;
+        height:100vh;
+    }
+    #four-sliders{
+        width:40vw;
+        height:20vw;
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        grid-template-rows:1fr;
+    }
+    .slider{
+        display: grid;
+        position:relative;
+        justify-items: center;
+        width:100%;
+        height:100%;
+    }
+    .slider-track{
+        position:absolute;
+        width:20%;
+        height:90%;
+        background-color: black;
+    }
+    .slider-wiper{
+        position:absolute;
+        width:40%;
+        height:10%;
+        background-color: red;
+    }
+   </style>
 </head>
-<body>
+<body onMouseup="mouseReleased()">
+
+    <div id="four-sliders">
+            <div class="slider 1">
+                <div class="slider-track 1"></div>
+                <div class="slider-wiper 1" onMousedown="wiperClicked(1)"></div>
+                <p>5</p>
+            </div>
+            <div class="slider 2">
+                <div class="slider-track 2"></div>
+                <div class="slider-wiper 2" onMousedown="wiperClicked(2)"></div>
+            </div>
+            <div class="slider 3">
+                <div class="slider-track 3"></div>
+                <div class="slider-wiper 3" onMousedown="wiperClicked(3)"></div>
+            </div>
+            <div class="slider 4">
+                <div class="slider-track 4"></div>
+                <div class="slider-wiper 4" onMousedown="wiperClicked(4)"></div>
+            </div>
+    </div>
+
+
     <button id='start-audio-button'>Start Audio</button> 
     <button id='clap-button'>Clap</button> 
     <button id='kick-button'>Kick</button> 
     <button id='hat-button'>Hat</button> 
     <button id='bass-button'>Bass</button> 
+
     <script src='https://cdnjs.cloudflare.com/ajax/libs/tone/14.9.17/Tone.js'></script>
+    <script>
+        state = {
+             wiperPosition: 0,
+             wiperAtTop: false,
+             wiperAtBottom: false,
+             sliderHeight: 0,
+             wiperHeight: 0,
+             wiperOutput: 0,
+        }
+        
+        function wiperClicked(sliderNumber){
+            state.selectedSlider = 
+                document.getElementsByClassName(`slider ${sliderNumber}`)[0];
+            state.selectedTrack = 
+                document.getElementsByClassName(`slider-track ${sliderNumber}`)[0];
+            state.selectedWiper = 
+                document.getElementsByClassName(`slider-wiper ${sliderNumber}`)[0];
+
+            state.sliderHeight = Number(
+                window.getComputedStyle(state.selectedTrack).height.match(/[\d.]/g).join('')
+            );
+            state.wiperHeight = Number(
+                window.getComputedStyle(state.selectedWiper).height.match(/[\d.]/g).join('')
+            );
+
+            document.addEventListener('mousemove',decideWiperMotion,true);
+        }
+
+        function mouseReleased(){
+            console.log('mouse released');
+            document.removeEventListener('mousemove',decideWiperMotion,true);
+        }
+
+        function decideWiperMotion(event){
+            //if the wiper is at the bottom, it can only move up
+            //if the wiper is at the top, it can only move down
+            function moveWiper(){
+                state.wiperPosition += event.movementY; 
+                state.selectedWiper.style.marginTop = `${state.wiperPosition}px`;
+            }
+
+            if(state.wiperAtBottom && event.movementY < 0){
+                moveWiper();
+                state.wiperAtBottom = false;
+                return;
+            }
+            if(state.wiperPosition > state.sliderHeight - state.wiperHeight){
+                state.wiperAtBottom = true;
+                return;
+            }
+            if(state.wiperAtTop && event.movementY > 0){
+                moveWiper();
+                state.wiperAtTop = false;
+                return;
+            }
+            if(state.wiperPosition < 0){
+                state.wiperAtTop = true;
+                return;
+            }
+            moveWiper();
+        }
+
+    </script>
     <script src='./clap.js'></script>
     <script src='./kick_drum.js'></script>
     <script src='./proto_app.js'></script>
