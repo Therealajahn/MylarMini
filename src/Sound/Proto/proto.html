@@ -70,6 +70,7 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/tone/14.9.17/Tone.js'></script>
     <script>
         state = {
+             sliderNumber: 0,
              wiperPosition: 0,
              wiperAtTop: false,
              wiperAtBottom: false,
@@ -79,6 +80,7 @@
         }
         
         function wiperClicked(sliderNumber){
+            state.sliderNumber = sliderNumber;
             state.selectedSlider = 
                 document.getElementsByClassName(`slider ${sliderNumber}`)[0];
             state.selectedTrack = 
@@ -93,12 +95,20 @@
                 window.getComputedStyle(state.selectedWiper).height.match(/[\d.]/g).join('')
             );
 
-            document.addEventListener('mousemove',decideWiperMotion,true);
+            document.addEventListener(
+                'mousemove',
+                decideWiperMotion,
+                true
+            );
         }
 
         function mouseReleased(){
             console.log('mouse released');
-            document.removeEventListener('mousemove',decideWiperMotion,true);
+            document.removeEventListener(
+                'mousemove',
+                decideWiperMotion,
+                true
+            );
         }
 
         function decideWiperMotion(event){
@@ -107,6 +117,11 @@
             function moveWiper(){
                 state.wiperPosition += event.movementY; 
                 state.selectedWiper.style.marginTop = `${state.wiperPosition}px`;
+                const midiValue = Math.floor(
+                    state.wiperPosition * 127 / (state.sliderHeight - state.wiperHeight)
+                );
+                state.wiperPosition * 127 / (state.sliderHeight - state.wiperHeight);
+                console.log(`slider ${state.sliderNumber}: ${midiValue}`);
             }
 
             if(state.wiperAtBottom && event.movementY < 0){
