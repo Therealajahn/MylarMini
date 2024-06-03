@@ -21,11 +21,12 @@
         display: grid;
         position:relative;
         justify-items: center;
+        grid-template-columns: 1fr;
+        grid-template-rows: 90% 10%;
         width:100%;
         height:100%;
     }
     .slider-track{
-        position:absolute;
         width:20%;
         height:90%;
         background-color: black;
@@ -36,27 +37,35 @@
         height:10%;
         background-color: red;
     }
+    .number{
+        margin: 0;
+        font-weight: bold;
+    }
+
    </style>
 </head>
 <body onMouseup="mouseReleased()">
 
-    <div id="four-sliders">
-            <div class="slider 1">
+    <div id="four-sliders" >
+            <div class="slider 1" onload="sliderLoaded(1)">
                 <div class="slider-track 1"></div>
                 <div class="slider-wiper 1" onMousedown="wiperClicked(1)"></div>
-                <p>5</p>
+                <p class="number 1">0</p>
             </div>
-            <div class="slider 2">
-                <div class="slider-track 2"></div>
+            <div class="slider 2" onload="sliderLoaded(2)">
+                <div class="slider-track 2" ></div>
                 <div class="slider-wiper 2" onMousedown="wiperClicked(2)"></div>
+                <p class="number 2">0</p>
             </div>
-            <div class="slider 3">
+            <div class="slider 3" onload="sliderLoaded(3)">
                 <div class="slider-track 3"></div>
                 <div class="slider-wiper 3" onMousedown="wiperClicked(3)"></div>
+                <p class="number 3">0</p>
             </div>
-            <div class="slider 4">
+            <div class="slider 4" onload="sliderLoaded(4)">
                 <div class="slider-track 4"></div>
                 <div class="slider-wiper 4" onMousedown="wiperClicked(4)"></div>
+                <p class="number 4">0</p>
             </div>
     </div>
 
@@ -71,14 +80,21 @@
     <script>
         state = {
              sliderNumber: 0,
-             wiperPosition: 0,
-             wiperAtTop: false,
-             wiperAtBottom: false,
              sliderHeight: 0,
+             wiperPosition:0,
+             wiperAtBottom: false,
              wiperHeight: 0,
              wiperOutput: 0,
+             selectedSlider:null,
+             selectedTrack:null,
+             selectedWiper:null,
         }
-        
+
+        function sliderLoaded(sliderNumber){
+            console.log(`slider ${sliderNumber} loaded`);
+            wiperClicked(sliderNumber);
+        }
+
         function wiperClicked(sliderNumber){
             state.sliderNumber = sliderNumber;
             state.selectedSlider = 
@@ -87,17 +103,25 @@
                 document.getElementsByClassName(`slider-track ${sliderNumber}`)[0];
             state.selectedWiper = 
                 document.getElementsByClassName(`slider-wiper ${sliderNumber}`)[0];
+            state.selectedNumber = 
+                document.getElementsByClassName(`number ${sliderNumber}`)[0];
 
             state.sliderHeight = Number(
                 window.getComputedStyle(state.selectedTrack).height.match(/[\d.]/g).join('')
             );
+
             state.wiperHeight = Number(
                 window.getComputedStyle(state.selectedWiper).height.match(/[\d.]/g).join('')
             );
 
+            state.wiperPosition = state.sliderHeight - state.wiperHeight;
+            console.log("wiperPosition", state.wiperPosition);
+            state.selectedWiper.dataset.position = state.wiperPosition;
+            state.selectedWiper.style.marginTop = `${state.wiperPosition}px`;
+
             document.addEventListener(
                 'mousemove',
-                decideWiperMotion,
+                whenWiperMoves,
                 true
             );
         }
@@ -106,22 +130,30 @@
             console.log('mouse released');
             document.removeEventListener(
                 'mousemove',
-                decideWiperMotion,
+                whenWiperMoves,
                 true
             );
         }
 
-        function decideWiperMotion(event){
+        function whenWiperMoves(event){
             //if the wiper is at the bottom, it can only move up
             //if the wiper is at the top, it can only move down
             function moveWiper(){
-                state.wiperPosition += event.movementY; 
+                console.log(
+                    "wiperPosition: ",
+                    state.wiperPosition,
+                    "\nsliderHeight: ",
+                    state.sliderHeight,
+                    "\nthis:",
+                    state                )
+                state.wiperPosition = 
+                    (state.wiperPosition + event.movementY) - state.sliderHeight; 
                 state.selectedWiper.style.marginTop = `${state.wiperPosition}px`;
-                const midiValue = Math.floor(
+                state.midiValue =  127 - Math.floor(
                     state.wiperPosition * 127 / (state.sliderHeight - state.wiperHeight)
                 );
-                state.wiperPosition * 127 / (state.sliderHeight - state.wiperHeight);
-                console.log(`slider ${state.sliderNumber}: ${midiValue}`);
+            
+                console.log(`slider ${state.sliderNumber}: ${state.midiValue}`);
             }
 
             if(state.wiperAtBottom && event.movementY < 0){
@@ -143,6 +175,11 @@
                 return;
             }
             moveWiper();
+
+            function updateNumber(){
+                state.selectedNumber.textContent = String(state.wiperPosition);
+            }
+            updateNumber();
         }
 
     </script>
