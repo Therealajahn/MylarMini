@@ -1,9 +1,120 @@
-<!DOCTYPE html>
-<html>
-  <head> </head>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mylar Mini</title>
+    <link href="css/style.css" rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+      }
+      .back-plate {
+        justify-self: center;
+        align-self: center;
+        width: 60vw;
+        height: 30vw;
+        background: black;
+        border-radius: 2vw;
+        display: grid;
+        grid-template-rows: 20% 20% 60%;
+        grid-template-columns: 1fr;
+      }
+      .top-plate {
+        justify-self: center;
+        align-self: center;
+        width: 90%;
+        height: 90%;
+        background: grey;
+        border-radius: 1vw;
+        display: grid;
+      }
+      .mid-plate {
+        justify-self: center;
+        align-self: center;
+        width: 90%;
+        height: 90%;
+        background: grey;
+        border-radius: 1vw;
+        display: grid;
+      }
+      .main-plate {
+        justify-self: center;
+        align-self: center;
+        width: 90%;
+        height: 90%;
+        background: grey;
+        border-radius: 1vw;
+        display: grid;
+      }
+      .panels-wrapper {
+        justify-self: center;
+        align-self: center;
+        width: 99%;
+        height: 99.9%;
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: repeat(8, 1fr);
+      }
+      .panel {
+        justify-self: center;
+        align-self: center;
+        width: 90%;
+        height: 95%;
+        background: darkgrey;
+        border-radius: 0.5vw;
+        display: grid;
+        grid-template-rows: 1fr;
+      }
+    </style>
+  </head>
   <body>
-		<back-plate>
-			<top-plate></top-plate>
-			<bottom-plate></bottom-plate>
-		</back-plate>
+    <back-plate>
+      <top-plate></top-plate>
+      <mid-plate></mid-plate>
+      <main-plate> </main-plate>
+    </back-plate>
+    <script>
+      const backPlate = document.querySelector("back-plate");
+      backPlate.setAttribute("class", "back-plate");
+
+      const topPlate = document.querySelector("top-plate");
+      topPlate.setAttribute("class", "top-plate");
+
+      const midPlate = document.querySelector("mid-plate");
+      midPlate.setAttribute("class", "mid-plate");
+
+      const mainPlate = document.querySelector("main-plate");
+      mainPlate.setAttribute("class", "main-plate");
+
+      const panelsWrapper = document.createElement("div");
+      panelsWrapper.setAttribute("class", "panels-wrapper");
+      mainPlate.appendChild(panelsWrapper);
+
+      function repeatElement({ repititions, className, parentName }) {
+        console.log(repititions, className, parentName);
+        for (let i = 0; i < repititions; i++) {
+          const currentElement = document.createElement("div");
+          currentElement.setAttribute("class", "${className}");
+          parentName.appendChild(currentElement);
+        }
+      }
+
+      repeatElement({
+        repetitions: 8,
+        className: "panel",
+        parentName: panelsWrapper,
+      });
+
+      for (let i = 0; i < 8; i++) {
+        const currentPanel = document.createElement("div");
+        currentPanel.setAttribute("class", "panel");
+        panelsWrapper.appendChild(currentPanel);
+      }
+    </script>
+  </body>
 </html>
