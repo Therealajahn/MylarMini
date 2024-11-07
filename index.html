@@ -2,7 +2,6 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Mylar Mini</title>
-    <link href="css/style.css" rel="stylesheet" />
     <style>
       * {
         margin: 0;
@@ -60,24 +59,28 @@
         grid-template-rows: 1fr;
         grid-template-columns: repeat(8, 1fr);
       }
-      .panel {
+      panel {
         justify-self: center;
         align-self: center;
         width: 90%;
         height: 95%;
-        background: darkgrey;
+        background: #7d7d7d; 
         border-radius: 0.5vw;
         display: grid;
         grid-template-rows: 1fr;
+				border: .25vw solid white; 
       }
     </style>
   </head>
   <body>
+
     <back-plate>
       <top-plate></top-plate>
       <mid-plate></mid-plate>
-      <main-plate> </main-plate>
+      <main-plate>
+			</main-plate>
     </back-plate>
+
     <script>
       const backPlate = document.querySelector("back-plate");
       backPlate.setAttribute("class", "back-plate");
@@ -95,26 +98,39 @@
       panelsWrapper.setAttribute("class", "panels-wrapper");
       mainPlate.appendChild(panelsWrapper);
 
-      function repeatElement({ repititions, className, parentName }) {
-        console.log(repititions, className, parentName);
+      function repeatElement({ repititions, elementName, className, parentName }) {
         for (let i = 0; i < repititions; i++) {
-          const currentElement = document.createElement("div");
-          currentElement.setAttribute("class", "${className}");
+					console.log('repetitions: ',repititions);
+					console.log('i:',i); 
+          const currentElement = document.createElement("panel");
           parentName.appendChild(currentElement);
+					console.log('type: ', typeof className);
+					if(typeof className === "string"){
+						console.log('first case'); 
+						currentElement.setAttribute("class", `${className}`);
+						continue; 
+					}
+					if(className.length === repititions){
+						console.log('second case');
+						currentElement.setAttribute("class", `${className[i]}`);
+						continue; 
+					}
+					throw new Error(`Array length doesn't match repititions for ${elementName}: ${i}`)
         }
       }
 
       repeatElement({
-        repetitions: 8,
-        className: "panel",
+        repititions: 8,
+				elementName:"panel",
+				className:"panel",
         parentName: panelsWrapper,
       });
 
-      for (let i = 0; i < 8; i++) {
-        const currentPanel = document.createElement("div");
-        currentPanel.setAttribute("class", "panel");
-        panelsWrapper.appendChild(currentPanel);
-      }
+			function panel(){
+				console.log('panel: ',document.querySelectorAll('panel-'));
+			}
+			panel(); 
+
     </script>
   </body>
 </html>
