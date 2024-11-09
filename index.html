@@ -12,6 +12,7 @@
         height: 100vh;
         display: grid;
       }
+
 			.plate{
         justify-self: center;
         align-self: center;
@@ -43,6 +44,7 @@
         background: grey;
         display: grid;
       }
+
       panels-wrapper {
         justify-self: center;
         align-self: center;
@@ -63,6 +65,36 @@
         grid-template-rows: 1fr;
 				border: .25vw solid white; 
       }
+
+			panel-center {
+        justify-self: center;
+        align-self: center;
+        width: 95%;
+				height: 48%; 
+        border-radius: 0.5vw;
+        display: grid;
+				border: .15vw solid white; 
+			}
+
+			square-button{
+        justify-self: center;
+        align-self: center;
+				width: 3vw;
+				height: 3vw;
+        border-radius: 0.5vw;
+				display:grid; 
+			}
+			part-of-button{
+				width: 1.2vw;
+				height: 1.2vw;
+			}
+			part-of-button.top{
+				background:red;
+			}
+			part-of-button.bottom{
+				background:blue;
+			}
+
     </style>
   </head>
   <body>
@@ -128,8 +160,23 @@
 				console.log('element',element.tagName);
 				switch(element.tagName){
 					case 'RHYTHM-PANEL':
-						console.log("HUH?");
+						createRythmPanel();
 					break;
+				}
+				////////PANEL COMPONENTS//////////////
+				function createRythmPanel(){
+					//add center
+					const panelCenter = document.createElement('panel-center');
+					element.appendChild(panelCenter);
+					//add button component
+					const squareButton = document.createElement('square-button');	
+					panelCenter.appendChild(squareButton);
+					const partOfButtonTop = document.createElement('part-of-button');
+					partOfButtonTop.setAttribute('class','top');
+					squareButton.appendChild(partOfButtonTop);
+					const partOfButtonBottom = document.createElement('part-of-button');
+					partOfButtonBottom.setAttribute('class','bottom');
+					squareButton.appendChild(partOfButtonBottom);
 				}
 			}
 
