@@ -92,18 +92,19 @@
       function repeatElement({ repititions, elementName, typeName, parentName, callback }) {
         for (let i = 0; i < repititions; i++) {
           let currentElement;
-					customizePanel( typeName );
 					if(typeof typeName === "string"){
 						currentElement = document.createElement(`${typeName}-${elementName}-`);
 						currentElement.setAttribute("class", `${elementName}`);
 						parentName.appendChild(currentElement);
+						callback( currentElement );
 						continue; 
 					}
-					if(!typeName[i]){continue;};
+					if(!typeName[i]){break};
 					if(typeof typeName === "object"){
 						currentElement = document.createElement(`${typeName[i]}-${elementName}`);
 						currentElement.setAttribute("class", `${elementName}`);
 						parentName.appendChild(currentElement);
+						callback( currentElement );
 						continue; 
 					}
 					if(typeName.length !== repititions){
@@ -124,9 +125,12 @@
       });
 
 			function customizePanel(element){
-				console.log('element',element);
-				//switch(){
-				//}
+				console.log('element',element.tagName);
+				switch(element.tagName){
+					case 'RHYTHM-PANEL':
+						console.log("HUH?");
+					break;
+				}
 			}
 
     </script>
