@@ -73,26 +73,31 @@
 				height: 48%; 
         border-radius: 0.5vw;
         display: grid;
-				border: .15vw solid white; 
+				border: .15vw solid white; 				grid-template-columns: 1fr;
+				grid-template-rows: repeat(3,1fr);
 			}
 
 			square-button{
         justify-self: center;
         align-self: center;
-				width: 3vw;
-				height: 3vw;
         border-radius: 0.5vw;
 				display:grid; 
+				z-index:999; 
 			}
 			part-of-button{
 				width: 1.2vw;
 				height: 1.2vw;
+        border-radius: 0.2vw;
+				border: .15vw solid white; 
 			}
 			part-of-button.top{
-				background:red;
+				background: black;
+				z-index:999;
 			}
 			part-of-button.bottom{
-				background:blue;
+				margin-top: -0.9vw; 
+				background: darkgrey ;
+				z-index:0;
 			}
 
     </style>
@@ -124,21 +129,22 @@
       function repeatElement({ repititions, elementName, typeName, parentName, callback }) {
         for (let i = 0; i < repititions; i++) {
           let currentElement;
-					if(typeof typeName === "string"){
-						currentElement = document.createElement(`${typeName}-${elementName}-`);
-						currentElement.setAttribute("class", `${elementName}`);
-						parentName.appendChild(currentElement);
-						callback( currentElement );
-						continue; 
-					}
+				//	if(typeof typeName === "string"){
+				//		currentElement = document.createElement(`${typeName}-${elementName}`);
+				//		currentElement.setAttribute("class", `${elementName}`);
+				//		parentName.appendChild(currentElement);
+				//		if(callback) callback( currentElement );
+				//		continue; 
+				//	}
 					if(!typeName[i]){break};
-					if(typeof typeName === "object"){
-						currentElement = document.createElement(`${typeName[i]}-${elementName}`);
+					//if(typeof typeName === "object"){
+						typeName = typeName === "string" ? typeName : typeName === "object" ? typeName[i] : typeName;
+						currentElement = document.createElement(`${typeName}-${elementName}`);
 						currentElement.setAttribute("class", `${elementName}`);
 						parentName.appendChild(currentElement);
-						callback( currentElement );
+						if(callback) callback( currentElement );
 						continue; 
-					}
+					//}
 					if(typeName.length !== repititions){
 						throw new Error(
 							`Array length doesn't match repititions for ${elementName}: ${i}`)
@@ -168,15 +174,23 @@
 					//add center
 					const panelCenter = document.createElement('panel-center');
 					element.appendChild(panelCenter);
-					//add button component
-					const squareButton = document.createElement('square-button');	
-					panelCenter.appendChild(squareButton);
-					const partOfButtonTop = document.createElement('part-of-button');
-					partOfButtonTop.setAttribute('class','top');
-					squareButton.appendChild(partOfButtonTop);
-					const partOfButtonBottom = document.createElement('part-of-button');
-					partOfButtonBottom.setAttribute('class','bottom');
-					squareButton.appendChild(partOfButtonBottom);
+			    //add button component
+					
+					const squareButton = document.createElement('square-button');
+					function squareButtonContent(squareButton){
+						squareButton.innerHTML = 
+							`<part-of-button class='top'></part-of-button>
+							 <part-of-button class='bottom'></part-of-button>`
+					}
+
+					repeatElement({
+						repititions: 4,
+						elementName:"button",
+						typeName:"square",
+						parentName: panelCenter,
+						callback:squareButtonContent,
+					});
+					
 				}
 			}
 
