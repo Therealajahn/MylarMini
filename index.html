@@ -73,10 +73,26 @@
 				height: 48%; 
         border-radius: 0.5vw;
         display: grid;
+				background: darkgrey;
 				border: .15vw solid white; 				grid-template-columns: 1fr;
-				grid-template-rows: repeat(3,1fr);
+				grid-template-rows: 1fr 2fr 1fr;
+				grid-template-areas:
+				"top"
+				"mid"
+				"bot"
 			}
 
+			top-of-center{
+				display:grid;
+				grid-template-columns:repeat(4,1fr);
+				grid-template-rows:1fr;
+				margin-top: -1.5vw;
+			}
+			mid-of-center{
+				display:grid;
+				grid-template-columns:repeat(4,1fr);
+				grid-template-rows:1fr 1fr;
+			}
 			square-button{
         justify-self: center;
         align-self: center;
@@ -85,10 +101,10 @@
 				z-index:999; 
 			}
 			part-of-button{
-				width: 1.2vw;
-				height: 1.2vw;
+				width: 1.1vw;
+				height: 1.1vw;
         border-radius: 0.2vw;
-				border: .15vw solid white; 
+				border: .15vw solid white;				
 			}
 			part-of-button.top{
 				background: black;
@@ -126,26 +142,27 @@
       const panelsWrapper = document.createElement("panels-wrapper");
       mainPlate.appendChild(panelsWrapper);
 
-      function repeatElement({ repititions, elementName, typeName, parentName, callback }) {
+      function repeatElement({ repititions, elementName, typeName, props, parentName, callback }) {
         for (let i = 0; i < repititions; i++) {
           let currentElement;
-				//	if(typeof typeName === "string"){
-				//		currentElement = document.createElement(`${typeName}-${elementName}`);
-				//		currentElement.setAttribute("class", `${elementName}`);
-				//		parentName.appendChild(currentElement);
-				//		if(callback) callback( currentElement );
-				//		continue; 
-				//	}
-					if(!typeName[i]){break};
-					//if(typeof typeName === "object"){
-						typeName = typeName === "string" ? typeName : typeName === "object" ? typeName[i] : typeName;
+
+					typeof typeName === "string" ? execute(typeName) :
+						typeof typeName === "object" ? 
+							typeName[i] ? execute(typeName[i]) : null : null; 
+							
+					if(props)apply(props);
+					
+					function execute(typeName){
 						currentElement = document.createElement(`${typeName}-${elementName}`);
 						currentElement.setAttribute("class", `${elementName}`);
 						parentName.appendChild(currentElement);
-						if(callback) callback( currentElement );
-						continue; 
-					//}
-					if(typeName.length !== repititions){
+						if(callback) callback( currentElement,props );
+					}
+					function apply(props){
+						currentElement.style[props.prop] = props.propValue;
+					}
+
+					if(typeName === "object" && typeName.length !== repititions){
 						throw new Error(
 							`Array length doesn't match repititions for ${elementName}: ${i}`)
 					}
@@ -169,28 +186,59 @@
 						createRythmPanel();
 					break;
 				}
+
 				////////PANEL COMPONENTS//////////////
-				function createRythmPanel(){
+				function createRythmPanel(topColor,bottomColor){
 					//add center
+					//<panel-center>
+					//	<top-of-center></top-of-center>
+					//	<mid-of-center></mid-of-center>
+					//</panel-center>
 					const panelCenter = document.createElement('panel-center');
 					element.appendChild(panelCenter);
+					//add a top wrapper
+					//<top-of-center></top-of-center>
+					const topOfCenter = document.createElement('top-of-center');
+					panelCenter.appendChild(topOfCenter);
+					//add a mid wrapper
+					//<mid-of-center></mid-of-center>
+					const midOfCenter = document.createElement('mid-of-center');
+					panelCenter.appendChild(midOfCenter); 
 			    //add button component
-					
 					const squareButton = document.createElement('square-button');
-					function squareButtonContent(squareButton){
+					function squareButtonContent(squareButton,props){
 						squareButton.innerHTML = 
 							`<part-of-button class='top'></part-of-button>
 							 <part-of-button class='bottom'></part-of-button>`
-					}
+						const buttonTop = squareButton.children[0];
+						const buttonBottom = squareButton.children[1];
 
+						if(!props)return;	
+						if(props.topColor){
+							buttonTop.style.background = props.topColor;
+						}
+						if(props.bottomColor){
+							buttonBottom.style.background = props.bottomColor;
+						}
+					}
 					repeatElement({
 						repititions: 4,
 						elementName:"button",
 						typeName:"square",
-						parentName: panelCenter,
+						parentName: topOfCenter,
 						callback:squareButtonContent,
 					});
-					
+					repeatElement({
+						repititions: 8,
+						elementName: "button",
+						typeName: "square",
+						props:{
+							topColor:"black",
+							bottomColor:"black",
+						},
+						parentName: midOfCenter,
+						callback: squareButtonContent,
+					});
 				}
 			}
 
