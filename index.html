@@ -146,7 +146,8 @@
         for (let i = 0; i < repititions; i++) {
           let currentElement;
 
-					typeof typeName === "string" ? execute(typeName) :
+					typeof typeName === "string" ? 
+						execute(typeName) :
 						typeof typeName === "object" ? 
 							typeName[i] ? execute(typeName[i]) : null : null; 
 							
@@ -200,27 +201,46 @@
 					//<top-of-center></top-of-center>
 					const topOfCenter = document.createElement('top-of-center');
 					panelCenter.appendChild(topOfCenter);
-					//add a mid wrapper
+					//add a midrapper
 					//<mid-of-center></mid-of-center>
 					const midOfCenter = document.createElement('mid-of-center');
 					panelCenter.appendChild(midOfCenter); 
 			    //add button component
 					const squareButton = document.createElement('square-button');
+
+					const bottomOfCenter = document.createElement('bottom-of-center');
+					panelCenter.appendChild(bottomOfCenter);
+
 					function squareButtonContent(squareButton,props){
+
+						if(props){
+							const buttonTopStyle = `style=${props.buttonTop}` |' ' 
+							const buttonBottomStyle = `style=${props.buttonBottom}` |' ';
+						}			
 						squareButton.innerHTML = 
-							`<part-of-button class='top'></part-of-button>
-							 <part-of-button class='bottom'></part-of-button>`
+							`<part-of-button class='top' ${buttonTopStyle}></part-of-button>
+							<part-of-button class='bottom' ${buttonBottomStyle}></part-of-button>`
 						const buttonTop = squareButton.children[0];
 						const buttonBottom = squareButton.children[1];
 
-						if(!props)return;	
-						if(props.topColor){
-							buttonTop.style.background = props.topColor;
-						}
-						if(props.bottomColor){
-							buttonBottom.style.background = props.bottomColor;
-						}
+						//if(!props)return;	
+
+						//if(props.topColor){
+						//	buttonTop.style.background = props.topColor;
+						//}
+						//if(props.bottomColor){
+						//	buttonBottom.style.background = props.bottomColor;
+						//}
+						//if(props.width){
+						//	buttonTop.style.width = props.width;	
+						//	buttonBottom.style.width = props.width;	
+						//}
+						//if(props.justifySelf){
+						//	buttonTop.style.justifySelf = props.justifySelf;
+						//	buttonBottom.style.justifySelf = props.justifySelf;
+						//}
 					}
+
 					repeatElement({
 						repititions: 4,
 						elementName:"button",
@@ -228,15 +248,29 @@
 						parentName: topOfCenter,
 						callback:squareButtonContent,
 					});
+
 					repeatElement({
 						repititions: 8,
 						elementName: "button",
 						typeName: "square",
 						props:{
-							topColor:"black",
-							bottomColor:"black",
+							buttonBottom:`
+							background: black;
+							` ,
 						},
 						parentName: midOfCenter,
+						callback: squareButtonContent,
+					});
+
+					repeatElement({
+						repititions: 1,
+						elementName: "button",
+						typeName: "square",
+						props:{
+							justifySelf:'center',
+							width: '95%',
+						},
+						parentName: bottomOfCenter,
 						callback: squareButtonContent,
 					});
 				}
