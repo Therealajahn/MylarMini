@@ -25,7 +25,7 @@
         background: black;
         grid-template-rows: 20% 20% 60%;
         grid-template-columns: 1fr;
-      }
+			}
       .top.plate {
         width: 90%;
         height: 90%;
@@ -38,7 +38,6 @@
         background: grey;
         display: grid;
       }
-      .main.plate {
         width: 90%;
         height: 90%;
         background: grey;
@@ -93,6 +92,9 @@
 				grid-template-columns:repeat(4,1fr);
 				grid-template-rows:1fr 1fr;
 			}
+			bottom-of-center{
+				display:grid;
+			}
 			square-button{
         justify-self: center;
         align-self: center;
@@ -142,38 +144,41 @@
       const panelsWrapper = document.createElement("panels-wrapper");
       mainPlate.appendChild(panelsWrapper);
 
-      function repeatElement({ repititions, elementName, typeName, props, parentName, callback }) {
+      function repeatElement({ repititions, elementSuffix, elementPrefix, props, childProps, parentName, callback }) {
         for (let i = 0; i < repititions; i++) {
           let currentElement;
 
-					typeof typeName === "string" ? 
-						execute(typeName) :
-						typeof typeName === "object" ? 
-							typeName[i] ? execute(typeName[i]) : null : null; 
+					typeof elementPrefix === "string" ? 
+						execute(elementPrefix) :
+						typeof elementPrefix === "object" ? 
+							elementPrefix[i] ? execute(elementPrefix[i]) : null : null; 
 							
 					if(props)apply(props);
 					
-					function execute(typeName){
-						currentElement = document.createElement(`${typeName}-${elementName}`);
-						currentElement.setAttribute("class", `${elementName}`);
+					function execute(elementPrefix){
+						currentElement = document.createElement(`${elementPrefix}-${elementSuffix}`);
+						currentElement.setAttribute("class", `${elementSuffix}`);
 						parentName.appendChild(currentElement);
 						if(callback) callback( currentElement,props );
 					}
 					function apply(props){
-						currentElement.style[props.prop] = props.propValue;
+						for(prop in props){
+							currentElement.style[prop] = props[prop];
+							console.log("prop: ",currentElement.style);
+						}
 					}
 
-					if(typeName === "object" && typeName.length !== repititions){
+					if(elementPrefix === "object" && elementPrefix.length !== repititions){
 						throw new Error(
-							`Array length doesn't match repititions for ${elementName}: ${i}`)
+							`Array length doesn't match repititions for ${elementSuffix}: ${i}`)
 					}
 				}
 			}
 
       repeatElement({
         repititions: 8,
-				elementName:"panel",
-				typeName:[
+				elementSuffix:"panel",
+				elementPrefix:[
 					"rhythm",
 				],
         parentName: panelsWrapper,
@@ -213,10 +218,9 @@
 
 					function squareButtonContent(squareButton,props){
 
-						if(props){
-							const buttonTopStyle = `style=${props.buttonTop}` |' ' 
-							const buttonBottomStyle = `style=${props.buttonBottom}` |' ';
-						}			
+						const buttonTopStyle = `style=${props?.buttonTop}` ?? ' '; 
+						const buttonBottomStyle = `style=${props?.buttonBottom}` ?? ' ';
+
 						squareButton.innerHTML = 
 							`<part-of-button class='top' ${buttonTopStyle}></part-of-button>
 							<part-of-button class='bottom' ${buttonBottomStyle}></part-of-button>`
@@ -243,20 +247,20 @@
 
 					repeatElement({
 						repititions: 4,
-						elementName:"button",
-						typeName:"square",
+						elementPrefix:"square",
+						elementSuffix:"button",
 						parentName: topOfCenter,
 						callback:squareButtonContent,
 					});
 
 					repeatElement({
 						repititions: 8,
-						elementName: "button",
-						typeName: "square",
-						props:{
-							buttonBottom:`
-							background: black;
-							` ,
+						elementPrefix: "square",
+						elementSuffix: "button",
+						childProps:{
+							buttonBottom:{
+								'background': 'black',
+							},
 						},
 						parentName: midOfCenter,
 						callback: squareButtonContent,
@@ -264,11 +268,11 @@
 
 					repeatElement({
 						repititions: 1,
-						elementName: "button",
-						typeName: "square",
+						elementPrefix: "square",
+						elementSuffix: "button",
 						props:{
-							justifySelf:'center',
-							width: '95%',
+							'justify-self':'center',
+							'width': '95%',
 						},
 						parentName: bottomOfCenter,
 						callback: squareButtonContent,
