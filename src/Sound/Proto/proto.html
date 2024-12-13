@@ -1,191 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-   <style>
-    body{
-        margin:0;
-        padding:0;
-        width:100vw;
-        height:100vh;
-    }
-    #four-sliders{
-        width:40vw;
-        height:20vw;
-        display:grid;
-        grid-template-columns:repeat(4,1fr);
-        grid-template-rows:1fr;
-    }
-    .slider{
-        display: grid;
-        position:relative;
-        justify-items: center;
-        grid-template-columns: 1fr;
-        grid-template-rows: 90% 10%;
-        width:100%;
-        height:100%;
-    }
-    .slider-track{
-        width:20%;
-        height:90%;
-        background-color: black;
-    }
-    .slider-wiper{
-        position:absolute;
-        width:40%;
-        height:10%;
-        background-color: red;
-    }
-    .number{
-        margin: 0;
-        font-weight: bold;
-    }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<style>
+			.in-blk{
+				display: inline-block;
+				position: absolute;
+			}
+			slider{
+				position: relative; 
+				display: grid;
+				width: 3rem;
+				height: 13rem;
+				border: .2rem solid black;
+			}
+			wiper{
+				width: 80%;
+				height: 10%;
+				background: black; 
+				justify-self: center; 
+				margin-top: 6.5rem;
+			}
+			track{
+				width: 20%;
+				height: 90%;
+				border: .2rem solid black;
+				justify-self: center; 
+				margin-top: .45rem;
+			}
+			input[type="range"]{
+				position:absolute;
+				justify-self: center;
+				align-self: center; 
+				transform: rotate(90deg);
+				opacity: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<slider>
+			<wiper class="in-blk"></wiper>
+			<track class="in-blk"></track>
+			<input type='range' min='0' max='127' class='vanilla-slider'>
+		</slider>
 
-   </style>
-</head>
-<body onMouseup="mouseReleased()">
-
-    <div id="four-sliders" >
-            <div class="slider 1" onload="sliderLoaded(1)">
-                <div class="slider-track 1"></div>
-                <div class="slider-wiper 1" onMousedown="wiperClicked(1)"></div>
-                <p class="number 1">0</p>
-            </div>
-            <div class="slider 2" onload="sliderLoaded(2)">
-                <div class="slider-track 2" ></div>
-                <div class="slider-wiper 2" onMousedown="wiperClicked(2)"></div>
-                <p class="number 2">0</p>
-            </div>
-            <div class="slider 3" onload="sliderLoaded(3)">
-                <div class="slider-track 3"></div>
-                <div class="slider-wiper 3" onMousedown="wiperClicked(3)"></div>
-                <p class="number 3">0</p>
-            </div>
-            <div class="slider 4" onload="sliderLoaded(4)">
-                <div class="slider-track 4"></div>
-                <div class="slider-wiper 4" onMousedown="wiperClicked(4)"></div>
-                <p class="number 4">0</p>
-            </div>
-    </div>
+		<script>
 
 
-    <button id='start-audio-button'>Start Audio</button> 
-    <button id='clap-button'>Clap</button> 
-    <button id='kick-button'>Kick</button> 
-    <button id='hat-button'>Hat</button> 
-    <button id='bass-button'>Bass</button> 
+    const wiper = document.getElementsByTagName('wiper')[0];
+		const track = document.getElementsByTagName('track')[0];
+		function getTrackHeight() {
+			return +window.getComputedStyle(track).height.split('p')[0]; 
+		};
 
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/tone/14.9.17/Tone.js'></script>
-    <script>
-        state = {
-             sliderNumber: 0,
-             sliderHeight: 0,
-             wiperPosition:0,
-             wiperAtBottom: false,
-             wiperHeight: 0,
-             wiperOutput: 0,
-             selectedSlider:null,
-             selectedTrack:null,
-             selectedWiper:null,
-        }
+		const vanillaSlider = document.getElementsByClassName('vanilla-slider')[0];
+		const sliderMax = 127;
+		vanillaSlider.style.max = sliderMax;
+		vanillaSlider.style.width = `${getTrackHeight()}px`;
 
-        function sliderLoaded(sliderNumber){
-            console.log(`slider ${sliderNumber} loaded`);
-            wiperClicked(sliderNumber);
-        }
-
-        function wiperClicked(sliderNumber){
-            state.sliderNumber = sliderNumber;
-            state.selectedSlider = 
-                document.getElementsByClassName(`slider ${sliderNumber}`)[0];
-            state.selectedTrack = 
-                document.getElementsByClassName(`slider-track ${sliderNumber}`)[0];
-            state.selectedWiper = 
-                document.getElementsByClassName(`slider-wiper ${sliderNumber}`)[0];
-            state.selectedNumber = 
-                document.getElementsByClassName(`number ${sliderNumber}`)[0];
-
-            state.sliderHeight = Number(
-                window.getComputedStyle(state.selectedTrack).height.match(/[\d.]/g).join('')
-            );
-
-            state.wiperHeight = Number(
-                window.getComputedStyle(state.selectedWiper).height.match(/[\d.]/g).join('')
-            );
-
-            state.wiperPosition = state.sliderHeight - state.wiperHeight;
-            console.log("wiperPosition", state.wiperPosition);
-            state.selectedWiper.dataset.position = state.wiperPosition;
-            state.selectedWiper.style.marginTop = `${state.wiperPosition}px`;
-
-            document.addEventListener(
-                'mousemove',
-                whenWiperMoves,
-                true
-            );
-        }
-
-        function mouseReleased(){
-            console.log('mouse released');
-            document.removeEventListener(
-                'mousemove',
-                whenWiperMoves,
-                true
-            );
-        }
-
-        function whenWiperMoves(event){
-            //if the wiper is at the bottom, it can only move up
-            //if the wiper is at the top, it can only move down
-            function moveWiper(){
-                console.log(
-                    "wiperPosition: ",
-                    state.wiperPosition,
-                    "\nsliderHeight: ",
-                    state.sliderHeight,
-                    "\nthis:",
-                    state                )
-                state.wiperPosition = 
-                    (state.wiperPosition + event.movementY) - state.sliderHeight; 
-                state.selectedWiper.style.marginTop = `${state.wiperPosition}px`;
-                state.midiValue =  127 - Math.floor(
-                    state.wiperPosition * 127 / (state.sliderHeight - state.wiperHeight)
-                );
-            
-                console.log(`slider ${state.sliderNumber}: ${state.midiValue}`);
-            }
-
-            if(state.wiperAtBottom && event.movementY < 0){
-                moveWiper();
-                state.wiperAtBottom = false;
-                return;
-            }
-            if(state.wiperPosition > state.sliderHeight - state.wiperHeight){
-                state.wiperAtBottom = true;
-                return;
-            }
-            if(state.wiperAtTop && event.movementY > 0){
-                moveWiper();
-                state.wiperAtTop = false;
-                return;
-            }
-            if(state.wiperPosition < 0){
-                state.wiperAtTop = true;
-                return;
-            }
-            moveWiper();
-
-            function updateNumber(){
-                state.selectedNumber.textContent = String(state.wiperPosition);
-            }
-            updateNumber();
-        }
-
-    </script>
-    <script src='./clap.js'></script>
-    <script src='./kick_drum.js'></script>
-    <script src='./proto_app.js'></script>
-
-</body>
+		vanillaSlider.addEventListener('input',event => {
+			const vanillaValue = event.currentTarget.value; 
+			const changeMax = (vanillaValue * getTrackHeight()) / 127; 
+			wiper.style.marginTop = `${changeMax}px`;
+			console.log(
+				'input detected',event.currentTarget.value,
+				'\nnew max: ', changeMax
+			);
+		});
+		</script>
+	</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+

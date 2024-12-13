@@ -1,0 +1,20 @@
+import { render, fireEvent, screen } from '@testing-library/react';
+import * as Tone from 'tone';
+import Sound from './Sound.js';
+
+jest.mock('tone',() => ({
+    Oscillator:{
+}));
+
+describe('Sound',() => {
+
+    const renderSound = () => {
+        render(<Sound/>)
+    }
+
+    it('calls oscillator',() => {
+        renderSound();
+        expect(Tone.Oscillator.toDestination()).toHaveBeenCalled();
+    })
+})
+

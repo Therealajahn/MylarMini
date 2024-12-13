@@ -1,9 +1,9 @@
 export default function Button(
-	{type,dataTestid,topColor,bottomColor,marginTop,width,gridArea,toKey}
-) {
+	{type,dataTestid, bottomColor, marginTop, width, topColor,gridArea,toKey}) {
     function renderSquareButton(){
         return(
-            <div  data-testid={`${dataTestid? dataTestid : 'square-button'}`} className='button' style={{
+            <div  data-testid={
+				`${dataTestid? dataTestid : 'square-button'}`} className='button' style={{
                 display:'grid',
                 height:'100%',
                 width:'100%',

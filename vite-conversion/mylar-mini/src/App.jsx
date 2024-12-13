@@ -1,5 +1,5 @@
-import MiniModular from './View/MiniModular/MiniModular.js';
-import Sound from './Sound/Sound.js';
+import MiniModular from './View/MiniModular/MiniModular.jsx';
+import Sound from './Sound/Sound.jsx';
 
 export default function App() {
     let appStyle = {
