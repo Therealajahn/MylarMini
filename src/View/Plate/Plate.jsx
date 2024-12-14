@@ -138,8 +138,8 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                         marginTop:'-1.5vw',
                         marginLeft:'.6vw',
                     }}
-                    countKeys={['gridArea','key']}
-                    countValues={['fader','fader']}
+                    countKeys={['gridArea','key','className']}
+                    countValues={['fader','fader','fader']}
                 />
             </div>
         );
@@ -264,7 +264,7 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                         countKeys={['key']}
                         countValues={['knob']}
                     />
-                </div>
+               </div>
                 <Keys width='90%'/>
             </div>
         )
