@@ -1,18 +1,102 @@
-import { createElement } from 'react';
+import { createElement, useState, useEffect, useRef, useCallback } from 'react';
 
 export default function Knob({gridArea,marginTop,marginLeft,width,height,alignSelf,justifySelf}){
-    //stroke-width was throwing an error, converted the elements using it
-    const pathOne = createElement("path",{
+////////////////////////
+	const [sliderState, setSliderState] = useState(-90);
+	const knobLineRef = useRef();
+
+	function convertToLength(inputValue, inputLength, outputLength){
+		return outputLength / inputLength * inputValue;	
+	}
+
+	useEffect(() => {
+		const convertedValue = convertToLength(sliderState,127,270);
+  	knobLineRef.current.setAttribute('style',`
+			transform-origin: 50% 30%;
+			transform: rotate(${convertedValue - 140}deg);
+		`);			
+	},[sliderState]);
+//////////////////////
+	
+//////////////////////
+	const [knobTopClick,setKnobTopClick] = useState(false);
+	const [mouseStart, setMouseStart] = useState(0);
+	const [mousePosition, setMousePosition] = useState(0);
+	const [count, setCount] = useState(0);
+	const knobTopRef = useRef();
+
+	useEffect(()=>{
+		 const getMousePostion = event => {
+				if(knobTopClick){
+					const currentPosition = event.clientY;
+					console.log('knobTopClick: ',knobTopClick);
+					console.log('mouseStart: ',mouseStart);
+		 			setMousePosition(prevMousePosition => {
+							console.log(`${count}prevMousePosition: `,prevMousePosition);
+							console.log(`${count}currentPosition: `,currentPosition);
+							setSliderState(sliderState => sliderState += 1)
+							setCount(count => count =+ 1);
+							return currentPosition;
+						}
+					); 	
+					//if(mousePosition < mouseStart){
+					//	setSliderState(sliderState => sliderState += 1);
+					//	return;
+					//}
+					//if(mousePosition > mouseStart){
+					//	setSliderState(sliderState => sliderState -= 1);
+					//}
+			}                    
+		}
+		document.addEventListener('mousemove',getMousePostion);
+
+		const onMouseUp = event => {
+			console.log('mouseup');
+			setKnobTopClick(false);
+		};
+		document.addEventListener('mouseup',onMouseUp);
+		
+
+		return () => {
+			document.removeEventListener('mousemove',getMousePostion);
+			document.removeEventListener('mouseup',onMouseUp);
+		};
+	},[knobTopClick]);
+
+		//const getMouseUp = event => {
+		//	console.log("mouseup");
+		//	setKnobTopClick(false);
+		//}
+		//if(knobTopClick){
+		//	document.addEventListener('mousemove',getMousePostion);
+		//	document.addEventListener('mouseup',getMouseUp);
+		//}
+		//return () => {
+		//	console.log('cleanup');
+		//	document.removeEventListener('mousemove',getMousePostion);
+		//	document.removeEventListener('mouseup',getMouseUp);
+		//}
+
+////////////////////
+	const pathOne = createElement("path",{
         d:"M51.5 45.5696C51.5 59.3346 40.3108 70.5 26.5 70.5C12.6892 70.5 1.5 59.3346 1.5 45.5696C1.5 31.8047 12.6892 20.6393 26.5 20.6393C40.3108 20.6393 51.5 31.8047 51.5 45.5696Z",
         fill:"#B9B9B9",
         stroke:"white",
         strokeWidth:"3",
     });
-    const anotherPath = createElement("path",{
+
+    const knobTop = createElement("path",{
         d:"M46.931 21.8734C46.931 33.1216 37.7875 42.2468 26.5 42.2468C15.2125 42.2468 6.06897 33.1216 6.06897 21.8734C6.06897 10.6252 15.2125 1.5 26.5 1.5C37.7875 1.5 46.931 10.6252 46.931 21.8734Z", 
         fill:"black",
         stroke:"white",
         strokeWidth:"3",
+ 				ref:knobTopRef, 
+				onMouseDown:event => {
+					//console.log('mouseY',event.clientY);
+					console.log("event: ",event.clientY);
+					setKnobTopClick(true);
+					setMouseStart(event.clientY);
+				},
     })
     const lineOne = createElement("line",{
         x1:"6.47819",
@@ -30,7 +114,14 @@ export default function Knob({gridArea,marginTop,marginLeft,width,height,alignSe
         stroke:"white",
         strokeWidth:"3",
     })
+
    return(
+		<section
+			style={{
+				display: 'grid',
+				marginTop: '.5rem',
+			}}
+		>
        <svg data-testid="knob-svg" viewBox="0 0 53 72" fill="none" xmlns="http://www.w3.org/2000/svg"
            style={{
                height:`${height ? height : 'auto'}`,
@@ -44,16 +135,24 @@ export default function Knob({gridArea,marginTop,marginLeft,width,height,alignSe
        >
         {pathOne}
         <path d="M4.88649 19.1393H48.1273L53 45.5696H0L4.88649 19.1393Z" fill="#B9B9B9"/>
-        {anotherPath}
+        {knobTop}
         {lineOne}
         {lineTwo}
         <mask id="mask0_1_107" style={{maskType: 'alpha'}} maskUnits="userSpaceOnUse" x="4" y="0" width="45" height="44">
         <ellipse cx="26.5" cy="21.8734" rx="21.931" ry="21.8734" fill="#8C8C8C"/>
         </mask>
-        <g mask="url(#mask0_1_107)">
-        <rect x="22.8448" y="-7.29114" width="8.22414" height="25.519" fill="white"/>
-        <ellipse cx="26.9569" cy="17.7722" rx="4.11207" ry="4.10127" fill="white"/>
+        <g mask="url(#mask0_1_107)" ref={knobLineRef}
+				style={{ transform: 'rotate(0deg)' }}>
+        <rect x="22.8448" y="-7.29114" width="8.22414" height="25.519" fill="white"
+					style={{
+							pointerEvents:'none',
+				}}/>
+        <ellipse cx="26.9569" cy="17.7722" rx="4.11207" ry="4.10127" fill="white"
+					style={{
+							pointerEvents:'none',
+				}}/>
         </g>
         </svg>
+		</section>
    ) 
 }
