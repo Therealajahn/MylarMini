@@ -1,7 +1,7 @@
 import Plate from '../Plate/Plate';
 import RepeatElement from '../../Utilities/RepeatElement/RepeatElement.jsx';
 
-export default function MiniModular() {
+export default function MiniModular({appRef}) {
 
     let backPlate = {
         width: '70vw',
@@ -35,7 +35,8 @@ export default function MiniModular() {
             repetitions={9}
             element={Plate}
             props={{
-                height:'100%'
+                height:'100%',
+								appRef: {appRef}
             }}
             listProp='type'
             list={[

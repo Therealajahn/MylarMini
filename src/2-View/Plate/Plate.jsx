@@ -5,7 +5,7 @@ import Fader from '../Fader/Fader.jsx';
 import Keys from '../Keys/Keys.jsx';
 import RepeatElement from '../../Utilities/RepeatElement/RepeatElement.jsx';
 
-export default function Plate({gridArea,backgroundColor,width,height,alignSelf,marginTop,dataTestId,type}) {
+export default function Plate({gridArea,backgroundColor,width,height,alignSelf,marginTop,dataTestId,type,appRef}) {
     function getModule(){
         switch(type){
             case 'rhythm':
@@ -127,6 +127,7 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                     element={Knob}
                     props={{
                         marginTop:'-3vw',
+												appRef: {appRef},
                     }}
                     countKeys={['gridArea','key']}
                     countValues={['knob','knob']}
@@ -137,6 +138,7 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                     props={{
                         marginTop:'-1.5vw',
                         marginLeft:'.6vw',
+												appRef: {appRef},
                     }}
                     countKeys={['gridArea','key','className']}
                     countValues={['fader','fader','fader']}
@@ -157,7 +159,8 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                     repetitions={3}
                     element={Knob}
                     props={{
-                        width:'70%'
+                        width:'70%',
+                        appRef: {appRef},
                     }}
                     countKeys={['key']}
                     countValues={['knob']}
@@ -178,7 +181,8 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                     repetitions={3}
                     element={Knob}
                     props={{
-                        width:'70%'
+                        width:'70%',
+												appRef: {appRef},
                     }}
                     countKeys={['key']}
                     countValues={['knob']}
@@ -199,7 +203,8 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                     repetitions={3}
                     element={Knob}
                     props={{
-                        width:'70%'
+                        width:'70%',
+					 							appRef: {appRef}, 
                     }}
                     countKeys={['key']}
                     countValues={['knob']}
@@ -227,7 +232,8 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                         repetitions={4}
                         element={Knob}
                         props={{
-                            width:'90%'
+                            width:'90%',
+														appRef: {appRef},
                         }}
                         countKeys={['key']}
                         countValues={['knob']}
@@ -260,6 +266,7 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                         element={Knob}
                         props={{
                             width:'100%',
+													  appRef: {appRef}, 
                         }}
                         countKeys={['key']}
                         countValues={['knob']}
@@ -282,16 +289,16 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                 gridTemplateColumns:'1fr',
                 gridTemplateRows:'1fr 1fr 1fr',
             }}>
-                <Knob width='70%'/>
-                <Knob width='45%' alignSelf='center'/>
+                <Knob appRef={appRef} width='70%'/>
+                <Knob appRef={appRef} width='45%' alignSelf='center'/>
                 <div style={{
                     display:'grid',
                     width:'100%',
                     gridTemplateColumns:'1fr 1fr',
                     gridTemplateRows:'1fr',
                 }}>
-                    <Knob width='90%' justifySelf='start'/>
-                    <Knob width='90%' justifySelf='end'/>
+                    <Knob appRef={appRef} width='90%' justifySelf='start'/>
+                    <Knob appRef={appRef} width='90%' justifySelf='end'/>
                 </div>
             </div>
         )
@@ -309,9 +316,9 @@ export default function Plate({gridArea,backgroundColor,width,height,alignSelf,m
                 gridTemplateColumns:'1fr',
                 gridTemplateRows:'1fr 1fr 1fr',
             }}>
-                <Knob/>
-                <Knob/>
-                <Knob/>
+                <Knob appRef={appRef}/>
+                <Knob appRef={appRef}/>
+                <Knob appRef={appRef}/>
             </div>
         )
     }

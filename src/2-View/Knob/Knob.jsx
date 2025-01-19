@@ -1,81 +1,27 @@
-import { createElement, useState, useEffect, useRef, useCallback } from 'react';
+import { createElement, useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addEventToApp } from '../../3-Controller/controlEventSlice.jsx';
 
-export default function Knob({gridArea,marginTop,marginLeft,width,height,alignSelf,justifySelf}){
-////////////////////////
-	const [sliderState, setSliderState] = useState(-90);
-	const knobLineRef = useRef();
+export default function Knob({gridArea,marginTop,marginLeft,width,height,alignSelf,justifySelf,appRef}){
 
-	function convertToLength(inputValue, inputLength, outputLength){
-		return outputLength / inputLength * inputValue;	
-	}
+	const dispatch = useDispatch();
 
-	useEffect(() => {
-		const convertedValue = convertToLength(sliderState,127,270);
-  	knobLineRef.current.setAttribute('style',`
-			transform-origin: 50% 30%;
-			transform: rotate(${convertedValue - 140}deg);
-		`);			
-	},[sliderState]);
-//////////////////////
-	
-//////////////////////
-	const [knobTopClick,setKnobTopClick] = useState(false);
-	const [mouseStart, setMouseStart] = useState(0);
-	const [mousePosition, setMousePosition] = useState(0);
-	const [count, setCount] = useState(0);
 	const knobTopRef = useRef();
+	const knobLineRef = useRef();
+	const [knobTopClicked, setKnobTopClicked] = useState(false);
+  const mouseMoveEvent = useSelector(state => state.getEvent.mouseEvent);
 
-	useEffect(()=>{
-		 const getMousePostion = event => {
-				if(knobTopClick){
-					const currentPosition = event.clientY;
-					console.log('knobTopClick: ',knobTopClick);
-					console.log('mouseStart: ',mouseStart);
-		 			setMousePosition(prevMousePosition => {
-							console.log(`${count}prevMousePosition: `,prevMousePosition);
-							console.log(`${count}currentPosition: `,currentPosition);
-							setSliderState(sliderState => sliderState += 1)
-							setCount(count => count =+ 1);
-							return currentPosition;
-						}
-					); 	
-					//if(mousePosition < mouseStart){
-					//	setSliderState(sliderState => sliderState += 1);
-					//	return;
-					//}
-					//if(mousePosition > mouseStart){
-					//	setSliderState(sliderState => sliderState -= 1);
-					//}
-			}                    
+	const whenKnobCLicked = useEffect(() => {
+    if(knobTopClicked){
+			dispatch(addEventToApp('mouseup'));
+			dispatch(addEventToApp('mousemove'));
 		}
-		document.addEventListener('mousemove',getMousePostion);
+		if(knobTopClicked && mouseMoveEvent){
+  		console.log('mousemove(from whenKnobCLicked): ');  	
+		}
+	},[knobTopClicked,mouseMoveEvent]);
 
-		const onMouseUp = event => {
-			console.log('mouseup');
-			setKnobTopClick(false);
-		};
-		document.addEventListener('mouseup',onMouseUp);
-		
-
-		return () => {
-			document.removeEventListener('mousemove',getMousePostion);
-			document.removeEventListener('mouseup',onMouseUp);
-		};
-	},[knobTopClick]);
-
-		//const getMouseUp = event => {
-		//	console.log("mouseup");
-		//	setKnobTopClick(false);
-		//}
-		//if(knobTopClick){
-		//	document.addEventListener('mousemove',getMousePostion);
-		//	document.addEventListener('mouseup',getMouseUp);
-		//}
-		//return () => {
-		//	console.log('cleanup');
-		//	document.removeEventListener('mousemove',getMousePostion);
-		//	document.removeEventListener('mouseup',getMouseUp);
-		//}
+	
 
 ////////////////////
 	const pathOne = createElement("path",{
@@ -94,8 +40,7 @@ export default function Knob({gridArea,marginTop,marginLeft,width,height,alignSe
 				onMouseDown:event => {
 					//console.log('mouseY',event.clientY);
 					console.log("event: ",event.clientY);
-					setKnobTopClick(true);
-					setMouseStart(event.clientY);
+					setKnobTopClicked(true);
 				},
     })
     const lineOne = createElement("line",{
