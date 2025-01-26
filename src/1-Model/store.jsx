@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'; 
-import getEventReducer from '../3-Controller/controlEventSlice.jsx';
+import controlEventReducer from '../1-Model/controlEventSlice.jsx';
+import getEventDataReducer from '../1-Model/getEventData.jsx';
 
 export default configureStore({
 	reducer:{
-		getEvent: getEventReducer,
+		controlEvent: controlEventReducer,
+		getEventData: getEventDataReducer,
 	},
 });
 

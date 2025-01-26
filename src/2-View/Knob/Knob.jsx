@@ -1,6 +1,6 @@
 import { createElement, useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addEventToApp } from '../../3-Controller/controlEventSlice.jsx';
+import { addEventToApp } from '../../1-Model/controlEventSlice.jsx';
 
 export default function Knob({gridArea,marginTop,marginLeft,width,height,alignSelf,justifySelf,appRef}){
 
@@ -8,18 +8,36 @@ export default function Knob({gridArea,marginTop,marginLeft,width,height,alignSe
 
 	const knobTopRef = useRef();
 	const knobLineRef = useRef();
+  const knobTopClickedRef = useRef(false);
 	const [knobTopClicked, setKnobTopClicked] = useState(false);
-  const mouseMoveEvent = useSelector(state => state.getEvent.mouseEvent);
+  const mouseMoveY = useSelector(state => state.getEventData.mouseLocation.y);
+	
+  const animateRef = useRef();
+	const animate = time => {
+		console.log('knobTopClicked: ',knobTopClickedRef.current);
+		animateRef.current = requestAnimationFrame(animate);
+	};
+
+	const animationEffect = useEffect(() => {
+		animateRef.current = requestAnimationFrame(animate);
+		return () => {
+			cancelAnimationFrame(animateRef.current);
+		};
+	},[]);
+
+	const onMouseMove = useEffect(() => {
+		if(knobTopClicked){
+			knobLineRef.current.style.transform = `rotate(${mouseMoveY}deg)`;
+		}
+	},[mouseMoveY]);
 
 	const whenKnobCLicked = useEffect(() => {
     if(knobTopClicked){
+			console.log("knob top clicked");
 			dispatch(addEventToApp('mouseup'));
 			dispatch(addEventToApp('mousemove'));
 		}
-		if(knobTopClicked && mouseMoveEvent){
-  		console.log('mousemove(from whenKnobCLicked): ');  	
-		}
-	},[knobTopClicked,mouseMoveEvent]);
+	},[knobTopClicked]);
 
 	
 
@@ -39,8 +57,9 @@ export default function Knob({gridArea,marginTop,marginLeft,width,height,alignSe
  				ref:knobTopRef, 
 				onMouseDown:event => {
 					//console.log('mouseY',event.clientY);
-					console.log("event: ",event.clientY);
-					setKnobTopClicked(true);
+					//console.log("event: ",event.clientY);
+          knobTopClickedRef.current = true;
+					setKnobTopClicked(state => state? state : !state);
 				},
     })
     const lineOne = createElement("line",{
@@ -87,7 +106,10 @@ export default function Knob({gridArea,marginTop,marginLeft,width,height,alignSe
         <ellipse cx="26.5" cy="21.8734" rx="21.931" ry="21.8734" fill="#8C8C8C"/>
         </mask>
         <g mask="url(#mask0_1_107)" ref={knobLineRef}
-				style={{ transform: 'rotate(0deg)' }}>
+				style={{ 
+						transform: 'rotate(0deg)',
+						transformOrigin: '50% 29%',
+				}}>
         <rect x="22.8448" y="-7.29114" width="8.22414" height="25.519" fill="white"
 					style={{
 							pointerEvents:'none',
