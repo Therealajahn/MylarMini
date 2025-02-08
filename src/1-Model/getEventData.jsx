@@ -8,6 +8,10 @@ export const getEventData = createSlice(
 				x:0,
 				y:0,
 			},
+			knobTop:{
+				clicked: false,
+				ref:{},
+			},
 		},
 		reducers: {
 			updateMouseLocation: (state,action) => {
@@ -22,12 +26,19 @@ export const getEventData = createSlice(
 			 		},
 			 	};
 			},                                 
-			whenTheMouseUps: (state,action) => {
-
-			},
+			whenKnobTopClicked: (state,action) => {
+				console.log('knobTopClicked',action);
+				return {
+					...state,
+					knobTop:{
+						...state.knobTop,
+						clicked:true,
+					},
+				}
+			}
 		},
  });
 
-export const { updateMouseLocation } = getEventData.actions;
+export const { updateMouseLocation, whenKnobTopClicked } = getEventData.actions;
 
 export default getEventData.reducer;

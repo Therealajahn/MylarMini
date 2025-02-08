@@ -1,43 +1,34 @@
-import { createElement, useState, useEffect, useRef } from 'react';
+import { createElement, useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addEventToApp } from '../../1-Model/controlEventSlice.jsx';
+import { whenKnobTopClicked } from '../../1-Model/getEventData.jsx';
+import { v4 as uuid } from 'uuid';
 
-export default function Knob({gridArea,marginTop,marginLeft,width,height,alignSelf,justifySelf,appRef}){
+export default function Knob({gridArea,marginTop,marginLeft,width,height,alignSelf,justifySelf}){
 
-	const dispatch = useDispatch();
+ const newId = uuid();
+ const knobTopClicked = useSelector(
+		state => state.getEventData.knobTopClicked
+ );
+ const dispatch = useDispatch();
+ //const position = useRef(0);
+ const knobTopRef = useRef(); 
+ const knobLineRef = useRef();
 
-	const knobTopRef = useRef();
-	const knobLineRef = useRef();
-  const knobTopClickedRef = useRef(false);
-	const [knobTopClicked, setKnobTopClicked] = useState(false);
-  const mouseMoveY = useSelector(state => state.getEventData.mouseLocation.y);
-	
-  const animateRef = useRef();
-	const animate = time => {
-		console.log('knobTopClicked: ',knobTopClickedRef.current);
-		animateRef.current = requestAnimationFrame(animate);
-	};
-
-	const animationEffect = useEffect(() => {
-		animateRef.current = requestAnimationFrame(animate);
-		return () => {
-			cancelAnimationFrame(animateRef.current);
-		};
-	},[]);
-
-	const onMouseMove = useEffect(() => {
-		if(knobTopClicked){
-			knobLineRef.current.style.transform = `rotate(${mouseMoveY}deg)`;
-		}
-	},[mouseMoveY]);
-
-	const whenKnobCLicked = useEffect(() => {
-    if(knobTopClicked){
-			console.log("knob top clicked");
-			dispatch(addEventToApp('mouseup'));
-			dispatch(addEventToApp('mousemove'));
-		}
-	},[knobTopClicked]);
+// const animationCallback = useCallback((time)=>{
+// 	console.log('knobTopClicked: ',knobTopClicked);
+// },[]);
+//
+// const startAnimation = useEffect(()=>{
+// 	const animate = (time) => {
+// 		animationCallback(time);
+// 		requestAnimationFrame(animate);
+// 	};
+// 	requestAnimationFrame(animate);
+// 	return () => {
+// 		cancelAnimationFrame(animate);
+// 	};
+// },[]);
 
 	
 
@@ -56,10 +47,7 @@ export default function Knob({gridArea,marginTop,marginLeft,width,height,alignSe
         strokeWidth:"3",
  				ref:knobTopRef, 
 				onMouseDown:event => {
-					//console.log('mouseY',event.clientY);
-					//console.log("event: ",event.clientY);
-          knobTopClickedRef.current = true;
-					setKnobTopClicked(state => state? state : !state);
+					dispatch(whenKnobTopClicked(newId));
 				},
     })
     const lineOne = createElement("line",{
@@ -96,6 +84,7 @@ export default function Knob({gridArea,marginTop,marginLeft,width,height,alignSe
                alignSelf:`${alignSelf ? alignSelf : ''}`,
                justifySelf:`${justifySelf ? justifySelf : 'center'}`,
            }}
+					 uuid={newId}
        >
         {pathOne}
         <path d="M4.88649 19.1393H48.1273L53 45.5696H0L4.88649 19.1393Z" fill="#B9B9B9"/>

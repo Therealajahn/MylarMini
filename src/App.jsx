@@ -25,7 +25,7 @@ export default function App() {
 					}
 					function whenMouseMoves() {
 						dispatch(updateMouseLocation({x: event.clientX,y: event.clientY}));
-						//console.log('whenMouseMoves(in whenEventAdded)',event.clientY);
+						console.log('whenMouseMoves(in whenEventAdded)',event.clientY);
 					};
 				});
 			});

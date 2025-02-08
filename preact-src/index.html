@@ -3,16 +3,62 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title></title>
-		<link href="css/style.css" rel="stylesheet">
+		<title>Preact Testing</title>
 	</head>
 	<body>
+					<script>
+						function it(description, testBody){
+							try{
+								testBody();
+								console.log(`${description}: Yes`);
+							} catch (error) {
+								console.log(`${description}: No\n ${error}`);
+							}
+						};
+						const assert = it;
+
+						function assertEquals(x,y){
+							if( x === y || (
+								typeof x === 'object'&&
+								typeof y === 'object'&&
+								x.length === y.length&&
+								x.every((element,index) => element === y[index])
+							)){
+								return;
+							} else {
+								throw new Error(
+									`${x} (${typeof x}) does not equal ${y} (${typeof y})`
+								);
+							};
+						};
+					</script>
 	        <script type='module'>
-						import { h, render } from 'https://esm.sh/htm/preact/standalone';
+					assert('1 is equal to 5',() => {
+						assertEquals(1,1);
+					});
+						import { html, render, createContext, useContext, useState } from 'https://esm.sh/htm/preact/standalone';
 
-						const app = h('h1',null,'Hello World');
+						const Context = createContext(null);
 
-						render(app,document.body);
+						function App (props){
+							const Store = useState({
+									expletive: 'World'
+							});
+
+							return html`
+								<${Context.Provider} value=${Store}>
+									<${Header}/>
+								<//>`
+							
+						};
+
+						function Header (props){
+							//useContext hook to consume the provider
+							const [Store, setStore] = useContext(Context);
+							return html`<h1>Hello ${Store.expletive}</h1>`
+						}
+
+						render(html`<${App}/>`,document.body);
 	        </script>
 	</body>
 </html>
