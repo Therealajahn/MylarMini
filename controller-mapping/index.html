@@ -6,16 +6,58 @@
 		<title></title>
 		<style>
 		*{
-			margin:0,
-			padding:0,
+			margin:0;
+			padding:0;
 		}
 		page{
 			width: 100vw;
 			height: 100vh;
 			display: grid;
+			justify-items: center;
+			align-items: center;
+		}
+		controller{
+			display: grid;
+			width: 35rem;
+			height: 20rem;
+			border: .2rem dotted gray;
+			grid-template-columns: 5fr 2fr 5fr;
+			grid-template-areas: 
+				'left middle right';
+		}
+		left-table{
+			display: grid;
+			width: 97%;
+			height: 96%;
+			border: .2rem solid gray;
+			justify-self: center;
+			align-items: center;
+			grid-template-rows: 1fr 1fr;
+			grid-template-areas: 
+				'top'
+				'bottom';
+		}
+		left-platter{
+			display: grid;
+			border: .2rem solid gray;
+			width: 10rem;
+			height: 10rem;
+			border-radius: 50%;
+			justify-self: center;
+			grid-area: top;
+			justify-items:center;
+			align-items:center;
+		}
+		right-table{
+			width: 97%;
+			height: 96%;
+			border: .2rem solid gray;
+			justify-self: center;
+			align-items: center;
 		}
 		middle{
 			display: grid;
+			grid-area: middle;
 			width: 10rem;
 			height: 20rem;
 			border: .2rem solid black;
@@ -78,85 +120,120 @@
 	<body>
 
 		<page>
-		<middle>
- 
-				<left-middle>
-					<load-left class='left-middle-class'>
-						<p>0</p>
-					</load-left>
-					<gain-left class='left-middle-class'>
-						<p>0</p>
-					</gain-left>
-					<high-left class='left-middle-class'>
-						<p>0</p>
-					</high-left>
-					<low-left class='left-middle-class'>
-						<p>0</p>
-					</low-left>
-					<filter-left class='left-middle-class'>
-						<p>0</p>
-					</filter-left>
-					<headphone-left class='left-middle-class'>
-						<p>0</p>
-					</headphone-left>
-				</left-middle>
+				<controller>
 
-				<center-middle>
-					<browse-knob class='center-middle-class'>
-						<p>0</p>
-						<browse-button class='center-middle-class'>
-							<p>0</p>
-						</browse-button>
-					</browse-knob>
-					
-					<assistant-button class='center-middle-class'>
-          	<p>0</p>
-					</assistant-button>
-					<master-knob class='center-middle-class'>
-          	<p>0</p>
-					</master-knob>
-					<headphones-knob class='center-middle-class'>
-						<p>0</p>
-					</headphones-knob>
-					<master-button class='center-middle-class'>
-						<p>0</p>
-					</master-button>
-				</center-middle>
+					<left-table>
+							<left-platter>
+								<p>0</p>
+							</left-platter>
+							<left-bottom-buttons>
+								<vinyl-left></vinyl-left>
+								<in-left></in-left>
+								<out-left></out-left>
+								<shift-left></shift-left>
+								<hot-cue-left></hot-cue-left>
+								<roll-left></roll-left>
+								<sync-left></sync-left>
+								<cue-left></cue-left>
+								<play-left></play-left>
+								<pitch-left></pitch-left>
+							</left-bottom-buttons>
+					</left-table>
 
-				<right-middle>
-					<load-right class='left-middle-class'>
-						<p>0</p>
-					</load-right>
-					<gain-right class='left-middle-class'>
-						<p>0</p>
-					</gain-right>
-					<high-right class='left-middle-class'>
-						<p>0</p>
-					</high-right>
-					<low-right class='left-middle-class'>
-						<p>0</p>
-					</low-right>
-					<filter-right class='left-middle-class'>
-						<p>0</p>
-					</filter-right>
-					<headphone-right class='left-middle-class'>
-						<p>0</p>
-					</headphone-right>
-				</right-middle>
+					<right-table>
+						<right-platter></right-platter>
+						<vinyl-left></vinyl-left>
+						<in-left></in-left>
+						<out-left></out-left>
+						<shift-left></shift-left>
+						<hot-cue-left></hot-cue-left>
+						<roll-left></roll-left>
+						<sync-left></sync-left>
+						<cue-left></cue-left>
+						<play-left></play-left>
+						<pitch-left></pitch-left>
+					</right-table>
 
-				<left-fade class='center-middle-class'>
-					<p>0</p>
-				</left-fade>
-				<cross-fade class='center-middle-class'>
-					<p>0</p>
-					<beatmatch-button class='center-middle-class'>
-						<p>0</p>
-					</beatmatch-button>
-				</cross-fade>
-				<right-fade class='center-middle-class'>
-					<p>0</p>
-				</right-fade>
-		</middle>
+						<middle>
+							<left-middle>
+								<load-left class='left-middle-class'>
+									<p>0</p>
+								</load-left>
+								<gain-left class='left-middle-class'>
+									<p>0</p>
+								</gain-left>
+								<high-left class='left-middle-class'>
+									<p>0</p>
+								</high-left>
+								<low-left class='left-middle-class'>
+									<p>0</p>
+								</low-left>
+								<filter-left class='left-middle-class'>
+									<p>0</p>
+								</filter-left>
+								<headphone-left class='left-middle-class'>
+									<p>0</p>
+								</headphone-left>
+							</left-middle>
+
+							<center-middle>
+								<browse-knob class='center-middle-class'>
+									<p>0</p>
+									<browse-button class='center-middle-class'>
+										<p>0</p>
+									</browse-button>
+								</browse-knob>
+								
+								<assistant-button class='center-middle-class'>
+									<p>0</p>
+								</assistant-button>
+								<master-knob class='center-middle-class'>
+									<p>0</p>
+								</master-knob>
+								<headphones-knob class='center-middle-class'>
+									<p>0</p>
+								</headphones-knob>
+								<master-button class='center-middle-class'>
+									<p>0</p>
+								</master-button>
+							</center-middle>
+
+							<right-middle>
+								<load-right class='left-middle-class'>
+									<p>0</p>
+								</load-right>
+								<gain-right class='left-middle-class'>
+									<p>0</p>
+								</gain-right>
+								<high-right class='left-middle-class'>
+									<p>0</p>
+								</high-right>
+								<low-right class='left-middle-class'>
+									<p>0</p>
+								</low-right>
+								<filter-right class='left-middle-class'>
+									<p>0</p>
+								</filter-right>
+								<headphone-right class='left-middle-class'>
+									<p>0</p>
+								</headphone-right>
+							</right-middle>
+
+							<left-fade class='center-middle-class'>
+								<p>0</p>
+							</left-fade>
+							<cross-fade class='center-middle-class'>
+								<p>0</p>
+								<beatmatch-button class='center-middle-class'>
+									<p>0</p>
+								</beatmatch-button>
+							</cross-fade>
+							<right-fade class='center-middle-class'>
+								<p>0</p>
+							</right-fade>
+					</middle>
+
+			</controller>
 		</page>
 
 		<script>
