@@ -5,8 +5,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title></title>
 		<link rel="stylesheet" href="controller.css">
+		<link rel="stylesheet" href="sequencer.css">
 		<style>
-		*{
+		:root{
 			margin:0;
 			padding:0;
 		}
@@ -21,12 +22,39 @@
 				'top'
 				'bottom';
 		}
+		.grid-item{
+			display: grid;
+			border: .2rem solid gray;
+			justify-items: center;
+			align-items: center;
+		}
 		</style>
 	</head>
 	<body>
 
 		<page>
-				<controller>
+			<sequencer>
+				<pitches >
+					<input type='range' class='grid-item pitch-one'></input>
+					<input type='range' class='grid-item pitch-two'></input>
+					<input type='range' class='grid-item pitch-three'></input>
+					<input type='range' class='grid-item pitch-four'></input>
+					<input type='range' class='grid-item pitch-five'></input>
+					<input type='range' class='grid-item pitch-six'></input>
+					<input type='range' class='grid-item pitch-seven'></input>
+					<input type='range' class='grid-item pitch-eight'></input>
+				</pitches>
+				<channel-one></channel-one>
+				<channel-two></channel-two>
+				<channel-three></channel-three>
+				<channel-four></channel-four>
+				<channel-five></channel-five>
+				<channel-six></channel-six>
+				<channel-seven></channel-seven>
+
+			</sequencer>
+
+			<controller>
 
 					<left-table>
 
@@ -237,6 +265,7 @@
 		</page>
 
 		<script src='./controller.js'></script>
+		<script src='./sequencer.js'></script>
 
 	</body>
 </html>

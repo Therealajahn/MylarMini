@@ -1,0 +1,17 @@
+sequencer{
+	display: grid;
+}
+pitches{
+	display: grid;
+	align-self: start;
+	width: 100%;
+	height: 5rem;
+	grid-template-columns: repeat(8,1fr);
+	grid-template-rows: 1fr;
+}
+pitches > input{
+	display: inline-block;
+	transform: rotate(-90deg);
+	width: 5rem;
+	padding:0;
+}
