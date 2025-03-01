@@ -85,9 +85,6 @@ pitch-left, pitch-right{
 	grid-area: ptch;
 	border: .2rem solid gray;
 }
-.border{
-	border: .2rem solid gray;
-}
 middle{
 	display: grid;
 	grid-area: middle;

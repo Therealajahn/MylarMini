@@ -1,4 +1,4 @@
-		const store = {
+		const controllerStore = {
 				177:{
 				 'pitch-left':8,
 				 'gain-left':5,
@@ -80,26 +80,29 @@
 					console.log("midi message: ",midiMessage.data);
 
 					const [channel, controlNumber, controlValue] = midiMessage.data;
-          matchMessageToStore(channel,controlNumber,controlValue);
+          matchMessageToControllerStore(channel,controlNumber,controlValue);
 					updateMidiView(controlValue);
 				};
 		  }
 		};
 
-		function matchMessageToStore(channel,controlNumber,controlValue){
-			for(const channelLabel in store){
+		function matchMessageToControllerStore(channel,controlNumber,controlValue){
+			for(const channelLabel in controllerStore){
 				if(+channelLabel !== channel){continue};
-					for (const tagName in store[channelLabel]){
-						if(store[channelLabel][tagName] !== controlNumber){continue};
+					for (const tagName in controllerStore[channelLabel]){
+						if(controllerStore[channelLabel][tagName] !== controlNumber){continue};
 						console.log('tag: ',tagName,controlNumber);
-						store.targetTag = tagName;
+						controllerStore.targetTag = tagName;
+							if(getMidiMessage){
+								getMidiMessage(tagName, controlValue);
+							}
 					}
-			}
+				}
 		};
 
 		function updateMidiView(controlValue){
-			if(!store.targetTag){return};
-				const targetElement = document.querySelector(store.targetTag)
+			if(!controllerStore.targetTag){return};
+				const targetElement = document.querySelector(controllerStore.targetTag)
 					.children[0];
 				targetElement.innerHTML = `${controlValue}`;
 		};

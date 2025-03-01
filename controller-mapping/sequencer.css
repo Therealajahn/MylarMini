@@ -9,7 +9,7 @@ pitches{
 	grid-template-columns: repeat(8,1fr);
 	grid-template-rows: 1fr;
 }
-pitches > input{
+pitches > section > input{
 	display: inline-block;
 	transform: rotate(-90deg);
 	width: 5rem;

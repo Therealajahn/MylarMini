@@ -1,0 +1,21 @@
+page{
+	display: grid;
+	height: 100vh;
+	width: 100vw;
+	padding: 0;
+	margin: 0;
+}
+.border{
+	border: .15rem solid grey;
+}
+
+controller{
+	display: grid;
+	width: 35em;
+	height: 20em; 
+	justify-self: center;
+	align-self: center;
+	grid-template-rows: 1fr;
+	grid-template-columns: 5fr 4fr 5fr;
+}
+
