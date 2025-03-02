@@ -1,7 +1,7 @@
 const pitchOne = document.getElementsByClassName('pitch-one')[0];
 pitchOne.value = 50;
 
-function sequencerControlFactory() {
+function pitchControlFactory() {
 	let selectIndex = 0;
 	let previousIndex = 7;
 	let postIndex = 1;
@@ -96,76 +96,64 @@ function sequencerControlFactory() {
 	}
 };                                                       
 
-const sequencerControl = sequencerControlFactory();
+const pitchControl = pitchControlFactory();
 
 function getMidiMessage(tagName,controlValue){
-	//get the jog wheel input
-	//take forward and back of the jog wheel
-	console.log('tagName: ',tagName);
 	switch(tagName){
 		case 'left-platter':
-			if(controlValue === 1){
-				switch(sequencerControl.getPlatterMode()){
-					case 'select':
-						sequencerControl.incrementSelectIndex(1);
-						updateSliderSelection();
-					break;
-					case 'change':
-						sequencerControl.incrementSelection(1);
-						updateSliderValue();
-					break;
-				};
-			}else if(controlValue === 127){
-				switch(sequencerControl.getPlatterMode()){
-					case 'select':
-						sequencerControl.incrementSelectIndex(-1);
-						updateSliderSelection();
-					break;
-					case 'change':
-						sequencerControl.incrementSelection(-1);
-						updateSliderValue();
-					break;
-				};
+			switch(controlValue){
+				case 1:
+					updateFromPlatter(1);
+				break;
+				case 127:
+					updateFromPlatter(-1);
+				break;
+			};
+			function updateFromPlatter(increment){
+					switch(pitchControl.getPlatterMode()){
+						case 'select':
+							pitchControl.incrementSelectIndex(increment);
+							updateSliderSelection();
+						break;
+						case 'change':
+							pitchControl.incrementSelection(increment);
+							updateSliderValue();
+						break;
+					};
 			}
+			
 		break;
 		case 'vinyl-left':
 				if(controlValue !== 127){break};
-				sequencerControl.togglePlatterMode();
-		 		console.log('platter mode: ',sequencerControl.getPlatterMode()); 
+				pitchControl.togglePlatterMode();
+		 		console.log('platter mode: ',pitchControl.getPlatterMode()); 
 		break;
 		case 'in-left':
 			if(controlValue !== 127){break};
-			sequencerControl.incrementSelectIndex(-1,'no-space');
-			sequencerControl.setPlatterMode('change');
+			pitchControl.incrementSelectIndex(-1,'no-space');
+			pitchControl.setPlatterMode('change');
 			updateSliderSelection();
 		break;
 		case 'out-left':
 			if(controlValue !== 127){break};
-			sequencerControl.incrementSelectIndex(1,'no-space');
-			sequencerControl.setPlatterMode('change');
+			pitchControl.incrementSelectIndex(1,'no-space');
+			pitchControl.setPlatterMode('change');
 			updateSliderSelection();
 		break;
 		//case 'right-platter':
-		//		if(controlValue === 1){
-		//			sequencerControl.incrementSelection(1);
-		//			updateSliderValue();
-		//		}else if(controlValue === 127){
-		//				sequencerControl.incrementSelection(-1);
-		//				updateSliderValue();
-		//		}
 		//break;
 		}
 }
 
 function updateSliderSelection(){
 	let currentSlider = document.getElementsByClassName(
-		sequencerControl.getCurrentStage()
+		pitchControl.getCurrentStage()
 	)[0];
 	let previousSlider = document.getElementsByClassName(
-		sequencerControl.getPreviousStage()
+		pitchControl.getPreviousStage()
 	)[0];
 	let postSlider = document.getElementsByClassName(
-		sequencerControl.getPostStage()
+		pitchControl.getPostStage()
 	)[0];
 	currentSlider.getElementsByClassName('select-indicator')[0].innerHTML = '1';
 	previousSlider.getElementsByClassName('select-indicator')[0].innerHTML = '0';
@@ -174,8 +162,8 @@ function updateSliderSelection(){
 
 function updateSliderValue(){
 	let currentSlider = document.getElementsByClassName(
-		sequencerControl.getCurrentStage()
+		pitchControl.getCurrentStage()
 	)[0];
-	currentSlider.querySelector('input').value = sequencerControl.getCurrentStageValue();
-	console.log('change value: ',sequencerControl.getCurrentStageValue());
+	currentSlider.querySelector('input').value = pitchControl.getCurrentStageValue();
+	console.log('change value: ',pitchControl.getCurrentStageValue());
 };

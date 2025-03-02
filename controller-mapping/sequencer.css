@@ -1,17 +1,32 @@
 sequencer{
 	display: grid;
 }
-pitches{
+stages{
 	display: grid;
 	align-self: start;
 	width: 100%;
-	height: 5rem;
+	height: 15rem;
 	grid-template-columns: repeat(8,1fr);
-	grid-template-rows: 1fr;
+	grid-template-rows: 1fr 2fr;
 }
-pitches > section > input{
+input{
 	display: inline-block;
 	transform: rotate(-90deg);
 	width: 5rem;
 	padding:0;
+}
+.pulse-section{
+	display:grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: 33% 33% 33%;
+}
+.pulse-indicator{
+	display:grid;
+	width: 1rem;
+	grid-template-rows: repeat(8,1fr);
+	grid-template-columns: 1fr;
+}
+tick{
+	height:50%;
+	width:50%;
 }
