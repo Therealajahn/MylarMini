@@ -93,9 +93,8 @@
 						if(controllerStore[channelLabel][tagName] !== controlNumber){continue};
 						console.log('tag: ',tagName,controlNumber);
 						controllerStore.targetTag = tagName;
-							if(getMidiMessage){
-								getMidiMessage(tagName, controlValue);
-							}
+							getPitchMessage(tagName, controlValue);
+							getPulseMessage(tagName, controlValue);
 					}
 				}
 		};

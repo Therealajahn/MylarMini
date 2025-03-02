@@ -1,6 +1,3 @@
-const pitchOne = document.getElementsByClassName('pitch-one')[0];
-pitchOne.value = 50;
-
 function pitchControlFactory() {
 	let selectIndex = 0;
 	let previousIndex = 7;
@@ -48,6 +45,9 @@ function pitchControlFactory() {
 
 	return{
 		getPitchKeys:function () {return Object.keys(pitchStages)},
+		getSelectIndex:function () {
+			return selectIndex;
+		},
 		incrementSelectIndex:function (increment,disableSpace) {
 			if(!inputSpaceReached() && (disableSpace !== 'no-space')){return}
 
@@ -98,7 +98,7 @@ function pitchControlFactory() {
 
 const pitchControl = pitchControlFactory();
 
-function getMidiMessage(tagName,controlValue){
+function getPitchMessage(tagName,controlValue){
 	switch(tagName){
 		case 'left-platter':
 			switch(controlValue){
