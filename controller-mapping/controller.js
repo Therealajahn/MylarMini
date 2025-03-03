@@ -6,6 +6,7 @@
 				 'low-left':2,
 				 'filter-left':1,
 				 'left-fade':0,
+				 'left-platter-rim':9,
 				 'left-platter':10,
 				},
 				178:{
@@ -15,6 +16,7 @@
 				 'low-right':2,
 				 'filter-right':1,
 				 'right-fade':0,
+				 'right-platter-rim':9,
 				 'right-platter':10,
 				},
 				176:{

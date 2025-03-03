@@ -30,7 +30,10 @@ function pulseControlFactory(){
 			console.log('pulse stages: ',pulseStages);
 		},
 		getCurrentStage:function () {
-			return pulseStages[getSelectIndex()];
+			return pulseKeys[getSelectIndex()];
+		},
+		getCurrentValue:function () {
+			return pulseStages[pulseKeys[getSelectIndex()]];
 		},
 	};
 }
@@ -69,10 +72,16 @@ function handleTickClick(){
 handleTickClick();
 
 function updatePulseIndicator(){
+	const currentPulseStage = document.getElementsByClassName(pulseControl.getCurrentStage())[0];
+	for(const tick of currentPulseStage.children){
+		if(+tick.classList[0] === pulseControl.getCurrentValue()){
+			updateTickView(tick);
+		}
+	};
 };
 
 function updateTickView(target){
-	const siblings = Object.values(event.target.parentElement.children);
+	const siblings = Object.values(target.parentElement.children);
 	siblings.forEach(sibling => {sibling.style.background = 'white'});
 	target.style.background = 'black';
 };

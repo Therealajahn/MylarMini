@@ -123,6 +123,19 @@ function getPitchMessage(tagName,controlValue){
 			}
 			
 		break;
+		case 'left-platter-rim':
+			switch(controlValue){
+				case 1:
+					pitchControl.incrementSelectIndex(1);
+					updateSliderSelection();
+				break;
+				case 127:
+					pitchControl.incrementSelectIndex(-1);
+					updateSliderSelection();
+				break;
+			};
+			
+		break;
 		case 'vinyl-left':
 				if(controlValue !== 127){break};
 				pitchControl.togglePlatterMode();
