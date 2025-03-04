@@ -22,7 +22,7 @@ function pulseControlFactory(){
 
 	return{
 		setPulseCount:function (pulseIndex,tickValue) {
-			pulseStages[pulseKeys[pulseIndex]] = tickValue;
+			pulseStages[pulseKeys[pulseIndex]] = +tickValue;
 			//console.log(pulseStages);
 		},
 		incrementSelection:function (increment) {
@@ -55,6 +55,13 @@ function getPulseMessage(tagName,controlValue){
 	};                                           	
 };
 
+function initPulses(){
+	const pulseList = document.getElementsByClassName('pulse-indicator');
+	for(pulse of pulseList){
+      updatePulseIndicator(pulse);
+	}
+};
+initPulses();
 
 function handleTickClick(){
 	const tickList = document.querySelectorAll('tick');
@@ -71,8 +78,12 @@ function handleTickClick(){
 
 handleTickClick();
 
-function updatePulseIndicator(){
-	const currentPulseStage = document.getElementsByClassName(pulseControl.getCurrentStage())[0];
+function updatePulseIndicator(pulseIndicator){
+	const currentPulseStage = pulseIndicator ?
+		pulseIndicator :
+		document.getElementsByClassName(
+			pulseControl.getCurrentStage()
+		)[0];
 	for(const tick of currentPulseStage.children){
 		if(+tick.classList[0] === pulseControl.getCurrentValue()){
 			updateTickView(tick);
