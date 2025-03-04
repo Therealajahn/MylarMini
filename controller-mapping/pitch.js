@@ -17,6 +17,17 @@ function pitchControlFactory() {
 		'pitch-seven':0,
 		'pitch-eight':0,
 	};
+	const octaveStages = 
+	{
+			'octave-one':4,
+			'octave-two':4,
+			'octave-three':4,
+			'octave-four':4,
+			'octave-five':4,
+			'octave-six':4,
+			'octave-seven':4,
+			'octave-eight':4,
+	};
 	const pitchKeys = Object.keys(pitchStages);
 
 	function loopValue(value,addValue,top,bottom) {
@@ -57,7 +68,7 @@ function pitchControlFactory() {
 
 			console.log('selectIndex: ',selectIndex);
 		},
-		incrementSelection:function (increment) {
+		incrementSelectedPitch:function (increment) {
 		  pitchStages[pitchKeys[selectIndex]] += increment;
 			const currentPitch = this.getCurrentStageValue();
 
@@ -116,7 +127,7 @@ function getPitchMessage(tagName,controlValue){
 							updateSliderSelection();
 						break;
 						case 'change':
-							pitchControl.incrementSelection(increment);
+							pitchControl.incrementSelectedPitch(increment);
 							updateSliderValue();
 						break;
 					};
@@ -178,5 +189,6 @@ function updateSliderValue(){
 		pitchControl.getCurrentStage()
 	)[0];
 	currentSlider.querySelector('input').value = pitchControl.getCurrentStageValue();
+	console.log('current slider value: ', currentSlider.value);
 	console.log('change value: ',pitchControl.getCurrentStageValue());
 };
