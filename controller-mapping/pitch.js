@@ -17,6 +17,7 @@ function pitchControlFactory() {
 		'pitch-seven':0,
 		'pitch-eight':0,
 	};
+	const pitchKeys = Object.keys(pitchStages);
 	const octaveStages = 
 	{
 			'octave-one':4,
@@ -28,7 +29,7 @@ function pitchControlFactory() {
 			'octave-seven':4,
 			'octave-eight':4,
 	};
-	const pitchKeys = Object.keys(pitchStages);
+	const octaveKeys = Object.keys(octaveStages);
 
 	function loopValue(value,addValue,top,bottom) {
 		if(value + addValue > top){
@@ -55,6 +56,12 @@ function pitchControlFactory() {
 	};
 
 	return{
+		chromaticPitchValue:function () {
+    	return(
+				Math.ceil(this.getCurrentPitchStageValue() / 11)
+				+ (12 * this.getCurrentOctaveStageValue())
+			); 
+		},
 		getPitchKeys:function () {return Object.keys(pitchStages)},
 		getSelectIndex:function () {
 			return selectIndex;
@@ -70,7 +77,7 @@ function pitchControlFactory() {
 		},
 		incrementSelectedPitch:function (increment) {
 		  pitchStages[pitchKeys[selectIndex]] += increment;
-			const currentPitch = this.getCurrentStageValue();
+			const currentPitch = this.getCurrentPitchStageValue();
 
 			if(currentPitch > 127){
 				setPitchStage(127);
@@ -80,14 +87,24 @@ function pitchControlFactory() {
 			}
 			console.log('stages', pitchStages);
 		},
+		incrementSelectedOctave:function (increment) {
+      octaveStages[octaveKeys[selectIndex]] += increment;
+		},
 		getPitchStage:function (stage) {
 			return pitchStages[stage];
 		},                
-		getCurrentStage:function () {
+		getCurrentPitchStage:function () {
 			return pitchKeys[selectIndex]
 		},
-		getCurrentStageValue:function (){
+		getCurrentPitchStageValue:function (){
 			return pitchStages[pitchKeys[selectIndex]];
+		},
+		getCurrentOctaveStage:function () {
+			console.log('from factory current octave stage: ',octaveKeys[selectIndex]);
+			return octaveKeys[selectIndex];
+		},
+		getCurrentOctaveStageValue:function () {
+			return octaveStages[octaveKeys[selectIndex]];
 		},
 		getPreviousStage:function () {
 			return pitchKeys[previousIndex]
@@ -108,7 +125,6 @@ function pitchControlFactory() {
 };                                                       
 
 const pitchControl = pitchControlFactory();
-
 function getPitchMessage(tagName,controlValue){
 	switch(tagName){
 		case 'left-platter':
@@ -164,6 +180,17 @@ function getPitchMessage(tagName,controlValue){
 			pitchControl.setPlatterMode('change');
 			updateSliderSelection();
 		break;
+    ////Octave
+  	case 'drum-left-one':
+			if(controlValue !== 127){break};
+			pitchControl.incrementSelectedOctave(1);
+			updateOctaveIndicator();
+		break;
+  	case 'drum-left-three':
+			if(controlValue !== 127){break};
+			pitchControl.incrementSelectedOctave(-1);
+			updateOctaveIndicator();
+		break;
 		//case 'right-platter':
 		//break;
 		}
@@ -171,7 +198,7 @@ function getPitchMessage(tagName,controlValue){
 
 function updateSliderSelection(){
 	let currentSlider = document.getElementsByClassName(
-		pitchControl.getCurrentStage()
+		pitchControl.getCurrentPitchStage()
 	)[0];
 	let previousSlider = document.getElementsByClassName(
 		pitchControl.getPreviousStage()
@@ -186,9 +213,30 @@ function updateSliderSelection(){
 
 function updateSliderValue(){
 	let currentSlider = document.getElementsByClassName(
-		pitchControl.getCurrentStage()
+		pitchControl.getCurrentPitchStage()
 	)[0];
-	currentSlider.querySelector('input').value = pitchControl.getCurrentStageValue();
+	currentSlider.querySelector('input').value = 
+		pitchControl.getCurrentPitchStageValue();
 	console.log('current slider value: ', currentSlider.value);
-	console.log('change value: ',pitchControl.getCurrentStageValue());
+	console.log('current chromatic value: ',pitchControl.chromaticPitchValue());
+};
+
+function updateOctaveIndicator(octaveIndicator){
+	const currentOctaveStage = octaveIndicator ?
+		octaveIndicator : 
+		document.getElementsByClassName(
+			pitchControl.getCurrentOctaveStage()
+		)[0];
+		console.log('current octave stage: ',currentOctaveStage);
+		for(const octave of currentOctaveStage.children){
+			if(+octave.classList[0] === pitchControl.getCurrentOctaveStageValue()){
+      	updateOctaveView(octave);
+			}
+		}; 
+};
+
+function updateOctaveView(target){
+	const siblings = Object.values(target.parentElement.children);
+	siblings.forEach(sibling => {sibling.style.background = 'white'});
+	target.style.background = 'black';
 };
