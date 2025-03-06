@@ -33,16 +33,24 @@ tick{
 }
 .pitch-section{
 	display:grid;
-	grid-template-rows: 1fr;
-	grid-template-columns: 33% 33% 33%;
+	grid-template-rows: repeat(3,33%);
+	grid-template-columns: repeat(3,33%);
 	grid-template-areas:
     "select slider octave"
+		"note slider octave"
+		"space slider octave"
 	;
 	width: 7rem;
-	height: 5rem;
 }
 .select-indicator{
+	position: relative;
 	grid-area: select;
+	justify-self: center;
+}
+.note-indicator{
+	position: relative;
+	grid-area: note;
+	justify-self: center;
 }
 input{
 	height: 5rem;
@@ -60,5 +68,9 @@ input{
 }
 .octave{
   height: .3rem;
+	width: .3rem;
+}
+trigger-light{
+	height: .3rem;
 	width: .3rem;
 }

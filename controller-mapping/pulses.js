@@ -61,6 +61,7 @@ function initPulses(){
       updatePulseIndicator(pulse);
 	}
 };
+
 initPulses();
 
 function handleTickClick(){

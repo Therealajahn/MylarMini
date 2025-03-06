@@ -209,6 +209,7 @@ function updateSliderSelection(){
 	currentSlider.getElementsByClassName('select-indicator')[0].innerHTML = '1';
 	previousSlider.getElementsByClassName('select-indicator')[0].innerHTML = '0';
 	postSlider.getElementsByClassName('select-indicator')[0].innerHTML = '0';
+
 };
 
 function updateSliderValue(){
@@ -217,8 +218,11 @@ function updateSliderValue(){
 	)[0];
 	currentSlider.querySelector('input').value = 
 		pitchControl.getCurrentPitchStageValue();
-	console.log('current slider value: ', currentSlider.value);
-	console.log('current chromatic value: ',pitchControl.chromaticPitchValue());
+	const sliderSiblings = currentSlider.children;
+	for(const sibling of sliderSiblings){
+		if(sibling.classList[0] !== 'note-indicator'){continue}
+		sibling.innerHTML = pitchControl.chromaticPitchValue();
+	}
 };
 
 function updateOctaveIndicator(octaveIndicator){

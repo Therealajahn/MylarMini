@@ -37,10 +37,15 @@
 
 		<page>
 			<sequencer>
+				<button class='audio-button'>
+					Start Audio
+				</button>
 				<stages>
 					<section class='pitch-one pitch-section'>
 						<input type='range' class='grid-item'/>
 						<p class='select-indicator'>0</p>
+						<p class='note-indicator'>0</p>
+						<trigger-light class='grid-item'></trigger-light>
 						<figure class='octave-one octave-indicator grid-item'>
 							<octave class='8 octave grid-item'></octave>
 							<octave class='7 octave grid-item'></octave>
@@ -55,6 +60,8 @@
 					<section class='pitch-two pitch-section'>
 						<input type='range' class='grid-item'/>
 						<p class='select-indicator'>0</p>
+						<p class='note-indicator'>0</p>
+						<trigger-light class='grid-item'></trigger-light>
 						<figure class='octave-two octave-indicator grid-item'>
 							<octave class='8 octave grid-item'></octave>
 							<octave class='7 octave grid-item'></octave>
@@ -69,6 +76,8 @@
 					<section class='pitch-three pitch-section'>
 						<input type='range' class='grid-item'/>
 						<p class='select-indicator'>0</p>
+						<p class='note-indicator'>0</p>
+						<trigger-light class='grid-item'></trigger-light>
 						<figure class='octave-three octave-indicator grid-item'>
 							<octave class='8 octave grid-item'></octave>
 							<octave class='7 octave grid-item'></octave>
@@ -83,6 +92,8 @@
 					<section class='pitch-four pitch-section'>
 						<input type='range' class='grid-item'/>
 						<p class='select-indicator'>0</p>
+						<p class='note-indicator'>0</p>
+						<trigger-light class='grid-item'></trigger-light>
 						<figure class='octave-four octave-indicator grid-item'>
 							<octave class='8 octave grid-item'></octave>
 							<octave class='7 octave grid-item'></octave>
@@ -97,6 +108,8 @@
 					<section class='pitch-five pitch-section'>
 						<input type='range' class='grid-item'/>
 						<p class='select-indicator'>0</p>
+						<p class='note-indicator'>0</p>
+						<trigger-light class='grid-item'></trigger-light>
 						<figure class='octave-five octave-indicator grid-item'>
 							<octave class='8 octave grid-item'></octave>
 							<octave class='7 octave grid-item'></octave>
@@ -111,6 +124,8 @@
 					<section class='pitch-six pitch-section'>
 						<input type='range' class='grid-item'/>
 						<p class='select-indicator'>0</p>
+						<p class='note-indicator'>0</p>
+						<trigger-light class='grid-item'></trigger-light>
 						<figure class='octave-six octave-indicator grid-item'>
 							<octave class='8 octave grid-item'></octave>
 							<octave class='7 octave grid-item'></octave>
@@ -125,6 +140,8 @@
 					<section class='pitch-seven pitch-section'>
 						<input type='range' class='grid-item'/>
 						<p class='select-indicator'>0</p>
+						<p class='note-indicator'>0</p>
+						<trigger-light class='grid-item'></trigger-light>
 						<figure class='octave-seven octave-indicator grid-item'>
 							<octave class='8 octave grid-item'></octave>
 							<octave class='7 octave grid-item'></octave>
@@ -139,6 +156,8 @@
 					<section class='pitch-eight pitch-section'>
 						<input type='range' class='grid-item'/>
 						<p class='select-indicator'>0</p>
+						<p class='note-indicator'>0</p>
+						<trigger-light class='grid-item'></trigger-light>
 						<figure class='octave-eight octave-indicator grid-item'>
 							<octave class='8 octave grid-item'></octave>
 							<octave class='7 octave grid-item'></octave>
@@ -474,6 +493,8 @@
 			</controller>
 		</page>
 
+		<script src="./Tone.js"></script>
+		<script src='./sequencer.js'></script>
 		<script src='./controller.js'></script>
 		<script src='./pitch.js'></script>
 		<script src='./pulses.js'></script>
