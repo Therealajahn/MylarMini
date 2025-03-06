@@ -5,6 +5,7 @@ document.getElementsByClassName("audio-button")[0].addEventListener("click", asy
 });
 
 function controlTriggerLightsFactory(){
+	 let selectIndex = 0;
 	 const triggerLights = {
 		 'trigger-light-one':0,
 		 'trigger-light-two':0,
@@ -15,9 +16,48 @@ function controlTriggerLightsFactory(){
 		 'trigger-light-seven':0,
 		 'trigger-light-eight':0,
 	 };
+	 const triggerKeys = Object.keys(triggerLights);
+	 function getSelectIndex(){
+	 	return selectIndex;
+	 };
+	 return{
+		 incrementSelectIndex:function (increment) {
+		 	selectIndex = (selectIndex + increment) % 8;
+			console.log('select light: ',selectIndex);
+		 },
+		 getCurrentTriggerLightValue:function () {
+      return triggerLights[triggerKeys[selectIndex]];
+		 },
+		 getTriggerLightValue:function (name) {
+			 return triggerLights[name];
+		 },
+		 setCurrentTriggerLightValue:function (value) {
+		 	triggerLights[triggerKeys[selectIndex]] = value;
+		 },
+		 toggleCurrentTriggerLightValue:function () {
+			 const currentTrigger = this.getCurrentTriggerLightValue();
+			 this.setCurrentTriggerLightValue(
+				 currentTrigger ? 0 : 1
+			 );
+		 },
+	 };
 };
+ const controlTriggerLights = controlTriggerLightsFactory();
+
+ function updateTriggerLights(){
+	 const triggerLights = document.querySelectorAll('trigger-light');
+	 for(const light of triggerLights){
+		 const lightValue = controlTriggerLights.getTriggerLightValue(light.classList[0]);
+		 light.style.background = lightValue ? 'black' : 'white';
+	 };
+ };
+
  const sequence = new Tone.Sequence((time,note) => {
 	 console.log('Sequencer time: ',time,' note: ',note);
- },[12,12,12,12]).start(0);
+	 controlTriggerLights.toggleCurrentTriggerLightValue();
+	 updateTriggerLights();
+	 controlTriggerLights.toggleCurrentTriggerLightValue();
+	 controlTriggerLights.incrementSelectIndex(1);
+ },[1,2,3,4,5,6,7,8]).start(0);
 
  Tone.Transport.start(0);

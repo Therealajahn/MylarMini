@@ -1,5 +1,4 @@
 function pulseControlFactory(){
-	let selectIndex = 0;
 	let previousIndex = 7;
 	let postIndex = 1;
 	let inputCount = 0;
