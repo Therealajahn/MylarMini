@@ -73,4 +73,5 @@ input{
 trigger-light{
 	height: .3rem;
 	width: .3rem;
+	justify-self: center;
 }
