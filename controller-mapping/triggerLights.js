@@ -48,9 +48,9 @@ function controlTriggerLightsFactory(){
  };
 
 
- function flashCurrentTriggerLight(){
+ function flashCurrentTriggerLight(increment){
 	 controlTriggerLights.toggleCurrentTriggerLightValue();
 	 updateTriggerLights();
 	 controlTriggerLights.toggleCurrentTriggerLightValue();
-	 controlTriggerLights.incrementSelectIndex(1);
+	 controlTriggerLights.incrementSelectIndex(increment);
  };

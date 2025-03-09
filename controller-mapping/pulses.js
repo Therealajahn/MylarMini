@@ -31,6 +31,16 @@ function pulseControlFactory(){
 		getCurrentStage:function () {
 			return pulseKeys[getSelectIndex()];
 		},
+		getStage:function (stage) {
+			switch(typeof stage){
+				case 'string':
+					return pulseStages[stage];
+				break;
+				case 'number':
+				 return pulseStages[pulseKeys[stage]];
+				break;
+			}
+		}, 
 		getCurrentValue:function () {
 			return pulseStages[pulseKeys[getSelectIndex()]];
 		},

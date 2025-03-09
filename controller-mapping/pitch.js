@@ -51,15 +51,12 @@ function pitchControlFactory() {
 		return false;
 	};
 
-	function setPitchStage (setValue) {
-		return pitchStages[pitchKeys[selectIndex]] = setValue;
-	};
 
 	return{
-		chromaticPitchValue:function () {
+		chromaticPitchValue:function (stage) {
     	return(
-				Math.ceil(this.getCurrentPitchStageValue() / 11)
-				+ (12 * this.getCurrentOctaveStageValue())
+				Math.ceil(this.getPitchStage(stage) / 11)
+				+ (12 * this.getOctaveStage(stage))
 			); 
 		},
 		getPitchKeys:function () {return Object.keys(pitchStages)},
@@ -80,19 +77,62 @@ function pitchControlFactory() {
 			const currentPitch = this.getCurrentPitchStageValue();
 
 			if(currentPitch > 127){
-				setPitchStage(127);
+				this.setPitchStage(127);
 			}
 			if(currentPitch < 0){
-				setPitchStage(0);
+				this.setPitchStage(0);
 			}
 			console.log('stages', pitchStages);
+		},
+		setPitchStage:function (setValue,stage) {
+			switch(typeof stage){
+        case 'number':
+					pitchStages[pitchKeys[stage]] = +setValue;
+				break;
+				case 'string':
+					pitchStages[stage] = +setValue;
+					console.log('pitchStages: ', pitchStages);
+				break;
+				default:
+					pitchStages[pitchKeys[selectIndex]] = +setValue;
+				break;
+			}
+		},
+		getPitchStage:function (stage) {
+			switch(typeof stage){
+        case 'number':
+					return pitchStages[pitchKeys[stage]];
+				break;
+				case 'string':
+					if(stage === 'all'){
+						return pitchStages;
+					}
+					return pitchStages[stage];
+				break;
+				default:
+					return pitchStages[pitchKeys[selectIndex]];
+				break;
+			}
+		},                
+		getOctaveStage:function () {
+			switch(typeof stage){
+        case 'number':
+					return octaveStages[octaveKeys[stage]];
+				break;
+				case 'string':
+					if(stage === 'all'){
+						return octaveStages;
+					}
+					return octaveStages[stage];
+				break;
+				default:
+					return octaveStages[octaveKeys[selectIndex]];
+				break;
+			}
 		},
 		incrementSelectedOctave:function (increment) {
       octaveStages[octaveKeys[selectIndex]] += increment;
 		},
-		getPitchStage:function (stage) {
-			return pitchStages[stage];
-		},                
 		getCurrentPitchStage:function () {
 			return pitchKeys[selectIndex]
 		},
@@ -102,9 +142,6 @@ function pitchControlFactory() {
 		getCurrentOctaveStage:function () {
 			console.log('from factory current octave stage: ',octaveKeys[selectIndex]);
 			return octaveKeys[selectIndex];
-		},
-		getCurrentOctaveStageValue:function () {
-			return octaveStages[octaveKeys[selectIndex]];
 		},
 		getPreviousStage:function () {
 			return pitchKeys[previousIndex]
@@ -144,7 +181,7 @@ function getPitchMessage(tagName,controlValue){
 						break;
 						case 'change':
 							pitchControl.incrementSelectedPitch(increment);
-							updateSliderValue();
+							updateCurrentSlider();
 						break;
 					};
 			}
@@ -212,18 +249,40 @@ function updateSliderSelection(){
 
 };
 
-function updateSliderValue(){
+function updateCurrentSlider(){
 	let currentSlider = document.getElementsByClassName(
 		pitchControl.getCurrentPitchStage()
 	)[0];
 	currentSlider.querySelector('input').value = 
 		pitchControl.getCurrentPitchStageValue();
-	const sliderSiblings = currentSlider.children;
-	for(const sibling of sliderSiblings){
-		if(sibling.classList[0] !== 'note-indicator'){continue}
-		sibling.innerHTML = pitchControl.chromaticPitchValue();
+	const sliderChildren = currentSlider.children;
+	for(const child of sliderChildren){
+		if(child.classList[0] === 'note-indicator'){
+			updatePitchIndicator(child);
+		}
 	}
 };
+
+function updatePitchIndicator(target){
+	console.log('update pitch indicator: ',pitchControl.chromaticPitchValue(target.classList[0]));
+	console.log('target: ',target.parentElement.getElementsByClassName('note-indicator')[0]);
+	target
+		.parentElement
+		.getElementsByClassName('note-indicator')[0]
+		.innerHTML =
+	pitchControl.chromaticPitchValue(target.classList[0]);
+}
+function whenSliderDragged(){
+	const pitchSliders = document.getElementsByClassName('pitch-slider');
+	for(slider of pitchSliders){
+		slider.addEventListener('change',event => {
+			console.log('slider move');
+			pitchControl.setPitchStage(event.target.value, event.target.classList[0]);
+     	updatePitchIndicator(event.target);
+		});
+	};
+};
+whenSliderDragged();
 
 function updateOctaveIndicator(octaveIndicator){
 	const currentOctaveStage = octaveIndicator ?
