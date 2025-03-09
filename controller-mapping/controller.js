@@ -97,6 +97,7 @@
 						controllerStore.targetTag = tagName;
 							getPitchMessage(tagName, controlValue);
 							getPulseMessage(tagName, controlValue);
+							getSynthMessage(tagName, controlValue);
 					}
 				}
 		};
