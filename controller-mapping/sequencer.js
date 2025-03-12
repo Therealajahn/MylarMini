@@ -23,9 +23,9 @@ function mySynthFactory(){
 			baseFrequency: 200,
 			octaves: 7,
 	});
-	const filtergian = new Tone.Gain(0.5);
+	const filterGain = new Tone.Gain(0.5);
 	osc.chain(oscGain,filter,ampEnv).start();
-	filterEnv.chain(filterSignal,filter.frequency);
+	filterEnv.chain(filterGain,filter.frequency);
 
 	return{
 		triggerAttackRelease:function (note,duration,time) {
