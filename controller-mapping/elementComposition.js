@@ -1,58 +1,58 @@
-function makeElements({
-			elementTag,
-			parent,
-			listOfClassLists,
-			listOfChildClassLists,
-}) 
-{
-	const [ firstList ] = listOfClassLists;
-	firstList.forEach((classItem,i) => {
-		const element = document.createElement(elementTag);
-		let classString = ''; 
-		listOfClassLists.forEach((list,j) => {
-			if(j > 0){ classString += ' '; };
-			classString += list[i];  
-		});
-		element.setAttribute(
-			'class',
-			classString,
-		);
-		parent.appendChild(element);
-		if(listOfChildClassLists){
-			console.log('child class list list: ',listOfClassLists);
-			makeElements({
-				elementTag: 'p',
-				parent: element,
-				listOfClassLists: listOfChildClassLists,
-			});
+function makeElementsFactory(){
+	return{
+		repeatElement: function({
+					elementTag,
+					masterParent,
+					listOfClassLists,
+					listOfChildClassLists,
+					childrenMap,
+		}) 
+		{
+			const [ firstList ] = listOfClassLists;
+			firstList.forEach((classItem,i) => {
+				const element = document.createElement(elementTag);
+				let classString = ''; 
+				listOfClassLists.forEach((list,j) => {
+					if(j > 0){ classString += ' '; };
+					classString += list[i];  
+				});
+				element.setAttribute(
+					'class',
+					classString,
+				);
+				masterParent.appendChild(element);
+				if(listOfChildClassLists){
+					console.log('child class list list: ',listOfClassLists);
+				}
+			 })
+			}
 		}
-	});
-};
+}
+const makeElements = makeElementsFactory();
 
-
-const sequencer = document.querySelector('sequencer-compose');
+const stages = document.querySelector('stages-replace');
 
 const pitchList = [
- 'pitch-one',
- 'pitch-two',
+	'pitch-one',
+	'pitch-two',
 ];
 
-const pList = [
-	'p1',
-	'p2',
-];
-
-makeElements({
+makeElements.repeatElement({
 	elementTag: 'section',
-	parent: sequencer,
-	listOfClassLists: [pitchList,pList],
-	listOfChildClassLists:[pList,pitchList],
+	masterParent: stages,
+	listOfClassLists: [pitchList],
+	childrenMap: [
+		{tag:'p',class:'select-indicator'},
+		{tag:'p',class:'note-indicator'},
+		{tag:'trigger-light',
+		 class:'grid-item',
+		 crossClass:triggerList,},
+		{tag:'figure',
+		 class:'octave grid-item',
+		 numberClasses:{start:8,increment:-1},
+	],
 });
 
-//  {
-//		elementTag:'p',
-//		listOfClassLists: [pList],
-//	},	       
 
 
 
