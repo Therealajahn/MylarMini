@@ -11,52 +11,51 @@ function makeElementsFactory(){
 		}) 
 		{
 			let crossIndex = 0;
-
+			let element = {};
+      function insertClassLists(){
+			 const [ firstList ] = listOfClassLists;
+			 firstList.forEach((classItem,i) => {
+			 	element = document.createElement(elementTag);
+				console.log('comfirm running',childrenMap);
+			 	let classString = ''; 
+			 	listOfClassLists.forEach((list,j) => {
+			 		if(j > 0){ classString += ' '; };
+			 		classString += list[i];  
+			 	});
+			 	element.setAttribute(
+			 		'class',
+			 		classString,
+			 	);
+			 	if(propList){
+			 		propList.forEach(prop => {
+			 			element.setAttribute(
+			 				prop.name,
+			 				prop.value,
+			 			);
+			 		});
+			 	}
+			 	masterParent.appendChild(element);
+			 });
+		  };
+      function makeChildFromMap(){
+			 for(const child of childrenMap){
+			 	repeatElement({
+			 		elementTag: child.tag,
+			 		masterParent: element,
+			 		classString:child.class,
+			 		propList:child.props,
+			 	});				
+			 }
+			};
 			if(listOfClassLists){
-			const [ firstList ] = listOfClassLists;
-			firstList.forEach((classItem,i) => {
-				const element = document.createElement(elementTag);
-				let classString = ''; 
-				listOfClassLists.forEach((list,j) => {
-					if(j > 0){ classString += ' '; };
-					classString += list[i];  
-				});
-				element.setAttribute(
-					'class',
-					classString,
-				);
-				if(propList){
-					propList.forEach(prop => {
-						element.setAttribute(
-							prop.name,
-							prop.value,
-						);
-					});
-				}
-				masterParent.appendChild(element);
-				if(childrenMap){
-					for(const child of childrenMap){
-						if(child.listOfChildClassLists){
-								repeatElement({
-									elementTag: child.tag,
-									masterParent: element,
-									classString:child.listOfChildClassLists[crossIndex],
-									propList:child.props,
-								});				
-								crossIndex += 1;
-								return;
-						}
-
-						repeatElement({
-							elementTag: child.tag,
-							masterParent: element,
-							classString:child.class,
-							propList:child.props,
-						});				
-					}
-				}
-			 })
+				insertClassLists();
+				console.log('first if',element);
+			}
+		  if(childrenMap){
+				makeChildFromMap();
+				console.log('second if',element);
 			}else{
+				console.log('third if');
 				const element = document.createElement(elementTag);
 				element.setAttribute(
 					'class',
@@ -106,7 +105,6 @@ makeElements.repeatElement({
 		},
 		//{tag:'figure',
 		// class:[octaveList,'octave-indicator','grid-item'],
-		// numberClasses:{start:8,increment:-1},
 		//},
 	],
 });
