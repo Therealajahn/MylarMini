@@ -2,74 +2,78 @@ function makeElementsFactory(){
 		let crossClassIndex = 0;
 		function repeatElement ({
 					elementTag,
-					masterParent,
+					parent,
 					listOfClassLists,
 					childrenMap,
 					propList,
-					listOfChildClassLists,
+					childClasses,
 					classString,
 		}) 
 		{
 			let crossIndex = 0;
 			let element = {};
-      function insertClassLists(){
-			 const [ firstList ] = listOfClassLists;
-			 firstList.forEach((classItem,i) => {
-			 	element = document.createElement(elementTag);
-				console.log('comfirm running',childrenMap);
-			 	let classString = ''; 
-			 	listOfClassLists.forEach((list,j) => {
-			 		if(j > 0){ classString += ' '; };
-			 		classString += list[i];  
-			 	});
-			 	element.setAttribute(
-			 		'class',
-			 		classString,
-			 	);
-			 	if(propList){
-			 		propList.forEach(prop => {
-			 			element.setAttribute(
-			 				prop.name,
-			 				prop.value,
-			 			);
-			 		});
-			 	}
-			 	masterParent.appendChild(element);
-			 });
+
+      function createFromClassLists(){
+		   const [ firstList ] = listOfClassLists;
+		   firstList.forEach((classItem,i) => {
+		   	element = document.createElement(elementTag);
+		   	let classString = ''; 
+		   	listOfClassLists.forEach((list,j) => {
+		   		if(j > 0){ classString += ' '; };
+		   		classString += list[i];  
+		   	});
+		   	element.setAttribute(
+		   		'class',
+		   		classString,
+		   	);
+		   	if(propList){
+		   		propList.forEach(prop => {
+		   			element.setAttribute(
+		   				prop.name,
+		   				prop.value,
+		   			);
+		   		});
+		   	}
+		   	parent.appendChild(element);
+		  	console.log(`create element:`,element);
+				if(childrenMap){
+					makeChildFromMap();
+					console.log('child condition',element);
+				};
+		   });
 		  };
+
       function makeChildFromMap(){
-			 for(const child of childrenMap){
-			 	repeatElement({
-			 		elementTag: child.tag,
-			 		masterParent: element,
-			 		classString:child.class,
-			 		propList:child.props,
-			 	});				
-			 }
-			};
+		  	console.log('makeChildFromMap');
+		   for(const child of childrenMap){
+		   	repeatElement({
+		   		elementTag: child.tag,
+		   		parent: element,
+		   		childClasses:child.classes,
+		   		propList:child.props,
+		   	});				
+		   }
+		  };
 			if(listOfClassLists){
-				insertClassLists();
-				console.log('first if',element);
-			}
-		  if(childrenMap){
-				makeChildFromMap();
-				console.log('second if',element);
-			}else{
-				console.log('third if');
-				const element = document.createElement(elementTag);
-				element.setAttribute(
-					'class',
-					classString,
-				);
-				if(propList){
-					propList.forEach(prop => {
-						element.setAttribute(
-							prop.name,
-							prop.value,
-						);
-					});
-				}
-				masterParent.appendChild(element);
+				createFromClassLists();
+				console.log('class list condition',element);
+			};
+			if(childClasses){
+			 const child = document.createElement(elementTag);
+				console.log('child classes condition',child);
+			 child.setAttribute(
+			 	'class',
+			 	classString,
+			 );
+			 if(propList){
+			 	propList.forEach(prop => {
+			 		child.setAttribute(
+			 			prop.name,
+			 			prop.value,
+			 		);
+			 	});
+			 }
+			 parent.appendChild(child);
 			};
 		}
 	return{
@@ -92,14 +96,14 @@ const triggerList = [
 
 makeElements.repeatElement({
 	elementTag: 'section',
-	masterParent: stages,
+	parent: stages,
 	listOfClassLists: [pitchList],
 	childrenMap: [
-		{tag:'p',class:'select-indicator'},
-		{tag:'p',class:'note-indicator'},
+		{tag:'p',classes:'select-indicator'},
+		{tag:'p',classes:'note-indicator'},
 		{tag:'trigger-light',
 		 class:'grid-item',
-		 listOfChildClassLists: triggerList,
+		 classes: triggerList,
 		 parentList: pitchList,
 		 props:[{name:'id',value:'what?'}],
 		},
