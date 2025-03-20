@@ -74,9 +74,9 @@
 				targetTag:'',
 		}
 
-		navigator.requestMIDIAccess().then(getMidiInputs);
+		navigator.requestMIDIAccess().then(getMIDIInputs);
 
-		function getMidiInputs(MIDIAccess){
+		function getMIDIInputs(MIDIAccess){
 		  for(const input of MIDIAccess.inputs) {
 				input[1].onmidimessage = (midiMessage) => {
 					console.log("midi message: ",midiMessage.data);

@@ -4,9 +4,11 @@ function makeElementsFactory(){
 					elementTag,
 					parent,
 					listOfClassLists,
+					staticClass,
 					childrenMap,
 					propList,
 					childClasses,
+					crossClass,
 					classString,
 		}) 
 		{
@@ -15,6 +17,7 @@ function makeElementsFactory(){
 
       function createFromClassLists(){
 		   const [ firstList ] = listOfClassLists;
+			console.log('class lists');
 		   firstList.forEach((classItem,i) => {
 		   	element = document.createElement(elementTag);
 		   	let classString = ''; 
@@ -22,6 +25,9 @@ function makeElementsFactory(){
 		   		if(j > 0){ classString += ' '; };
 		   		classString += list[i];  
 		   	});
+				if(staticClass){
+					classString += ` ${staticClass}`;
+				};
 		   	element.setAttribute(
 		   		'class',
 		   		classString,
@@ -35,25 +41,25 @@ function makeElementsFactory(){
 		   		});
 		   	}
 		   	parent.appendChild(element);
-		  	console.log(`create element:`,element);
 				if(childrenMap){
 					makeChildFromMap();
-					console.log('child condition',element);
 				};
 		   });
 		  };
 
       function makeChildFromMap(){
-		  	console.log('makeChildFromMap');
+		  	console.log('makeChildFromMap',crossIndex);
 		   for(const child of childrenMap){
 		   	repeatElement({
 		   		elementTag: child.tag,
 		   		parent: element,
 		   		childClasses:child.classes,
 		   		propList:child.props,
+					crossClass:child.crossClass,
 		   	});				
 		   }
 		  };
+
 			if(listOfClassLists){
 				createFromClassLists();
 				console.log('class list condition',element);
@@ -61,6 +67,11 @@ function makeElementsFactory(){
 			if(childClasses){
 			 const child = document.createElement(elementTag);
 				console.log('child classes condition',child);
+			 let classString = childClasses;
+			 if(crossClass){
+				classString = crossClass[crossIndex];
+				crossIndex += 1;
+			 };
 			 child.setAttribute(
 			 	'class',
 			 	classString,
@@ -84,34 +95,51 @@ const makeElements = makeElementsFactory();
 
 const stages = document.querySelector('stages-replace');
 
-const pitchList = [
-	'pitch-one',
-	'pitch-two',
-];
+function makeEnumeratedArray(prefix){
+	const numbers = [
+		'one',
+		'two',
+		'three',
+		'four',
+		'five',
+		'six',
+		'seven',
+		'eight',
+		'nine',
+	];
+	return numbers.reduce((acc,cur) => 
+		[...acc,`${prefix}-${cur}`]
+	,[]);
+};
 
-const triggerList = [
-	'trigger-light-one',
-	'trigger-light-two',
-];
+const pitchList = makeEnumeratedArray('pitch');
+const triggerList = makeEnumeratedArray('trigger-light');
 
-makeElements.repeatElement({
-	elementTag: 'section',
-	parent: stages,
-	listOfClassLists: [pitchList],
-	childrenMap: [
-		{tag:'p',classes:'select-indicator'},
-		{tag:'p',classes:'note-indicator'},
-		{tag:'trigger-light',
-		 class:'grid-item',
-		 classes: triggerList,
-		 parentList: pitchList,
-		 props:[{name:'id',value:'what?'}],
-		},
-		//{tag:'figure',
-		// class:[octaveList,'octave-indicator','grid-item'],
-		//},
-	],
-});
+//makeElements.repeatElement({
+//	elementTag: 'section',
+//	parent: stages,
+//	listOfClassLists: [pitchList],
+//	staticClass:'pitch-section',
+//	childrenMap: [
+//		{tag:'input',
+//			classes:'pitch-section',
+//			crossClass:pitchList,
+//			props:[{name:'type',value:'range'}],
+//		},
+//		{tag:'p',classes:'select-indicator'},
+//		{tag:'p',classes:'note-indicator'},
+//		{tag:'trigger-light',
+//		 class:'grid-item',
+//		 parentList: pitchList,
+//		 classes:'trigger-light',
+//		 //props:[{name:'id',value:'what?'}],
+//		 crossClass:triggerList,
+//		},
+//		//{tag:'figure',
+//		// class:[octaveList,'octave-indicator','grid-item'],
+//		//},
+//	],
+//});
 
 
 
