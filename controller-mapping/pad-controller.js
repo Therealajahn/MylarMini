@@ -16,7 +16,7 @@ function padControllerFactory(){
 
 	for(let i = 0;i < 8;i++){
 		padControllerStore[i] = Array(8).fill(0).map((button,j) => (
-			{onOrOff:'off',controlNumber:rowStart + j})
+			{onOrOff:'off',controlNumber:rowStart + j,location:[i,j]})
 		);
 		rowStart += 16;
 	}
@@ -34,7 +34,15 @@ function padControllerFactory(){
   	return padColors[color];	
 	};
 
-	let output = {};
+	function getPadFromStore([row,column]) {
+   return padControllerStore[row][column]; 
+	};
+
+	function locationToControlNumber([row,column]){
+		return padControllerStore[row][column].controlNumber;
+	};
+
+	let output = undefined;
 
 	return{
 		defineOutput:function (definition) {
@@ -42,18 +50,38 @@ function padControllerFactory(){
 			console.log('output: ',output);
 		},
 		send:function (message) {
-			const [channel,controlNumber,velocity] = message;
+			let [channel,controlNumber,velocity] = message;
 
-			switch(typeof velocity){
-				case 'number':
-					message = [channel,controlNumber,velocity];
-				break;
-				case 'string':
-					message = [channel,controlNumber,colorToVelocity(velocity)];
-				break;
+			velocity = typeof velocity === 'string' ?
+				colorToVelocity(velocity) :
+				velocity;
+
+			controlNumber = typeof controlNumber === 'object' ?
+				locationToControlNumber(controlNumber) :
+				controlNumber;
+
+			message = [channel,controlNumber,velocity];
+			if(output === undefined){
+				throw Error(
+					'Output needs to be defined first with defineOutput method of padControllerFactory'
+				);
 			};
-
+			console.log('message: ',message);
 			output.send(message);
+		},
+		makeColumn:function (root,length,color) {
+			let currentLocation = root;
+			for(let i = 0; i < length; i++){
+				this.send([
+					144,
+					currentLocation,
+					color,
+				]);	
+				currentLocation = [currentLocation[0] + 1,currentLocation[1]];
+			};
+		},
+		padPressToColumn:function (root,color) {
+			this.makeColumn(root,8 - root[0],color);
 		},
 		getStore:function () {
 			return padControllerStore; 
@@ -61,7 +89,6 @@ function padControllerFactory(){
 	};
 }
 const padController = padControllerFactory();
-
 navigator.requestMIDIAccess().then(getMIDI);
 
 	function getMIDI(MIDIAccess){
@@ -103,14 +130,15 @@ navigator.requestMIDIAccess().then(getMIDI);
 				}; 
 			};
 			resetPads();
-      padController.send([144,0,'white']);
-      padController.send([144,1,'yellow']);
-      padController.send([144,2,'light-blue']);
-      padController.send([144,3,'purple']);
-      padController.send([144,4,'blue']);
-      padController.send([144,5,'green']);
-      padController.send([144,6,'red']);
-      padController.send([144,7,0]);
+			padController.padPressToColumn([4,0],'blue');
+      //padController.send([144,0,'white']);
+      //padController.send([144,1,'yellow']);
+      //padController.send([144,2,'light-blue']);
+      //padController.send([144,3,'purple']);
+      //padController.send([144,4,'blue']);
+      //padController.send([144,5,'green']);
+      //padController.send([144,6,'red']);
+      //padController.send([144,7,0]);
 		}
 	};
 
