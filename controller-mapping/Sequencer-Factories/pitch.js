@@ -5,7 +5,7 @@ function pitchControlFactory() {
 	let inputCount = 0;
 	let inputSpace = 8;
 	let platterMode = 'select';
-	//const pitchMax = 24;
+
 	const pitchStages = 
 	{
 		'pitch-one':0,
@@ -279,10 +279,10 @@ function whenSliderDragged(){
 			console.log('slider move');
 			pitchControl.setPitchStage(event.target.value, event.target.classList[0]);
      	updatePitchIndicator(event.target);
-		});
-	};
-};
-whenSliderDragged();
+		});               
+	};                  
+};                    
+whenSliderDragged();  
 
 function updateOctaveIndicator(octaveIndicator){
 	const currentOctaveStage = octaveIndicator ?

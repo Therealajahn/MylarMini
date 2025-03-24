@@ -22,7 +22,7 @@ function pulseControlFactory(){
 	return{
 		setPulseCount:function (pulseIndex,tickValue) {
 			pulseStages[pulseKeys[pulseIndex]] = +tickValue;
-			//console.log(pulseStages);
+			console.log('pulseStages: ',pulseStages);
 		},
 		incrementSelection:function (increment) {
 			pulseStages[pulseKeys[getSelectIndex()]] += increment;
@@ -81,6 +81,7 @@ function handleTickClick(){
 				const tickValue = event.target.classList[0];
 
 				pulseControl.setPulseCount(pulseIndex,tickValue);
+			  console.log('pulseControl');
 				updateTickView(event.target);
 			});
 	}
